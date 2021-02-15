@@ -8,52 +8,23 @@ import {
   GeneralBlueButtonStyles,
 } from '../styles/GeneralStyles';
 import { QuestionAnswer } from '../styles/GamePageStyles';
+import Lobby from '../components/Lobby/Lobby';
+import { createArrayOfPeopleWhoHaveVoted } from '../utilities/utilityFunctions';
 export interface WaitingForPlayersProps {
   roundNumber: number;
   gameCode: string | number;
+  answers: any;
   user: any;
   numberOfPlayers: number;
   isVotingRound: boolean;
+  playersArray: any;
+  votesArray: any;
 }
 
 const VotingOnAnswersComponent: React.SFC<WaitingForPlayersProps> = (props) => {
   const [roundAnswers, setRoundAnswers] = useState([]);
 
   const [userHasVotedalready, setUserHasVotedAlready] = useState(false);
-
-  // We have the round information from props
-
-  // Set up a snapshot listener on the answers
-  useEffect(() => {
-    const answersDbRef = db
-      .collection('games')
-      .doc(props.gameCode.toString())
-      .collection('answers')
-      .where('roundNumber', '==', props.roundNumber)
-      .onSnapshot((snap: any) => {
-        setRoundAnswers(
-          snap.docs.map((answer: any) => ({
-            id: answer.id,
-            data: answer.data(),
-          }))
-        );
-        // console.log(
-        //   `Number of answers (${snap.docs.length}) = total number of players (${props.numberOfPlayers}) so auto progressing to results round`
-        // );
-        // if (
-        //   snap.docs.length > 0 &&
-        //   snap.docs.length === props.numberOfPlayers
-        // ) {
-        //   console.log(
-        //     `Number of answers (${snap.docs.length}) = total number of players (${props.numberOfPlayers}) so auto progressing to results round`
-        //   );
-        //   db.collection('games')
-        //     .doc(props.gameCode.toString())
-        //     .set({ isVotingRound: false, isResultsRound: true });
-        // }
-      });
-    return answersDbRef;
-  }, [props.roundNumber]);
 
   // Checks to see if we have voted already
   useEffect(() => {
@@ -70,39 +41,19 @@ const VotingOnAnswersComponent: React.SFC<WaitingForPlayersProps> = (props) => {
           setUserHasVotedAlready(true);
         }
       });
+
+    console.log(props.answers);
+    if (
+      props.answers
+        .filter((vote: any) => vote.data.roundNumber === props.roundNumber)
+        .filter((vote: any) => vote.data.voterUid === props.user.uid).length > 0
+    ) {
+      setUserHasVotedAlready(true);
+      console.log(
+        'Successfully determined that the user has voted already using my array filter method and can delete the db query'
+      );
+    }
   }, [props]);
-
-  // This could cause some nasty bugs with rounds ending early -- be careful with this and potentially look for a better solution, potentially the host could determine the end of the round
-  // Another good way to do this would be to set a round started value - I think I will do this actually
-  //   useEffect(() => {
-  //     db.collection('games')
-  //       .doc(props.gameCode.toString())
-  //       .collection('answers')
-  //       .where('roundNumber', '==', props.roundNumber)
-  //       .limit(1)
-  //       .orderBy('timestamp', 'asc')
-  //       .get()
-  //       .then((earliestAnswer) => {
-  //         if (!earliestAnswer.empty) {
-  //           console.log(earliestAnswer.docs[0].data().timestamp.seconds);
-  //           const curTime = Math.floor(Date.now() / 1000);
-  //           const timeDif =
-  //             curTime - earliestAnswer.docs[0].data().timestamp.seconds;
-
-  //           if (curTime > 120) {
-  //             db.collection('games')
-  //               .doc(props.gameCode.toString())
-  //               .set({ isVotingRound: true }, { merge: true });
-  //           } else {
-  //             setTimeout(() => {
-  //               db.collection('games')
-  //                 .doc(props.gameCode.toString())
-  //                 .set({ isVotingRound: true }, { merge: true });
-  //             }, timeDif);
-  //           }
-  //         }
-  //       });
-  //   }, [props.roundNumber]);
 
   const castVoteHandler = (uid: string, name: string) => {
     console.log('castVoteHandler invoked with uid = ' + uid);
@@ -112,6 +63,7 @@ const VotingOnAnswersComponent: React.SFC<WaitingForPlayersProps> = (props) => {
         .collection('votes')
         .add({
           voterUid: props.user.uid,
+          voterName: props.user.name,
           votedForUid: uid,
           votedForName: name,
           roundNumber: props.roundNumber,
@@ -132,7 +84,7 @@ const VotingOnAnswersComponent: React.SFC<WaitingForPlayersProps> = (props) => {
 
   return (
     <ContainerStyles>
-      {!userHasVotedalready && <h1>ANSWERS!</h1>}
+      {!userHasVotedalready && <h1>Vote for your favourite answer!</h1>}
       <motion.div
         variants={fadeInFromLeft}
         initial="hidden"
@@ -146,7 +98,7 @@ const VotingOnAnswersComponent: React.SFC<WaitingForPlayersProps> = (props) => {
       >
         {roundAnswers &&
           !userHasVotedalready &&
-          roundAnswers.map((answer: any, index) => {
+          props.answers.map((answer: any, index: number) => {
             console.log(index);
             return (
               <motion.div
@@ -174,7 +126,22 @@ const VotingOnAnswersComponent: React.SFC<WaitingForPlayersProps> = (props) => {
               </motion.div>
             );
           })}
-        {userHasVotedalready && <span>Thank you for casting your vote!</span>}
+        {userHasVotedalready && (
+          <div>
+            <h2 style={{ marginBottom: 25 }}>
+              Thank you for casting your vote!
+            </h2>
+            <Lobby
+              players={createArrayOfPeopleWhoHaveVoted(
+                props.playersArray,
+                props.votesArray,
+                props.roundNumber
+              )}
+              showLoader={true}
+            />
+          </div>
+        )}
+
         <br />
         <GeneralBlueButtonStyles
           onClick={ProceedToResultsHandler}

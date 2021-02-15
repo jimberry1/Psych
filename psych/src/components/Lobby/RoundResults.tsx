@@ -4,6 +4,7 @@ import {
   ContainerStyles,
   GeneralBlueButtonStyles,
 } from '../../styles/GeneralStyles';
+import ResultsTableOrchestrator from '../ResultsTableOrchestrator';
 
 export interface RoundResultsProps {
   gameCode: string | number;
@@ -12,43 +13,10 @@ export interface RoundResultsProps {
   numberOfPlayers: number;
   isResultsRound: boolean;
   votesArray: any;
+  playersArray: any;
 }
 
 const RoundResults: React.SFC<RoundResultsProps> = (props) => {
-  //   const [votes, setVotes] = useState([]);
-
-  // Loads the votes for the round with a snapshot listener
-  //   useEffect(() => {
-  //     console.log('loading votes...');
-  //     const votesSnapshot = db
-  //       .collection('games')
-  //       .doc(props.gameCode.toString())
-  //       .collection('votes')
-  //       .where('roundNumber', '==', props.roundNumber)
-  //       .onSnapshot((snap: any) => {
-  //         setVotes(
-  //           snap.docs.map((vote: any) => ({ id: vote.id, data: vote.data() }))
-  //         );
-  //         if (
-  //           snap.docs.length > 0 &&
-  //           snap.docs.length === props.numberOfPlayers
-  //         ) {
-  //           console.log(
-  //             `Auto progressing to the results round as the system as determined that of the ${props.numberOfPlayers} players in the game, all have voted as there are ${snap.docs.length} votes`
-  //           );
-  //           db.collection('games')
-  //             .doc(props.gameCode.toString())
-  //             .set(
-  //               { isResultsRound: true, isVotingRound: false },
-  //               { merge: true }
-  //             );
-  //         }
-  //       });
-  //     return votesSnapshot;
-  //   }, [props]);
-
-  //Uses the votes from the snapshot to create a local results table.
-
   const nextRoundHandler = () => {
     db.collection('games')
       .doc(props.gameCode.toString())
@@ -62,12 +30,26 @@ const RoundResults: React.SFC<RoundResultsProps> = (props) => {
       );
   };
 
+  const playersWhoVotedForMe = props.votesArray
+    .filter((vote: any) => vote.data.roundNumber === props.roundNumber)
+    .filter((vote: any) => vote.data.votedForUid === props.user.uid)
+    .map((element: any) => {
+      return element.data.voterName;
+    });
+
   return (
     <ContainerStyles>
       {props.isResultsRound && (
-        <div>
+        <div style={{ width: '100%' }}>
           <h1>Results</h1>
-          <p>Total number of results {props.votesArray.length}</p>
+          <p>
+            Total number of results{' '}
+            {
+              props.votesArray.filter(
+                (vote: any) => vote.data.roundNumber === props.roundNumber
+              ).length
+            }
+          </p>
           <p>
             Total number of results for me:{' '}
             {
@@ -79,6 +61,16 @@ const RoundResults: React.SFC<RoundResultsProps> = (props) => {
                 .length
             }
           </p>
+          <p>People who voted for me: </p>
+          {playersWhoVotedForMe.map((playerName: any) => {
+            return <div key={playerName}>{playerName}</div>;
+          })}
+
+          <ResultsTableOrchestrator
+            votes={props.votesArray}
+            players={props.playersArray}
+            roundNumber={props.roundNumber}
+          />
           <GeneralBlueButtonStyles onClick={nextRoundHandler}>
             Proceed to round {props.roundNumber + 1}
           </GeneralBlueButtonStyles>
