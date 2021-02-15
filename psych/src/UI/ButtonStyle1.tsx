@@ -9,6 +9,8 @@ export const StartButton = styled.button`
   transition: 0.3s linear;
   outline: none;
   margin: auto;
+  padding: 10px;
+  min-width: 200px;
 
   font-family: Roboto;
   font-size: 2em;

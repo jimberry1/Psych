@@ -9,8 +9,10 @@ export const PageContainer = styled.div`
 export const TitleStyles = styled.h1`
   width: 100%;
   margin: auto;
+  margin-top: 25px;
   text-align: center;
-  padding: 30px;
+  display: flex;
+  justify-content: center;
 `;
 
 export const GameControlButton = styled.button`
@@ -28,17 +30,18 @@ export const ButtonContainer = styled.div`
   align-content: center;
   align-items: center;
   width: 50%;
+  min-width: 250px;
 `;
 export const GameCodeInput = styled(motion.div)`
   height: 200px;
   width: 100%;
   display: flex;
-  padding: 20px;
   justify-content: center;
   align-items: center;
-
+  gap: 15px;
   @media (max-width: 1000px) {
     flex-direction: column;
+    height: 500px;
   }
 `;
 
@@ -49,4 +52,28 @@ export const GameCodeInputColumn = styled.div`
   justify-content: center;
   flex: 1;
   height: 100%;
+  // border: 1px solid lightgray;
+`;
+
+export const GameInputSubSection = styled.div`
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+`;
+export const GameCodeInputBar = styled.input`
+  padding: 15px;
+  text-align: center;
+  font-size: 1.5em;
+  outline: none;
+  margin-bottom: 5px;
+`;
+
+export const StyledTextArea = styled.textarea`
+  padding: 15px;
+  text-align: center;
+  font-size: 1.5em;
+  outline: none;
+  margin-bottom: 5px;
+  font-family: 'Reggae One', cursive;
 `;
