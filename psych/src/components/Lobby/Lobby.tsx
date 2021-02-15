@@ -10,22 +10,6 @@ const LobbyListContainer = styled(motion.div)`
   align-items: center;
 `;
 
-const LobbyCardStyle = styled(motion.div)`
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-
-  height: 100px;
-  width: 75%;
-  color: white;
-  font-family: Roboto;
-  padding: 20px;
-  background-color: #222;
-  text-align: center;
-  margin: 5px auto;
-  border: 1px solid lightgray;
-`;
-
 const Lobby = (props: LobbyProps) => {
   return (
     <LobbyListContainer
@@ -35,7 +19,14 @@ const Lobby = (props: LobbyProps) => {
       animate="visible"
     >
       {props.players.map((player) => {
-        return <LobbyCard key={player.id} name={player.data.name} />;
+        return (
+          <LobbyCard
+            key={player.id}
+            name={player.data.name}
+            hasAnswered={player?.hasAnswered || false}
+            showLoader={props.showLoader || false}
+          />
+        );
       })}
     </LobbyListContainer>
   );
@@ -45,4 +36,5 @@ export default Lobby;
 
 export interface LobbyProps {
   players: any[];
+  showLoader?: boolean;
 }
