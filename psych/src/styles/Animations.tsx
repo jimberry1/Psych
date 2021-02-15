@@ -24,7 +24,7 @@ export const PageContainerVariants = {
       delay: 0.5,
     },
   },
-  exit: {
+  exitting: {
     x: '100vw',
     transition: {
       ease: 'easeInOut',

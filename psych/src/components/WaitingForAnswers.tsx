@@ -38,7 +38,10 @@ const WaitingForAnswers: React.SFC<WaitingForAnswersProps> = ({
           )}
           showLoader={true}
         />
-        <GeneralBlueButtonStyles onClick={ProceedToVotingHandler}>
+        <GeneralBlueButtonStyles
+          onClick={ProceedToVotingHandler}
+          style={{ marginTop: 15 }}
+        >
           Proceed to Voting round
         </GeneralBlueButtonStyles>
       </ContainerStyles>

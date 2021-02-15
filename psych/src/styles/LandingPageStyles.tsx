@@ -72,8 +72,9 @@ export const GameCodeInputBar = styled.input`
 export const StyledTextArea = styled.textarea`
   padding: 15px;
   text-align: center;
-  font-size: 1.5em;
+  font-size: 20px;
   outline: none;
   margin-bottom: 5px;
+  width: 80%;
   font-family: 'Reggae One', cursive;
 `;

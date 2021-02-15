@@ -46,7 +46,7 @@ const GameLobby = (props: any) => {
       variants={PageContainerVariants}
       initial="hidden"
       animate="visible"
-      exit="exit"
+      exit="exitting"
     >
       {gameStarted && <Redirect push to="/game" />}
       <motion.div

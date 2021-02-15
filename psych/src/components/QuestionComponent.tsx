@@ -6,6 +6,7 @@ import {
   GeneralBlueButtonStyles,
   ContainerStyles,
 } from '../styles/GeneralStyles';
+import { StyledTextArea } from '../styles/LandingPageStyles';
 export interface QuestionComponentProps {
   question: string;
   answer: string;
@@ -25,7 +26,7 @@ const QuestionComponent: React.SFC<QuestionComponentProps> = ({
     <motion.div>
       <ContainerStyles>
         <h1 style={{ marginBottom: 50 }}>{question}</h1>
-        <textarea
+        <StyledTextArea
           style={{
             marginBottom: 50,
             minWidth: 200,

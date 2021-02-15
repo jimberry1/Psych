@@ -11,6 +11,8 @@ import {
 import { StartButton } from '../UI/ButtonStyle1';
 import { useState } from 'react';
 import { AnimatePresence } from 'framer-motion';
+import { motion } from 'framer-motion';
+import { PageContainerVariants } from '../styles/Animations';
 import db from '../firebase';
 import { Redirect } from 'react-router';
 import {
@@ -111,59 +113,68 @@ const LandingPage = (props: any) => {
   const redirectHandler = () => {};
 
   return (
-    <PageContainer>
-      {redirectTo.length > 0 && <Redirect push to={redirectTo} />}
+    <motion.div
+      variants={PageContainerVariants}
+      initial="hidden"
+      animate="visible"
+      exit="exitting"
+    >
+      <PageContainer>
+        {redirectTo.length > 0 && <Redirect push to={redirectTo} />}
 
-      <TitleStyles>PSYCH</TitleStyles>
-      <ButtonContainer>
-        <StartButton onClick={() => setShowGameCodeInput((curVal) => !curVal)}>
-          Join Game
-        </StartButton>
-      </ButtonContainer>
-      <AnimatePresence>
-        {showGameCodeInput && (
-          <GameCodeInput
-            variants={{
-              hidden: { opacity: 0, y: -100 },
-              visible: { opacity: 1, y: 0 },
-            }}
-            initial="hidden"
-            animate="visible"
-            exit="hidden"
+        <TitleStyles>PSYCH</TitleStyles>
+        <ButtonContainer>
+          <StartButton
+            onClick={() => setShowGameCodeInput((curVal) => !curVal)}
           >
-            <GameCodeInputColumn>
-              <GameInputSubSection>
-                <h2>Join a new game</h2>
-              </GameInputSubSection>
+            Join Game
+          </StartButton>
+        </ButtonContainer>
+        <AnimatePresence>
+          {showGameCodeInput && (
+            <GameCodeInput
+              variants={{
+                hidden: { opacity: 0, y: -100 },
+                visible: { opacity: 1, y: 0 },
+              }}
+              initial="hidden"
+              animate="visible"
+              exit="hidden"
+            >
+              <GameCodeInputColumn>
+                <GameInputSubSection>
+                  <h2>Join a new game</h2>
+                </GameInputSubSection>
 
-              <GameInputSubSection>
-                <GameCodeInputBar
-                  value={props.gameCode}
-                  onChange={(e) => props.gameCodeChanged(e.target.value)}
-                  placeholder="Enter Game code here..."
-                />
-                <StartButton onClick={joinNewGameHandler}>Join</StartButton>
-              </GameInputSubSection>
-            </GameCodeInputColumn>
-            <GameCodeInputColumn>
-              <GameInputSubSection>
-                <h2>Reconnect to an existing game</h2>
-              </GameInputSubSection>
-              <GameInputSubSection>
-                {' '}
-                <StartButton onClick={ReconnectToGameHandler}>
-                  Reconnect
-                </StartButton>
-              </GameInputSubSection>
-            </GameCodeInputColumn>
-          </GameCodeInput>
-        )}
-      </AnimatePresence>
+                <GameInputSubSection>
+                  <GameCodeInputBar
+                    value={props.gameCode}
+                    onChange={(e) => props.gameCodeChanged(e.target.value)}
+                    placeholder="Enter Game code here..."
+                  />
+                  <StartButton onClick={joinNewGameHandler}>Join</StartButton>
+                </GameInputSubSection>
+              </GameCodeInputColumn>
+              <GameCodeInputColumn>
+                <GameInputSubSection>
+                  <h2>Reconnect to an existing game</h2>
+                </GameInputSubSection>
+                <GameInputSubSection>
+                  {' '}
+                  <StartButton onClick={ReconnectToGameHandler}>
+                    Reconnect
+                  </StartButton>
+                </GameInputSubSection>
+              </GameCodeInputColumn>
+            </GameCodeInput>
+          )}
+        </AnimatePresence>
 
-      <ButtonContainer>
-        <StartButton onClick={HostGameHandler}>Host Game</StartButton>
-      </ButtonContainer>
-    </PageContainer>
+        <ButtonContainer>
+          <StartButton onClick={HostGameHandler}>Host Game</StartButton>
+        </ButtonContainer>
+      </PageContainer>
+    </motion.div>
   );
 };
 

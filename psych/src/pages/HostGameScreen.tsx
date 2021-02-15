@@ -7,6 +7,7 @@ import { Redirect } from 'react-router';
 import { motion } from 'framer-motion';
 import { verticalFadeInVariants } from '../styles/Animations';
 import { StartButton } from '../UI/ButtonStyle1';
+import { PageContainerVariants } from '../styles/Animations';
 
 const ButtonContainer = styled(motion.div)`
   display: flex;
@@ -60,7 +61,12 @@ const HostGameScreen = (props: any) => {
       });
   };
   return (
-    <div>
+    <motion.div
+      variants={PageContainerVariants}
+      initial="hidden"
+      animate="visible"
+      exit="exit"
+    >
       {redirectTo.length > 0 && <Redirect push to={redirectTo} />}
       <HostGameContainer lobbyCode={props.gameCode} />
       {players[0] && <Lobby players={players} />}
@@ -72,7 +78,7 @@ const HostGameScreen = (props: any) => {
       >
         <StartButton onClick={startGameHandler}>Start!</StartButton>
       </ButtonContainer>
-    </div>
+    </motion.div>
   );
 };
 

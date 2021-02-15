@@ -11,6 +11,8 @@ import {
   SwitchControls,
 } from '../styles/loginStyles';
 import { resultingClientExists } from 'workbox-core/_private';
+import { motion } from 'framer-motion';
+import { PageContainerVariants } from '../styles/Animations';
 
 export interface LoginProps {
   changeGameCode: (newGameCode: string) => void;
@@ -126,68 +128,75 @@ const Login = ({ changeUser, changeGameCode }: LoginProps) => {
     }
   };
   return (
-    <LoginPageContainer>
-      <LoginContainer>
-        <LoginTitle>
-          {createAnAccount ? 'Create an account' : 'Login'}
-        </LoginTitle>
+    <motion.div
+      variants={PageContainerVariants}
+      initial="hidden"
+      animate="visible"
+      exit="exit"
+    >
+      <LoginPageContainer>
+        <LoginContainer>
+          <LoginTitle>
+            {createAnAccount ? 'Create an account' : 'Login'}
+          </LoginTitle>
 
-        {createAnAccount && (
+          {createAnAccount && (
+            <InfoGrouping>
+              <span>Enter your username</span>
+              <InputBar
+                value={displayName}
+                onChange={(e) => {
+                  setDisplayName(e.target.value);
+                }}
+              ></InputBar>
+            </InfoGrouping>
+          )}
           <InfoGrouping>
-            <span>Enter your username</span>
+            <span>Enter your Email</span>
             <InputBar
-              value={displayName}
+              value={email}
               onChange={(e) => {
-                setDisplayName(e.target.value);
+                setEmail(e.target.value);
               }}
             ></InputBar>
           </InfoGrouping>
-        )}
-        <InfoGrouping>
-          <span>Enter your Email</span>
-          <InputBar
-            value={email}
-            onChange={(e) => {
-              setEmail(e.target.value);
-            }}
-          ></InputBar>
-        </InfoGrouping>
-        <InfoGrouping>
-          <span>Enter your password</span>
-          <InputBar
-            type="password"
-            value={password}
-            onChange={(e) => {
-              setPassword(e.target.value);
-            }}
-          ></InputBar>
-        </InfoGrouping>
+          <InfoGrouping>
+            <span>Enter your password</span>
+            <InputBar
+              type="password"
+              value={password}
+              onChange={(e) => {
+                setPassword(e.target.value);
+              }}
+            ></InputBar>
+          </InfoGrouping>
 
-        <InfoGrouping>
-          <SubmitButton
-            onClick={(e) => signIn(e)}
-            // disabled={
-            //   !(
-            //     email.length > 0 &&
-            //     password.length > 6 &&
-            //     (createAnAccount ? displayName.length > 2 : true)
-            //   )
-            // }
-          >
-            Submit
-          </SubmitButton>
-        </InfoGrouping>
-        <InfoGrouping>
-          <SwitchControls
-            onClick={() => setCreateAnAccount((curVal) => !curVal)}
-          >
-            {createAnAccount
-              ? 'Switch to Sign in'
-              : 'Switch to account creation'}
-          </SwitchControls>
-        </InfoGrouping>
-      </LoginContainer>
-    </LoginPageContainer>
+          <InfoGrouping>
+            <SubmitButton
+              onClick={(e) => signIn(e)}
+              // disabled={
+              //   !(
+              //     email.length > 0 &&
+              //     password.length > 6 &&
+              //     (createAnAccount ? displayName.length > 2 : true)
+              //   )
+              // }
+            >
+              Submit
+            </SubmitButton>
+          </InfoGrouping>
+          <InfoGrouping>
+            <SwitchControls
+              onClick={() => setCreateAnAccount((curVal) => !curVal)}
+            >
+              {createAnAccount
+                ? 'Switch to Sign in'
+                : 'Switch to account creation'}
+            </SwitchControls>
+          </InfoGrouping>
+        </LoginContainer>
+      </LoginPageContainer>
+    </motion.div>
   );
 };
 

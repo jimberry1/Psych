@@ -186,7 +186,7 @@ const GamePage = (props: any) => {
       variants={PageContainerVariants}
       initial="hidden"
       animate="visible"
-      exit="exit"
+      exit="exitting"
     >
       {!hasAlreadyAnswered && !isResultsRound && !isVotingRound && (
         <QuestionComponent
