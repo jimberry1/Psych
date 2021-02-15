@@ -39,8 +39,55 @@ const GamePage = (props: any) => {
   }, []);
 
   // Establishes snapshot listener to the players subcollection
+  useEffect(() => {
+    const playersSnapshot = db
+      .collection('games')
+      .doc(props.gameCode.toString())
+      .collection('players')
+      .onSnapshot((playersSnap: any) => {
+        if (!playersSnap.empty) {
+          setPlayers(
+            playersSnap.docs.map((player: any) => ({
+              id: player.id,
+              data: player.data(),
+            }))
+          );
+        }
+      });
+    return playersSnapshot;
+  }, []);
 
   // Establishes snapshot listener to the answers subcollection
+  useEffect(() => {
+    const answersDbRef = db
+      .collection('games')
+      .doc(props.gameCode.toString())
+      .collection('answers')
+      // .where('roundNumber', '==', props.roundNumber) //removed this as we want all answers in the snapshot
+      .onSnapshot((snap: any) => {
+        setAnswers(
+          snap.docs.map((answer: any) => ({
+            id: answer.id,
+            data: answer.data(),
+          }))
+        );
+        // console.log(
+        //   `Number of answers (${snap.docs.length}) = total number of players (${props.numberOfPlayers}) so auto progressing to results round`
+        // );
+        // if (
+        //   snap.docs.length > 0 &&
+        //   snap.docs.length === props.numberOfPlayers
+        // ) {
+        //   console.log(
+        //     `Number of answers (${snap.docs.length}) = total number of players (${props.numberOfPlayers}) so auto progressing to results round`
+        //   );
+        //   db.collection('games')
+        //     .doc(props.gameCode.toString())
+        //     .set({ isVotingRound: false, isResultsRound: true });
+        // }
+      });
+    return answersDbRef;
+  }, []);
 
   //Establishes snapshot listener to the votes subcollection
   useEffect(() => {
@@ -72,23 +119,6 @@ const GamePage = (props: any) => {
         }
       });
     return votesSnapshot;
-  }, []);
-
-  // Gets all the players currently in the game -- This is used to condition when to end voting
-  useEffect(() => {
-    db.collection('games')
-      .doc(props.gameCode.toString())
-      .collection('players')
-      .onSnapshot((playersSnap: any) => {
-        if (!playersSnap.empty) {
-          setPlayers(
-            playersSnap.docs.map((player: any) => ({
-              id: player.id,
-              data: player.data(),
-            }))
-          );
-        }
-      });
   }, []);
 
   // Gets the question for the round using the information from the games collectiom
@@ -168,7 +198,12 @@ const GamePage = (props: any) => {
         />
       )}
       {hasAlreadyAnswered && !isResultsRound && !isVotingRound && (
-        <WaitingForAnswers ProceedToVotingHandler={ProceedToVotingHandler} />
+        <WaitingForAnswers
+          ProceedToVotingHandler={ProceedToVotingHandler}
+          answersArray={answers}
+          playersArray={players}
+          roundNumber={roundNumber}
+        />
       )}
       {hasAlreadyAnswered && isVotingRound && !isResultsRound && (
         <VotingOnAnswersComponent
@@ -177,18 +212,24 @@ const GamePage = (props: any) => {
           user={props.user}
           numberOfPlayers={players.length}
           isVotingRound={isVotingRound}
+          answers={answers.filter(
+            (answer: any) => answer.data.roundNumber === roundNumber //filtered to ensure only the current round questions are displayed
+          )}
+          playersArray={players}
+          votesArray={votes}
         />
       )}
-      {/* {isResultsRound && ( */}
-      <RoundResults
-        gameCode={props.gameCode}
-        user={props.user}
-        roundNumber={roundNumber}
-        numberOfPlayers={players.length}
-        isResultsRound={isResultsRound}
-        votesArray={votes}
-      />
-      {/* } */}
+      {isResultsRound && (
+        <RoundResults
+          gameCode={props.gameCode}
+          user={props.user}
+          roundNumber={roundNumber}
+          numberOfPlayers={players.length}
+          isResultsRound={isResultsRound}
+          votesArray={votes}
+          playersArray={players}
+        />
+      )}
     </motion.div>
   );
 };
