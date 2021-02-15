@@ -5,6 +5,8 @@ import {
   GameCodeInput,
   ButtonContainer,
   GameCodeInputColumn,
+  GameCodeInputBar,
+  GameInputSubSection,
 } from '../styles/LandingPageStyles';
 import { StartButton } from '../UI/ButtonStyle1';
 import { useState } from 'react';
@@ -112,7 +114,7 @@ const LandingPage = (props: any) => {
     <PageContainer>
       {redirectTo.length > 0 && <Redirect push to={redirectTo} />}
 
-      <TitleStyles>Welcome to my app!</TitleStyles>
+      <TitleStyles>PSYCH</TitleStyles>
       <ButtonContainer>
         <StartButton onClick={() => setShowGameCodeInput((curVal) => !curVal)}>
           Join Game
@@ -130,16 +132,29 @@ const LandingPage = (props: any) => {
             exit="hidden"
           >
             <GameCodeInputColumn>
-              <input
-                value={props.gameCode}
-                onChange={(e) => props.gameCodeChanged(e.target.value)}
-              />
-              <StartButton onClick={joinNewGameHandler}>Join</StartButton>
+              <GameInputSubSection>
+                <h2>Join a new game</h2>
+              </GameInputSubSection>
+
+              <GameInputSubSection>
+                <GameCodeInputBar
+                  value={props.gameCode}
+                  onChange={(e) => props.gameCodeChanged(e.target.value)}
+                  placeholder="Enter Game code here..."
+                />
+                <StartButton onClick={joinNewGameHandler}>Join</StartButton>
+              </GameInputSubSection>
             </GameCodeInputColumn>
             <GameCodeInputColumn>
-              <StartButton onClick={ReconnectToGameHandler}>
-                Reconnect To existing game
-              </StartButton>
+              <GameInputSubSection>
+                <h2>Reconnect to an existing game</h2>
+              </GameInputSubSection>
+              <GameInputSubSection>
+                {' '}
+                <StartButton onClick={ReconnectToGameHandler}>
+                  Reconnect
+                </StartButton>
+              </GameInputSubSection>
             </GameCodeInputColumn>
           </GameCodeInput>
         )}

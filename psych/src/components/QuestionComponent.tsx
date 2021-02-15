@@ -25,7 +25,7 @@ const QuestionComponent: React.SFC<QuestionComponentProps> = ({
     <motion.div>
       <ContainerStyles>
         <h1 style={{ marginBottom: 50 }}>{question}</h1>
-        <input
+        <textarea
           style={{
             marginBottom: 50,
             minWidth: 200,
@@ -36,7 +36,11 @@ const QuestionComponent: React.SFC<QuestionComponentProps> = ({
             outline: 'none',
           }}
           value={answer}
-          onChange={(e) => answerChangedHandler(e.target.value)}
+          onChange={(e) => {
+            if (e.target.value.length < 250) {
+              answerChangedHandler(e.target.value);
+            }
+          }}
         />
         <GeneralBlueButtonStyles onClick={submitAnswerHandler}>
           Submit
