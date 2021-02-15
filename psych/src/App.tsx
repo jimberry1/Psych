@@ -10,6 +10,7 @@ import HostGameScreen from './pages/HostGameScreen';
 import GamePage from './pages/GamePage';
 import { AnimatePresence } from 'framer-motion';
 import TestPage from './pages/TestPage';
+import AddQuestionsPage from './pages/AddQuestionsPage';
 
 function App() {
   const [user, setUser] = useState(null);
@@ -27,7 +28,11 @@ function App() {
       <AnimatePresence exitBeforeEnter>
         <Switch>
           <Route path="/lobby">
-            <GameLobby gameCode={gameCode} user={user} />
+            <GameLobby
+              gameCode={gameCode}
+              user={user}
+              style={{ height: '100vh', width: '100vw' }}
+            />
           </Route>
           <Route
             exact
@@ -57,6 +62,9 @@ function App() {
           </Route>
           <Route exact path="/game">
             <GamePage gameCode={gameCode} user={user} />
+          </Route>
+          <Route exact path="/submitQuestion">
+            <AddQuestionsPage user={user} />
           </Route>
         </Switch>
       </AnimatePresence>
