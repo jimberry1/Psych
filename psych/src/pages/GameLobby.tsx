@@ -72,7 +72,7 @@ const GameLobby = (props: any) => {
             marginTop: 50,
           }}
         >
-          <span style={{ marginBottom: 10 }}>Waiting for players to join</span>
+          <span style={{ marginBottom: 20 }}>Waiting for players to join</span>
           <ThreeDotLoader />
         </div>
       </motion.div>

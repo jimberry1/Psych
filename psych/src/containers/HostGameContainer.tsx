@@ -10,7 +10,7 @@ const GameCodeContainer = styled(motion.div)`
   font-size: 2em;
   margin: auto;
   text-align: center;
-  padding: 50px;
+  padding: 30px;
   display: flex;
   flex-direction: column;
   justify-content: space-around;

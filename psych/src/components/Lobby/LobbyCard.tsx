@@ -53,7 +53,7 @@ const LobbyCard = (props: LobbyCardProps) => {
                 height: 50,
                 width: 50,
                 borderRadius: '50%',
-                padding: 15,
+                padding: '15px',
                 color: 'cyan',
               }}
             />

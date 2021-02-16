@@ -122,7 +122,7 @@ const LandingPage = (props: any) => {
       <PageContainer>
         {redirectTo.length > 0 && <Redirect push to={redirectTo} />}
 
-        <TitleStyles>PSYCH</TitleStyles>
+        {/* <TitleStyles>PSYCH</TitleStyles> */}
         <ButtonContainer>
           <StartButton
             onClick={() => setShowGameCodeInput((curVal) => !curVal)}

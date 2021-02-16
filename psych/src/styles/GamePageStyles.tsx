@@ -6,6 +6,7 @@ export const QuestionAnswer = styled.div`
   color: white;
   font-family: 'Reggae One', cursive;
   text-align: center;
+  word-wrap: break-word;
   transition: 0.3s;
   &:hover {
   }

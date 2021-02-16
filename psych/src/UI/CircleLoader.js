@@ -7,7 +7,7 @@ const CircleLoader = () => {
       color="#00BFFF"
       height={50}
       width={50}
-      style={{ padding: 5 }}
+      style={{ padding: '5px' }}
     />
   );
 };

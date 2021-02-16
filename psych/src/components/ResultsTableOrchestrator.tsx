@@ -23,7 +23,7 @@ const DataRowContainer = styled.div`
   align-items: center;
 
   @media (max-width: 600px) {
-    width: 99%;
+    width: 90%;
     font-size: 1em;
     padding: 10px;
   }

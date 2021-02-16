@@ -28,7 +28,7 @@ const WaitingForAnswers: React.SFC<WaitingForAnswersProps> = ({
       animate="visible"
     >
       <ContainerStyles>
-        <h2 style={{ marginBottom: 50 }}>Waiting for all players to answer</h2>
+        {/* <h2 style={{ marginBottom: 50 }}>Waiting for all players to answer</h2> */}
 
         <Lobby
           players={createArrayOfPeopleWhoHaveAnswered(

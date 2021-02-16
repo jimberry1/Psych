@@ -1,25 +1,39 @@
 import { useState, useEffect } from 'react';
 import { motion, AnimatePresence, AnimateSharedLayout } from 'framer-motion';
+import styled from 'styled-components';
+import { SideDrawer } from '../styles/TestStyles';
+import SideDraw from '../UI/Navbar/Sidedraw';
+import HamburgerMenu from 'react-hamburger-menu';
+// export interface TestPageProps {}
 
-export interface TestPageProps {}
-
-const TestPage: React.SFC<TestPageProps> = () => {
+const TestPage = () => {
+  const [toggled, setToggled] = useState(false);
   const colors = ['#ff0055', '#0099ff', '#22cc88', '#ffaa00'];
   const [selected, setSelected] = useState('#ff0055');
 
   return (
-    <AnimateSharedLayout>
-      {/* <ul>
-        {colors.map((color) => (
-          <TestItem
-            key={color}
-            color={color}
-            isSelected={selected === color}
-            onClick={() => setSelected(color)}
-          />
-        ))}
-      </ul> */}
-    </AnimateSharedLayout>
+    <div>
+      Hello!
+      <div>
+        {/* <HamburgerMenu
+          isOpen={toggled}
+          menuClicked={() => {
+            setToggled((curVal) => !curVal);
+          }}
+          color="white"
+          strokeWidth={3}
+        /> */}
+      </div>
+      {/* <SideDraw
+        toggled={toggled}
+        setToggled={() => setToggled((curVal) => !curVal)}
+      /> */}
+      <div>
+        <button onClick={() => setToggled((curVal) => !curVal)}>
+          Toggle sidedraw
+        </button>
+      </div>
+    </div>
   );
 };
 
