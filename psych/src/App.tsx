@@ -11,6 +11,8 @@ import GamePage from './pages/GamePage';
 import { AnimatePresence } from 'framer-motion';
 import TestPage from './pages/TestPage';
 import AddQuestionsPage from './pages/AddQuestionsPage';
+import Header from './UI/Navbar/Header';
+import { relative } from 'path';
 
 function App() {
   const [user, setUser] = useState(null);
@@ -57,7 +59,7 @@ function App() {
               />
             )}
           />
-          <Route exact path="/hostgame">
+          <Route exact path="/test">
             <TestPage />
           </Route>
           <Route exact path="/game">
@@ -70,7 +72,14 @@ function App() {
       </AnimatePresence>
     );
   }
-  return <div>{AppPage}</div>;
+  return (
+    <div>
+      <div style={{ position: 'relative', zIndex: 1 }}>
+        <Header logout={() => setUser(null)} />
+      </div>
+      <div style={{ position: 'relative' }}>{AppPage}</div>
+    </div>
+  );
 }
 
 export default App;
