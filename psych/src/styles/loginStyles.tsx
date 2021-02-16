@@ -50,6 +50,7 @@ padding: 10px;
 border: 1px solid black;
 outline: none;
 placeholder: ${(props) => props.placeholder};
+font-size: 16px;
 
 @media (min-width: 1000px) {
     width: 40%;

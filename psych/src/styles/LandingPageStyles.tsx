@@ -64,7 +64,7 @@ export const GameInputSubSection = styled.div`
 export const GameCodeInputBar = styled.input`
   padding: 15px;
   text-align: center;
-  font-size: 1.5em;
+  font-size: 22px;
   outline: none;
   margin-bottom: 5px;
 `;

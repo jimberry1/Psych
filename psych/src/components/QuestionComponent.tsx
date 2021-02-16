@@ -25,7 +25,7 @@ const QuestionComponent: React.SFC<QuestionComponentProps> = ({
   return (
     <motion.div>
       <ContainerStyles>
-        <h1 style={{ marginBottom: 50 }}>{question}</h1>
+        <h1 style={{ marginBottom: 50, padding: 20 }}>{question}</h1>
         <StyledTextArea
           style={{
             marginBottom: 50,

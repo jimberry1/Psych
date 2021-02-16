@@ -31,10 +31,12 @@ transition: 0.2s;
 export const ContainerStyles = styled.div`
   display: flex;
   flex-direction: column;
-  justify-content: center;
+  justify-content: flex-top;
+  margin-top: 30px;
   align-items: center;
   text-align: center;
-  padding: 20px;
   overflow-x: none;
   gap: 20px;
+  height: 100vh;
+  overflow: none;
 `;
