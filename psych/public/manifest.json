@@ -1,14 +1,14 @@
 {
-  "short_name": "React App",
-  "name": "Create React App Sample",
+  "short_name": "Jim's Psych",
+  "name": "Jim's Psych",
   "icons": [
     {
-      "src": "favicon.ico",
+      "src": "questionMarkIcon192.png",
       "sizes": "64x64 32x32 24x24 16x16",
       "type": "image/x-icon"
     },
     {
-      "src": "logo192.png",
+      "src": "questionMarkIcon192.png",
       "type": "image/png",
       "sizes": "192x192"
     },
