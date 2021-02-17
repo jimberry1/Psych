@@ -66,6 +66,7 @@ const GameLobby = (props: any) => {
             width: '100%',
             display: 'flex',
             justifyContent: 'center',
+
             flexDirection: 'column',
             alignContent: 'center',
             alignItems: 'center',

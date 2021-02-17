@@ -2,10 +2,12 @@ import styled from 'styled-components';
 import { useState } from 'react';
 import TestPage from '../../pages/TestPage';
 import { Redirect } from 'react-router';
-import { motion } from 'framer-motion';
+import { motion, useAnimation } from 'framer-motion';
+
 export interface MenuProps {
   logout: any;
   setToggle: any;
+  toggled: boolean;
 }
 
 const MenuContainer = styled.div`
@@ -29,14 +31,39 @@ const MenuItem = styled(motion.span)`
   text-align: center;
   font-family: 'Titan One', cursive;
   cursor: pointer;
-
+  margin-bottom: 10px;
   @media (max-width: 1000px) {
     font-size: 20px;
   }
 `;
 
-const Menu: React.SFC<MenuProps> = ({ logout, setToggle }) => {
+const MenuItemVariants = {
+  hover: {
+    color: '#D309E1',
+    scale: 1.2,
+  },
+  hidden: {
+    y: 100,
+    opacity: 0,
+  },
+  visible: { y: 0, opacity: 1, transition: { delay: 0.5 } },
+};
+
+type player = { linkName: string; linkTo: string; color: string };
+
+const Menu: React.SFC<MenuProps> = ({ logout, setToggle, toggled }) => {
   const colors = ['#FF008C', '#D309E1', '#9C1AFF', '#7700FF', '#4400FF'];
+  const linkArray: player[] = [
+    { linkName: 'Home', linkTo: '/', color: '#FF008C' },
+    { linkName: 'Account', linkTo: '/', color: '#D309E1' },
+    {
+      linkName: 'Submit Questions',
+      linkTo: '/submitQuestion',
+      color: '#9C1AFF',
+    },
+    { linkName: 'Privacy Policy', linkTo: '/', color: '#7700FF' },
+  ];
+  const animationControl = useAnimation();
   const [redirectTo, setRedirectTo] = useState('');
 
   const logoutHandler = () => {
@@ -45,6 +72,13 @@ const Menu: React.SFC<MenuProps> = ({ logout, setToggle }) => {
     logout();
   };
 
+  if (toggled) {
+    animationControl.start('visible');
+    console.log('Anomiation control called');
+  } else {
+    animationControl.start('hidden');
+  }
+
   const RedirectHandler = (redirectToLocation: string) => {
     setRedirectTo(redirectToLocation);
     setToggle();
@@ -52,61 +86,36 @@ const Menu: React.SFC<MenuProps> = ({ logout, setToggle }) => {
   return (
     <MenuContainer>
       {redirectTo && <Redirect push to={redirectTo} />}
-      <MenuItem
-        onClick={() =>
-          //   setToggle();
-          RedirectHandler('/')
-        }
-        variants={{
-          hover: {
-            color: '#FF008C',
-            scale: 1.2,
-          },
-        }}
-        whileHover="hover"
-        whileTap="hover"
-      >
-        Home
-      </MenuItem>
-      <MenuItem
-        onClick={() => RedirectHandler('/')}
-        variants={{
-          hover: {
-            color: '#D309E1',
-            scale: 1.2,
-          },
-        }}
-        whileHover="hover"
-        whileTap="hover"
-      >
-        Account
-      </MenuItem>
-      <MenuItem
-        onClick={() => RedirectHandler('/submitQuestion')}
-        variants={{
-          hover: {
-            color: '#9C1AFF',
-            scale: 1.2,
-          },
-        }}
-        whileTap="hover"
-        whileHover="hover"
-      >
-        Submit Questions
-      </MenuItem>
-      <MenuItem
-        onClick={() => RedirectHandler('/')}
-        variants={{
-          hover: {
-            color: '#7700FF',
-            scale: 1.2,
-          },
-        }}
-        whileHover="hover"
-        whileTap="hover"
-      >
-        Privacy Policy
-      </MenuItem>
+      {linkArray.map((linkObj, index: number) => {
+        return (
+          <MenuItem
+            key={linkObj.color}
+            onClick={() => RedirectHandler(linkObj.linkTo)}
+            variants={{
+              hover: {
+                color: '#D309E1',
+                scale: 1.2,
+              },
+              hidden: {
+                y: 100,
+                opacity: 0,
+                color: '#D309E1',
+              },
+              visible: {
+                y: 0,
+                opacity: 1,
+                transition: { delay: 0.4 + 0.1 * index },
+                color: '#FFFFFF',
+              },
+            }}
+            animate={animationControl}
+            whileHover="hover"
+            whileTap="hover"
+          >
+            {linkObj.linkName}
+          </MenuItem>
+        );
+      })}
       <MenuItem
         onClick={logoutHandler}
         variants={{
@@ -114,9 +123,15 @@ const Menu: React.SFC<MenuProps> = ({ logout, setToggle }) => {
             color: '#4400FF',
             scale: 1.2,
           },
+          hidden: {
+            y: 100,
+            opacity: 0,
+          },
+          visible: { y: 0, opacity: 1, transition: { delay: 0.8 } },
         }}
         whileHover="hover"
         whileTap="hover"
+        animate={animationControl}
       >
         Logout
       </MenuItem>

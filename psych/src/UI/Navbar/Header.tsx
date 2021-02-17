@@ -46,7 +46,7 @@ const Header: React.SFC<HeaderProps> = ({ logout }) => {
 
   return (
     <div>
-      <div style={{ zIndex: 1 }}>
+      <div style={{ zIndex: -1 }}>
         <Sidedraw
           toggled={toggled}
           setToggled={() => setToggled((curVal) => !curVal)}
@@ -56,7 +56,6 @@ const Header: React.SFC<HeaderProps> = ({ logout }) => {
       <div style={{ zIndex: 0.9 }}>
         <HeaderContainer>
           <TitleContainer onClick={ClickedHandler}>
-            {' '}
             {titleArray.map((letter, index) => {
               return (
                 <motion.div
@@ -66,7 +65,6 @@ const Header: React.SFC<HeaderProps> = ({ logout }) => {
                       scale: [1, 1.5, 1],
                       color: ['#FFFFFF', colors[index], '#FFFFFF'],
                       transition: { delay: 0.2 * index },
-                      //   skew: [10, -10, 10, 0],
                       y: [0, -3, 0],
                     },
                   }}

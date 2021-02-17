@@ -14,7 +14,6 @@ const ButtonPop = keyframes`
 `;
 
 export const LoginContainer = styled.div`
-  height: 80%;
   width: 60%;
   background-color: rgba(0, 0, 0, 0.6);
   margin: auto;
@@ -28,13 +27,13 @@ export const LoginContainer = styled.div`
 
   @media (max-width: 1000px) {
     transform: translateY(40px);
-    height: 82%;
   }
 `;
 
 export const LoginPageContainer = styled.div`
   height: 100vh;
   width: 100vw;
+  // background: url(https://images.unsplash.com/photo-1557672172-298e090bd0f1?ixlib=rb-1.2.1&ixid=MXwxMjA3fDB8MHxzZWFyY2h8NjR8fHdhbGxwYXBlcnxlbnwwfHwwfA%3D%3D&auto=format&fit=crop&w=800&q=60)
   background: url(https://images.unsplash.com/photo-1455577380025-4321f1e1dca7?ixid=MXwxMjA3fDB8MHxzZWFyY2h8Mnx8cml2ZXJ8ZW58MHx8MHw%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=60)
     no-repeat center center fixed;
   width: 100%;
@@ -68,6 +67,10 @@ export const InfoGrouping = styled.div`
   justify-content: center;
   padding: 20px;
   width: 100%;
+
+  @media (max-width: 1000px) {
+    padding: 10px;
+  }
 `;
 
 export const SubmitButton = styled.button`

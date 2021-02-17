@@ -27,6 +27,18 @@ const HamburgerContainer = styled.div`
   }
 `;
 
+const Backdrop = styled.div`
+  height: 100vh;
+  width: 100vw;
+  position: absolute;
+  left: 0;
+  top: 0;
+  background: gray;
+  left: ${({ toggled }) => (toggled ? '0' : '-200vw')};
+  content: '';
+  opacity: 0.5;
+`;
+
 const Sidedraw = ({ toggled, setToggled, logout }) => {
   const animationControl = useAnimation();
 
@@ -47,6 +59,7 @@ const Sidedraw = ({ toggled, setToggled, logout }) => {
           strokeWidth={3}
         />
       </HamburgerContainer>
+      <Backdrop toggled={toggled} onClick={setToggled} />
 
       <motion.div
         variants={{
@@ -61,7 +74,7 @@ const Sidedraw = ({ toggled, setToggled, logout }) => {
         animate={animationControl}
       >
         <SideDrawer>
-          <Menu logout={logout} setToggle={setToggled} />
+          <Menu logout={logout} setToggle={setToggled} toggled={toggled} />
         </SideDrawer>
       </motion.div>
     </div>
