@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { motion } from 'framer-motion';
+import { AnimatePresence, motion } from 'framer-motion';
 import { PageContainerVariants } from '../styles/Animations';
 import db from '../firebase';
 import firebase from 'firebase';
@@ -21,6 +21,7 @@ const GamePage = (props: any) => {
   const [hasAlreadyAnswered, setHasAlreadyAnswered] = useState(true);
   const [isResultsRound, setIsResultsRound] = useState(false);
   const [answer, setAnswer] = useState('');
+  const [isHost, setIsHost] = useState(false);
 
   // Establishes a snapshot listner on the main games lobby
   useEffect(() => {
@@ -33,9 +34,15 @@ const GamePage = (props: any) => {
 
         setRoundNumber(fetchedQuestionSnapshot.data().roundNumber);
         setQuestionIndex(fetchedQuestionSnapshot.data().questionIndex);
+        console.log(fetchedQuestionSnapshot.data().questionIndex);
         setIsVotingRound(fetchedQuestionSnapshot.data().isVotingRound);
         setIsResultsRound(fetchedQuestionSnapshot.data().isResultsRound);
         setRandomNameArray(fetchedQuestionSnapshot.data().randomNameArray);
+        setIsHost(
+          fetchedQuestionSnapshot.data().hostUid === props.user.uid
+            ? true
+            : false
+        );
       });
     return snapshot;
   }, []);
@@ -125,7 +132,12 @@ const GamePage = (props: any) => {
 
   // Gets the question for the round using the information from the games collectiom
   useEffect(() => {
+    console.log(roundNumber);
+    console.log(questionIndex);
     console.log(questionIndex[roundNumber]);
+    if (!questionIndex) {
+      return;
+    }
     if (questionIndex.length > 0 && roundNumber > 0) {
       db.collection('questions')
         .where('index', '==', questionIndex[roundNumber])
@@ -180,64 +192,80 @@ const GamePage = (props: any) => {
   const ProceedToVotingHandler = () => {
     db.collection('games')
       .doc(props.gameCode.toString())
-      .set({ isVotingRound: true }, { merge: true });
+      .set({ isVotingRound: true, isResultsRound: false }, { merge: true });
   };
 
   return (
-    <motion.div
-      variants={PageContainerVariants}
-      initial="hidden"
-      animate="visible"
-      exit="exitting"
-    >
-      {!hasAlreadyAnswered && !isResultsRound && !isVotingRound && (
-        <QuestionComponent
-          question={question.replace(
-            'XXX',
-            randomNameArray.length >= roundNumber
-              ? randomNameArray[roundNumber]
-              : 'ERROR - NO NAME FOUND'
+    <AnimatePresence exitBeforeEnter>
+      <motion.div
+        variants={PageContainerVariants}
+        initial="hidden"
+        animate="visible"
+        exit="exitting"
+      >
+        {!hasAlreadyAnswered && !isResultsRound && !isVotingRound && (
+          <QuestionComponent
+            question={question
+              .replace(
+                'XXX',
+                randomNameArray.length >= roundNumber
+                  ? randomNameArray[roundNumber]
+                  : 'ERROR - NO NAME FOUND'
+              )
+              .replace(
+                'xxx',
+                randomNameArray.length >= roundNumber
+                  ? randomNameArray[roundNumber]
+                  : 'ERROR - NO NAME FOUND'
+              )}
+            answer={answer}
+            answerChangedHandler={(newAnswer) => setAnswer(newAnswer)}
+            submitAnswerHandler={() => submitAnswerHandler()}
+            gameCode={props.gameCode}
+          />
+        )}
+        {hasAlreadyAnswered && !isResultsRound && !isVotingRound && (
+          <WaitingForAnswers
+            ProceedToVotingHandler={ProceedToVotingHandler}
+            answersArray={answers}
+            playersArray={players}
+            roundNumber={roundNumber}
+            isHost={isHost}
+          />
+        )}
+        {hasAlreadyAnswered &&
+          isVotingRound &&
+          !isResultsRound &&
+          gameInfo &&
+          roundNumber > 0 && (
+            <VotingOnAnswersComponent
+              roundNumber={roundNumber}
+              gameCode={props.gameCode}
+              user={props.user}
+              numberOfPlayers={players.length}
+              isVotingRound={isVotingRound}
+              answers={answers.filter(
+                (answer: any) => answer.data.roundNumber === roundNumber //filtered to ensure only the current round questions are displayed
+              )}
+              playersArray={players}
+              votesArray={votes}
+              isHost={isHost}
+            />
           )}
-          answer={answer}
-          answerChangedHandler={(newAnswer) => setAnswer(newAnswer)}
-          submitAnswerHandler={() => submitAnswerHandler()}
-          gameCode={props.gameCode}
-        />
-      )}
-      {hasAlreadyAnswered && !isResultsRound && !isVotingRound && (
-        <WaitingForAnswers
-          ProceedToVotingHandler={ProceedToVotingHandler}
-          answersArray={answers}
-          playersArray={players}
-          roundNumber={roundNumber}
-        />
-      )}
-      {hasAlreadyAnswered && isVotingRound && !isResultsRound && (
-        <VotingOnAnswersComponent
-          roundNumber={roundNumber}
-          gameCode={props.gameCode}
-          user={props.user}
-          numberOfPlayers={players.length}
-          isVotingRound={isVotingRound}
-          answers={answers.filter(
-            (answer: any) => answer.data.roundNumber === roundNumber //filtered to ensure only the current round questions are displayed
-          )}
-          playersArray={players}
-          votesArray={votes}
-        />
-      )}
-      {isResultsRound && (
-        <RoundResults
-          gameCode={props.gameCode}
-          user={props.user}
-          roundNumber={roundNumber}
-          numberOfPlayers={players.length}
-          isResultsRound={isResultsRound}
-          votesArray={votes}
-          playersArray={players}
-        />
-      )}
-    </motion.div>
+        {isResultsRound && (
+          <RoundResults
+            gameCode={props.gameCode}
+            user={props.user}
+            roundNumber={roundNumber}
+            numberOfPlayers={players.length}
+            isResultsRound={isResultsRound}
+            votesArray={votes}
+            playersArray={players}
+            isHost={isHost}
+          />
+        )}
+      </motion.div>
+    </AnimatePresence>
   );
 };
 

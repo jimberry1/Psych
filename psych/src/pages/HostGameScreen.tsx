@@ -85,6 +85,7 @@ const HostGameScreen = (props: any) => {
           gameStarted: true,
           questionIndex: questionsIndex,
           randomNameArray: randomlyPickedPlayersForQuestions,
+          hostUid: props.user.uid,
         },
         { merge: true }
       )

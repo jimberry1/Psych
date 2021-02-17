@@ -10,9 +10,10 @@ import { useEffect } from 'react';
 import { createArrayOfPeopleWhoHaveAnswered } from '../utilities/utilityFunctions';
 export interface WaitingForAnswersProps {
   ProceedToVotingHandler: () => void;
-  answersArray: any;
-  playersArray: any;
+  answersArray: any[];
+  playersArray: any[];
   roundNumber: number;
+  isHost: boolean;
 }
 
 const WaitingForAnswers: React.SFC<WaitingForAnswersProps> = ({
@@ -20,6 +21,7 @@ const WaitingForAnswers: React.SFC<WaitingForAnswersProps> = ({
   answersArray,
   playersArray,
   roundNumber,
+  isHost,
 }) => {
   return (
     <motion.div
@@ -38,12 +40,14 @@ const WaitingForAnswers: React.SFC<WaitingForAnswersProps> = ({
           )}
           showLoader={true}
         />
-        <GeneralBlueButtonStyles
-          onClick={ProceedToVotingHandler}
-          style={{ marginTop: 15 }}
-        >
-          Proceed to Voting round
-        </GeneralBlueButtonStyles>
+        {isHost && (
+          <GeneralBlueButtonStyles
+            onClick={ProceedToVotingHandler}
+            style={{ marginTop: 15 }}
+          >
+            Proceed to Voting round
+          </GeneralBlueButtonStyles>
+        )}
       </ContainerStyles>
     </motion.div>
   );

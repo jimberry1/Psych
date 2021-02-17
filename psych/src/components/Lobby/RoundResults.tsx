@@ -14,6 +14,7 @@ export interface RoundResultsProps {
   isResultsRound: boolean;
   votesArray: any;
   playersArray: any;
+  isHost: boolean;
 }
 
 const RoundResults: React.SFC<RoundResultsProps> = (props) => {
@@ -71,9 +72,11 @@ const RoundResults: React.SFC<RoundResultsProps> = (props) => {
             players={props.playersArray}
             roundNumber={props.roundNumber}
           />
-          <GeneralBlueButtonStyles onClick={nextRoundHandler}>
-            Proceed to round {props.roundNumber + 1}
-          </GeneralBlueButtonStyles>
+          {props.isHost && (
+            <GeneralBlueButtonStyles onClick={nextRoundHandler}>
+              Proceed to round {props.roundNumber + 1}
+            </GeneralBlueButtonStyles>
+          )}
         </div>
       )}
     </ContainerStyles>

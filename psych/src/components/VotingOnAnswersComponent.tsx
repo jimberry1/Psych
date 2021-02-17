@@ -17,8 +17,9 @@ export interface WaitingForPlayersProps {
   user: any;
   numberOfPlayers: number;
   isVotingRound: boolean;
-  playersArray: any;
-  votesArray: any;
+  playersArray: any[];
+  votesArray: any[];
+  isHost: boolean;
 }
 
 const VotingOnAnswersComponent: React.SFC<WaitingForPlayersProps> = (props) => {
@@ -28,21 +29,29 @@ const VotingOnAnswersComponent: React.SFC<WaitingForPlayersProps> = (props) => {
 
   // Checks to see if we have voted already
   useEffect(() => {
-    console.log('checking whether the user has voted already');
-    db.collection('games')
-      .doc(props.gameCode.toString())
-      .collection('votes')
-      .where('roundNumber', '==', props.roundNumber)
-      .where('voterUid', '==', props.user.uid)
-      .get()
-      .then((usersVotes) => {
-        if (!usersVotes.empty) {
-          console.log('user has voted already');
-          setUserHasVotedAlready(true);
-        }
-      });
+    if (
+      props.votesArray
+        .filter((vote: any) => vote.data.roundNumber === props.roundNumber)
+        .filter((vote: any) => vote.data.voterUid === props.user.uid).length > 0
+    ) {
+      setUserHasVotedAlready(true);
+    }
 
-    console.log(props.answers);
+    // console.log('checking whether the user has voted already');
+    // db.collection('games')
+    //   .doc(props.gameCode.toString())
+    //   .collection('votes')
+    //   .where('roundNumber', '==', props.roundNumber)
+    //   .where('voterUid', '==', props.user.uid)
+    //   .get()
+    //   .then((usersVotes) => {
+    //     if (!usersVotes.empty) {
+    //       console.log('user has voted already');
+    //       setUserHasVotedAlready(true);
+    //     }
+    //   });
+
+    // console.log(props.answers);
     if (
       props.answers
         .filter((vote: any) => vote.data.roundNumber === props.roundNumber)
@@ -143,12 +152,14 @@ const VotingOnAnswersComponent: React.SFC<WaitingForPlayersProps> = (props) => {
         )}
 
         <br />
-        <GeneralBlueButtonStyles
-          onClick={ProceedToResultsHandler}
-          style={{ marginTop: 50 }}
-        >
-          Proceed to results
-        </GeneralBlueButtonStyles>
+        {props.isHost && (
+          <GeneralBlueButtonStyles
+            onClick={ProceedToResultsHandler}
+            style={{ marginTop: 50 }}
+          >
+            Proceed to results
+          </GeneralBlueButtonStyles>
+        )}
       </motion.div>
     </ContainerStyles>
   );
