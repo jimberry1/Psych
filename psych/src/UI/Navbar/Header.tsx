@@ -1,7 +1,7 @@
 import styled from 'styled-components';
 import Sidedraw from './Sidedraw';
 import { useState } from 'react';
-import { motion } from 'framer-motion';
+import { motion, useAnimation } from 'framer-motion';
 export interface HeaderProps {
   logout: any;
 }
@@ -38,6 +38,12 @@ const Header: React.SFC<HeaderProps> = ({ logout }) => {
   const titleArray = ['P', 'S', 'Y', 'C', 'H'];
   const colors = ['#FF008C', '#D309E1', '#9C1AFF', '#7700FF', '#4400FF'];
 
+  const animationControl = useAnimation();
+
+  const ClickedHandler = () => {
+    animationControl.start('clicked');
+  };
+
   return (
     <div>
       <div style={{ zIndex: 1 }}>
@@ -49,14 +55,24 @@ const Header: React.SFC<HeaderProps> = ({ logout }) => {
       </div>
       <div style={{ zIndex: 0.9 }}>
         <HeaderContainer>
-          <TitleContainer>
+          <TitleContainer onClick={ClickedHandler}>
             {' '}
             {titleArray.map((letter, index) => {
               return (
                 <motion.div
-                  variants={{ hover: { scale: 1.15, color: colors[index] } }}
-                  whileHover="hover"
-                  whileTap="hover"
+                  variants={{
+                    hover: { scale: 1.15, color: colors[index] },
+                    clicked: {
+                      scale: [1, 1.5, 1],
+                      color: ['#FFFFFF', colors[index], '#FFFFFF'],
+                      transition: { delay: 0.2 * index },
+                      //   skew: [10, -10, 10, 0],
+                      y: [0, -3, 0],
+                    },
+                  }}
+                  //   whileHover="hover"
+                  //   whileTap="hover"
+                  animate={animationControl}
                   key={`${letter}-${index}`}
                 >
                   <TitleLetter>{letter}</TitleLetter>

@@ -48,17 +48,13 @@ function App() {
               />
             )}
           />
-          <Route
-            exact
-            path="/hostgame"
-            render={() => (
-              <HostGameScreen
-                gameCode={gameCode}
-                user={user}
-                setGameCode={setGameCode}
-              />
-            )}
-          />
+          <Route exact path="/hostgame">
+            <HostGameScreen
+              gameCode={gameCode}
+              user={user}
+              setGameCode={setGameCode}
+            />
+          </Route>
           <Route exact path="/test">
             <TestPage />
           </Route>
@@ -73,7 +69,7 @@ function App() {
     );
   }
   return (
-    <div>
+    <div style={{ height: '100vh', width: '100vw', overflowX: 'hidden' }}>
       <div style={{ position: 'relative', zIndex: 1 }}>
         <Header logout={() => setUser(null)} />
       </div>

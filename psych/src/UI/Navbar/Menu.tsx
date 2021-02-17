@@ -17,6 +17,10 @@ const MenuContainer = styled.div`
   justify-content: center;
   align-items: center;
   margin-top: 50%;
+
+  @media (max-width: 1000px) {
+    gap: 30px;
+  }
 `;
 
 const MenuItem = styled(motion.span)`
