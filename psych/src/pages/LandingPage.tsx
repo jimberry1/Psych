@@ -73,13 +73,9 @@ const LandingPage = (props: any) => {
     const newGameId = makeRandomGameId(6);
     console.log(newGameId);
 
-    // Create a new questions array -- This will need to be changed in the future to use the questions db table and the number of available questions there
-    const questionsIndex = questionArrayGenerator(3, 4);
-
     // then create a new lobby using that game code,
     db.collection('games').doc(newGameId).set({
       gameStarted: false,
-      questionIndex: questionsIndex,
       roundNumber: 1,
       isVotingRound: false,
       isResultsRound: false,

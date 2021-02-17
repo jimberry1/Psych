@@ -14,6 +14,7 @@ const GamePage = (props: any) => {
   const [answers, setAnswers] = useState([]);
   const [votes, setVotes] = useState([]);
   const [questionIndex, setQuestionIndex] = useState([]);
+  const [randomNameArray, setRandomNameArray] = useState([]);
   const [question, setQuestion] = useState('');
   const [roundNumber, setRoundNumber] = useState(0);
   const [isVotingRound, setIsVotingRound] = useState(false);
@@ -34,6 +35,7 @@ const GamePage = (props: any) => {
         setQuestionIndex(fetchedQuestionSnapshot.data().questionIndex);
         setIsVotingRound(fetchedQuestionSnapshot.data().isVotingRound);
         setIsResultsRound(fetchedQuestionSnapshot.data().isResultsRound);
+        setRandomNameArray(fetchedQuestionSnapshot.data().randomNameArray);
       });
     return snapshot;
   }, []);
@@ -190,7 +192,12 @@ const GamePage = (props: any) => {
     >
       {!hasAlreadyAnswered && !isResultsRound && !isVotingRound && (
         <QuestionComponent
-          question={question.replace('XXX', 'Jim')}
+          question={question.replace(
+            'XXX',
+            randomNameArray.length >= roundNumber
+              ? randomNameArray[roundNumber]
+              : 'ERROR - NO NAME FOUND'
+          )}
           answer={answer}
           answerChangedHandler={(newAnswer) => setAnswer(newAnswer)}
           submitAnswerHandler={() => submitAnswerHandler()}

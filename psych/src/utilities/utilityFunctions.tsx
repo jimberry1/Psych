@@ -16,7 +16,8 @@ export const questionArrayGenerator = (
   const questionArray = [];
 
   while (questionArray.length < numberOfRounds) {
-    const randomNumber = Math.floor(Math.random() * totalNumberOfQs) + 1;
+    console.log(questionArray);
+    const randomNumber = Math.floor(Math.random() * totalNumberOfQs);
     if (questionArray.indexOf(randomNumber) === -1)
       questionArray.push(randomNumber);
   }
@@ -93,4 +94,16 @@ export const createAnOrderedListOfPlayerScores = (
   }
 
   return playersScores.sort(scoreComparator);
+};
+
+export const randomlyPickNamesForQuestions = (
+  playersArray: any,
+  numberOfRounds: number
+) => {
+  const playerNameArray = [];
+  for (let i = 0; i < numberOfRounds; i++) {
+    const randomNumber = Math.floor(Math.random() * playersArray.length);
+    playerNameArray.push(playersArray[randomNumber].data.name);
+  }
+  return playerNameArray;
 };
