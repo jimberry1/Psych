@@ -5,6 +5,7 @@ import { keyframes } from 'styled-components';
 import {
   GeneralBlueButtonStyles,
   ContainerStyles,
+  GeneralPageSubTitle,
 } from '../styles/GeneralStyles';
 import { StyledTextArea } from '../styles/LandingPageStyles';
 export interface QuestionComponentProps {
@@ -25,7 +26,9 @@ const QuestionComponent: React.SFC<QuestionComponentProps> = ({
   return (
     <motion.div>
       <ContainerStyles>
-        <h1 style={{ marginBottom: 50, padding: 20 }}>{question}</h1>
+        <GeneralPageSubTitle style={{ marginBottom: 50, padding: 20 }}>
+          {question}
+        </GeneralPageSubTitle>
         <StyledTextArea
           style={{
             marginBottom: 50,

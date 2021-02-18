@@ -40,3 +40,16 @@ export const ContainerStyles = styled.div`
   height: 100vh;
   overflow: none;
 `;
+
+export const GeneralPageSubTitle = styled.div`
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  padding: 10px 0px;
+  font-family: 'Secular One', sans-serif;
+  font-size: 30px;
+
+  @media (max-width: 1000px) {
+    font-size: 22px;
+  }
+`;

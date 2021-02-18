@@ -4,6 +4,7 @@ import { verticalFadeInVariants } from '../styles/Animations';
 import {
   GeneralBlueButtonStyles,
   ContainerStyles,
+  GeneralPageSubTitle,
 } from '..//styles/GeneralStyles';
 import Lobby from './Lobby/Lobby';
 import { useEffect } from 'react';
@@ -30,7 +31,9 @@ const WaitingForAnswers: React.SFC<WaitingForAnswersProps> = ({
       animate="visible"
     >
       <ContainerStyles>
-        {/* <h2 style={{ marginBottom: 50 }}>Waiting for all players to answer</h2> */}
+        <GeneralPageSubTitle style={{ marginBottom: 50 }}>
+          Waiting for all players to answer
+        </GeneralPageSubTitle>
 
         <Lobby
           players={createArrayOfPeopleWhoHaveAnswered(

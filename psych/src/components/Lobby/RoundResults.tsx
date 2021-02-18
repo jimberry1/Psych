@@ -3,6 +3,7 @@ import db from '../../firebase';
 import {
   ContainerStyles,
   GeneralBlueButtonStyles,
+  GeneralPageSubTitle,
 } from '../../styles/GeneralStyles';
 import ResultsTableOrchestrator from '../ResultsTableOrchestrator';
 
@@ -43,7 +44,7 @@ const RoundResults: React.SFC<RoundResultsProps> = (props) => {
     <ContainerStyles>
       {props.isResultsRound && (
         <div style={{ width: '100%' }}>
-          <h1>Results</h1>
+          <GeneralPageSubTitle>Results</GeneralPageSubTitle>
           <p>
             Total number of results{' '}
             {

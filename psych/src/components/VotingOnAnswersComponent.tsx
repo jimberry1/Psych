@@ -6,6 +6,7 @@ import { fadeInFromLeft } from '../styles/Animations';
 import {
   ContainerStyles,
   GeneralBlueButtonStyles,
+  GeneralPageSubTitle,
 } from '../styles/GeneralStyles';
 import { QuestionAnswer } from '../styles/GamePageStyles';
 import Lobby from '../components/Lobby/Lobby';
@@ -88,7 +89,11 @@ const VotingOnAnswersComponent: React.SFC<WaitingForPlayersProps> = (props) => {
 
   return (
     <ContainerStyles>
-      {!userHasVotedalready && <h1>Vote for your favourite answer!</h1>}
+      {!userHasVotedalready && (
+        <GeneralPageSubTitle>
+          Vote for your favourite answer!
+        </GeneralPageSubTitle>
+      )}
       <motion.div
         variants={fadeInFromLeft}
         initial="hidden"
