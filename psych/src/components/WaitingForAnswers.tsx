@@ -25,34 +25,34 @@ const WaitingForAnswers: React.SFC<WaitingForAnswersProps> = ({
   isHost,
 }) => {
   return (
-    <motion.div
-      variants={verticalFadeInVariants}
-      initial="hidden"
-      animate="visible"
-    >
-      <ContainerStyles>
-        <GeneralPageSubTitle style={{ marginBottom: 50 }}>
-          Waiting for all players to answer
-        </GeneralPageSubTitle>
+    // <motion.div
+    //   variants={verticalFadeInVariants}
+    //   initial="hidden"
+    //   animate="visible"
+    // >
+    <ContainerStyles>
+      <GeneralPageSubTitle style={{ marginBottom: 50 }}>
+        Waiting for all players to answer
+      </GeneralPageSubTitle>
 
-        <Lobby
-          players={createArrayOfPeopleWhoHaveAnswered(
-            playersArray,
-            answersArray,
-            roundNumber
-          )}
-          showLoader={true}
-        />
-        {isHost && (
-          <GeneralBlueButtonStyles
-            onClick={ProceedToVotingHandler}
-            style={{ marginTop: 15 }}
-          >
-            Proceed to Voting round
-          </GeneralBlueButtonStyles>
+      <Lobby
+        players={createArrayOfPeopleWhoHaveAnswered(
+          playersArray,
+          answersArray,
+          roundNumber
         )}
-      </ContainerStyles>
-    </motion.div>
+        showLoader={true}
+      />
+      {isHost && (
+        <GeneralBlueButtonStyles
+          onClick={ProceedToVotingHandler}
+          style={{ marginTop: 15 }}
+        >
+          Proceed to Voting round
+        </GeneralBlueButtonStyles>
+      )}
+    </ContainerStyles>
+    // </motion.div>
   );
 };
 

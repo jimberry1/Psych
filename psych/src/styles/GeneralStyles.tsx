@@ -50,6 +50,5 @@ export const GeneralPageSubTitle = styled.div`
   font-size: 30px;
 
   @media (max-width: 1000px) {
-    font-size: 22px;
   }
 `;

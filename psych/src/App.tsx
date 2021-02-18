@@ -37,7 +37,7 @@ function App() {
     AppPage = (
       <AnimatePresence exitBeforeEnter>
         <Switch>
-          <Route path="/lobby">
+          <Route path="/lobby" key="GameLobbyKey">
             <GameLobby
               gameCode={gameCode}
               user={user}
@@ -47,6 +47,7 @@ function App() {
           <Route
             exact
             path="/"
+            key="LandingPageKey"
             render={() => (
               <LandingPage
                 gameCodeChanged={(value: any) => setGameCode(value)}
@@ -56,7 +57,7 @@ function App() {
               />
             )}
           />
-          <Route exact path="/hostgame">
+          <Route exact path="/hostgame" key="HostGameScreenKey">
             <HostGameScreen
               gameCode={gameCode}
               user={user}
@@ -66,11 +67,11 @@ function App() {
           <Route exact path="/test">
             <TestPage />
           </Route>
-          <Route exact path="/game">
+          <Route exact path="/game" key="GamePageKey">
             <GamePage gameCode={gameCode} user={user} />
           </Route>
           <Route exact path="/submitQuestion">
-            <AddQuestionsPage user={user} />
+            <AddQuestionsPage user={user} key="AddQuestionsKey" />
           </Route>
         </Switch>
       </AnimatePresence>

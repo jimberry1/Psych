@@ -114,7 +114,7 @@ const VotingOnAnswersComponent: React.SFC<WaitingForPlayersProps> = (props) => {
                 variants={{
                   hidden: { x: index % 2 == 0 ? '-100vw' : '100vw' },
                   visible: { x: 0 },
-                  hover: { scale: 1.1 },
+                  hover: { scale: 1.1, y: -5 },
                 }}
                 whileHover="hover"
                 whileTap="hover"

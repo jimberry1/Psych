@@ -7,7 +7,7 @@ import VotingOnAnswersComponent from '../components/VotingOnAnswersComponent';
 import RoundResults from '../components/Lobby/RoundResults';
 import QuestionComponent from '../components/QuestionComponent';
 import WaitingForAnswers from '../components/WaitingForAnswers';
-
+import { verticalFadeInVariants } from '../styles/Animations';
 const GamePage = (props: any) => {
   const [gameInfo, setGameInfo] = useState(null);
   const [players, setPlayers] = useState([]);
@@ -245,13 +245,20 @@ const GamePage = (props: any) => {
 
   return (
     <AnimatePresence exitBeforeEnter>
-      <motion.div
+      {/* <motion.div
         variants={PageContainerVariants}
         initial="hidden"
         animate="visible"
         exit="exitting"
-      >
-        {!hasAlreadyAnswered && !isResultsRound && !isVotingRound && (
+      > */}
+      {!hasAlreadyAnswered && isQuestionsRound && (
+        <motion.div
+          key={10000000001}
+          variants={verticalFadeInVariants}
+          initial="hidden"
+          animate="visible"
+          exit="hidden"
+        >
           <QuestionComponent
             question={question
               .replace(
@@ -271,8 +278,16 @@ const GamePage = (props: any) => {
             submitAnswerHandler={() => submitAnswerHandler()}
             gameCode={props.gameCode}
           />
-        )}
-        {hasAlreadyAnswered && !isResultsRound && !isVotingRound && (
+        </motion.div>
+      )}
+      {hasAlreadyAnswered && isQuestionsRound && (
+        <motion.div
+          key={10000000002}
+          variants={verticalFadeInVariants}
+          initial="hidden"
+          animate="visible"
+          exit="hidden"
+        >
           <WaitingForAnswers
             ProceedToVotingHandler={ProceedToVotingHandler}
             answersArray={answers}
@@ -280,12 +295,21 @@ const GamePage = (props: any) => {
             roundNumber={roundNumber}
             isHost={isHost}
           />
-        )}
-        {hasAlreadyAnswered &&
-          isVotingRound &&
-          !isResultsRound &&
-          gameInfo &&
-          roundNumber > 0 && (
+        </motion.div>
+      )}
+
+      {hasAlreadyAnswered &&
+        isVotingRound &&
+        !isResultsRound &&
+        gameInfo &&
+        roundNumber > 0 && (
+          <motion.div
+            key={10000000003}
+            variants={verticalFadeInVariants}
+            initial="hidden"
+            animate="visible"
+            exit="hidden"
+          >
             <VotingOnAnswersComponent
               roundNumber={roundNumber}
               gameCode={props.gameCode}
@@ -300,8 +324,16 @@ const GamePage = (props: any) => {
               isHost={isHost}
               proceedToResultsRound={ProceedToResultsHandler}
             />
-          )}
-        {isResultsRound && (
+          </motion.div>
+        )}
+      {isResultsRound && (
+        <motion.div
+          key={10000000004}
+          variants={verticalFadeInVariants}
+          initial="hidden"
+          animate="visible"
+          exit="hidden"
+        >
           <RoundResults
             gameCode={props.gameCode}
             user={props.user}
@@ -312,8 +344,9 @@ const GamePage = (props: any) => {
             playersArray={players}
             isHost={isHost}
           />
-        )}
-      </motion.div>
+        </motion.div>
+      )}
+      {/* </motion.div> */}
     </AnimatePresence>
   );
 };

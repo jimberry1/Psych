@@ -9,5 +9,8 @@ export const QuestionAnswer = styled.div`
   word-wrap: break-word;
   transition: 0.3s;
   &:hover {
+    background-color: #242c8a;
+    border-radius: 15px;
+    font-size: 20px;
   }
 `;
