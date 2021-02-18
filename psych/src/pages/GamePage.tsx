@@ -17,6 +17,7 @@ const GamePage = (props: any) => {
   const [randomNameArray, setRandomNameArray] = useState([]);
   const [question, setQuestion] = useState('');
   const [roundNumber, setRoundNumber] = useState(0);
+  const [isQuestionsRound, setIsQuestionsRound] = useState(false);
   const [isVotingRound, setIsVotingRound] = useState(false);
   const [hasAlreadyAnswered, setHasAlreadyAnswered] = useState(true);
   const [isResultsRound, setIsResultsRound] = useState(false);
@@ -35,6 +36,7 @@ const GamePage = (props: any) => {
         setRoundNumber(fetchedQuestionSnapshot.data().roundNumber);
         setQuestionIndex(fetchedQuestionSnapshot.data().questionIndex);
         console.log(fetchedQuestionSnapshot.data().questionIndex);
+        setIsQuestionsRound(fetchedQuestionSnapshot.data().isQuestionsRound);
         setIsVotingRound(fetchedQuestionSnapshot.data().isVotingRound);
         setIsResultsRound(fetchedQuestionSnapshot.data().isResultsRound);
         setRandomNameArray(fetchedQuestionSnapshot.data().randomNameArray);
@@ -167,6 +169,38 @@ const GamePage = (props: any) => {
     }
   }, [roundNumber, isVotingRound]);
 
+  // Controls how we automatically progress to the voting round
+  useEffect(() => {
+    if (answers) {
+      if (
+        answers.filter((ans: any) => ans.data.roundNumber === roundNumber)
+          .length >= players.length &&
+        !isVotingRound &&
+        !isResultsRound &&
+        isQuestionsRound
+      ) {
+        console.log('Proceeding to voting round');
+        ProceedToVotingHandler();
+      }
+    }
+  }, [answers]);
+
+  // Controls how we automatically progress to the results round
+  useEffect(() => {
+    if (votes) {
+      if (
+        votes.filter((vote: any) => vote.data.roundNumber === roundNumber)
+          .length >= players.length &&
+        isVotingRound &&
+        !isResultsRound &&
+        !isQuestionsRound
+      ) {
+        console.log('Proceeding to results round');
+        ProceedToResultsHandler();
+      }
+    }
+  }, [votes]);
+
   // Submits the answer if the player's answer is longer than 0 characters and the user has not already answered the question
   const submitAnswerHandler = () => {
     if (!hasAlreadyAnswered) {
@@ -189,10 +223,24 @@ const GamePage = (props: any) => {
     }
   };
 
+  // Handles the progression to the voting round
   const ProceedToVotingHandler = () => {
     db.collection('games')
       .doc(props.gameCode.toString())
-      .set({ isVotingRound: true, isResultsRound: false }, { merge: true });
+      .set(
+        { isVotingRound: true, isResultsRound: false, isQuestionsRound: false },
+        { merge: true }
+      );
+  };
+
+  // Handles the progression to the results round
+  const ProceedToResultsHandler = () => {
+    db.collection('games')
+      .doc(props.gameCode.toString())
+      .set(
+        { isVotingRound: false, isResultsRound: true, isQuestionsRound: false },
+        { merge: true }
+      );
   };
 
   return (
@@ -250,6 +298,7 @@ const GamePage = (props: any) => {
               playersArray={players}
               votesArray={votes}
               isHost={isHost}
+              proceedToResultsRound={ProceedToResultsHandler}
             />
           )}
         {isResultsRound && (

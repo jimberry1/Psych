@@ -25,6 +25,7 @@ const RoundResults: React.SFC<RoundResultsProps> = (props) => {
         {
           isResultsRound: false,
           isVotingRound: false,
+          isQuestionsRound: true,
           roundNumber: props.roundNumber + 1,
         },
         { merge: true }

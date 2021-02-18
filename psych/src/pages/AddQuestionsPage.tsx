@@ -15,8 +15,13 @@ export interface AddQuestionsPageProps {
 const AddQuestionsPage: React.SFC<AddQuestionsPageProps> = ({ user }) => {
   const [question, setQuestion] = useState('');
   const [hasSubmittedQuestion, setHasSubmittedQuestion] = useState(false);
+  const [error, setError] = useState('');
+
   const submitQuestionHandler = () => {
-    if (question.length > 10) {
+    if (
+      question.length > 10 &&
+      (question.search('xxx') !== -1 || question.search('XXX') !== -1)
+    ) {
       db.collection('questions')
         .doc('Indexor')
         .get()
@@ -33,10 +38,14 @@ const AddQuestionsPage: React.SFC<AddQuestionsPageProps> = ({ user }) => {
           db.collection('questions')
             .doc('Indexor')
             .update({ index: firebase.firestore.FieldValue.increment(1) });
-        });
 
-      setQuestion('');
-      setHasSubmittedQuestion(true);
+          setQuestion('');
+          setHasSubmittedQuestion(true);
+        });
+    } else {
+      setError(
+        'Please make sure your question is over 10 characters long and contains XXX'
+      );
     }
   };
   return (
@@ -63,6 +72,7 @@ const AddQuestionsPage: React.SFC<AddQuestionsPageProps> = ({ user }) => {
           onChange={(e) => {
             setQuestion(e.target.value);
             setHasSubmittedQuestion(false);
+            setError('');
           }}
         />
         <GeneralBlueButtonStyles onClick={submitQuestionHandler}>
@@ -83,6 +93,22 @@ const AddQuestionsPage: React.SFC<AddQuestionsPageProps> = ({ user }) => {
               <p style={{ padding: 20 }}>
                 Thanks for submitting your question!
               </p>
+            </motion.div>
+          )}
+        </AnimatePresence>
+        <AnimatePresence>
+          {error.length > 0 && (
+            <motion.div
+              variants={{
+                hidden: { opacity: 0, x: '-100vw' },
+                visible: { opacity: 1, x: 0 },
+                exitted: { opacity: 0, x: '100vw' },
+              }}
+              initial="hidden"
+              animate="visible"
+              exit="exitted"
+            >
+              <p style={{ padding: 20 }}>{error}</p>
             </motion.div>
           )}
         </AnimatePresence>

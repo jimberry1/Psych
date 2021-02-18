@@ -83,6 +83,7 @@ const HostGameScreen = (props: any) => {
       .set(
         {
           gameStarted: true,
+          isQuestionsRound: true,
           questionIndex: questionsIndex,
           randomNameArray: randomlyPickedPlayersForQuestions,
           hostUid: props.user.uid,

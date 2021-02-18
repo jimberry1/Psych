@@ -77,6 +77,7 @@ const LandingPage = (props: any) => {
     db.collection('games').doc(newGameId).set({
       gameStarted: false,
       roundNumber: 1,
+      isQuestionsRound: false,
       isVotingRound: false,
       isResultsRound: false,
       host: props.user.uid,

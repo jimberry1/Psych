@@ -20,6 +20,7 @@ export interface WaitingForPlayersProps {
   playersArray: any[];
   votesArray: any[];
   isHost: boolean;
+  proceedToResultsRound: any;
 }
 
 const VotingOnAnswersComponent: React.SFC<WaitingForPlayersProps> = (props) => {
@@ -85,12 +86,6 @@ const VotingOnAnswersComponent: React.SFC<WaitingForPlayersProps> = (props) => {
     }
   };
 
-  const ProceedToResultsHandler = () => {
-    db.collection('games')
-      .doc(props.gameCode.toString())
-      .set({ isVotingRound: false, isResultsRound: true }, { merge: true });
-  };
-
   return (
     <ContainerStyles>
       {!userHasVotedalready && <h1>Vote for your favourite answer!</h1>}
@@ -154,7 +149,7 @@ const VotingOnAnswersComponent: React.SFC<WaitingForPlayersProps> = (props) => {
         <br />
         {props.isHost && (
           <GeneralBlueButtonStyles
-            onClick={ProceedToResultsHandler}
+            onClick={props.proceedToResultsRound}
             style={{ marginTop: 50 }}
           >
             Proceed to results
