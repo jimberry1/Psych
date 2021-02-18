@@ -14,9 +14,14 @@ import {
 export interface LoginProps {
   changeGameCode: (newGameCode: string) => void;
   changeUser: (user: object) => void;
+  displayErrorHandler: (message: string) => void;
 }
 
-const Login = ({ changeUser, changeGameCode }: LoginProps) => {
+const Login = ({
+  changeUser,
+  changeGameCode,
+  displayErrorHandler,
+}: LoginProps) => {
   const localStorageUid: string | null = localStorage.getItem('psy_uid');
   const [createAnAccount, setCreateAnAccount] = useState(true);
   const [email, setEmail] = useState('');
@@ -53,7 +58,10 @@ const Login = ({ changeUser, changeGameCode }: LoginProps) => {
     if (createAnAccount) {
       auth
         .createUserWithEmailAndPassword(email, password)
-        .catch((err) => console.log(err))
+        .catch((err) => {
+          console.log(err);
+          displayErrorHandler(err.message);
+        })
         .then((result: any) => {
           console.log('creating user with email and password');
           if (result) {
@@ -81,12 +89,18 @@ const Login = ({ changeUser, changeGameCode }: LoginProps) => {
             });
           }
         })
-        .catch((err) => console.log(err));
+        .catch((err) => {
+          console.log(err);
+          displayErrorHandler(err.message);
+        });
     } else if (!createAnAccount) {
       console.log('attempting to sign in');
       auth
         .signInWithEmailAndPassword(email, password)
-        .catch((err) => console.log(err))
+        .catch((err) => {
+          console.log(err);
+          displayErrorHandler(err.message);
+        })
         .then((result: any) => {
           const dbUserRef = db.collection('users').doc(result.user.uid);
           console.log('in here');
@@ -121,7 +135,9 @@ const Login = ({ changeUser, changeGameCode }: LoginProps) => {
             }
           });
         })
-        .catch((err) => console.log(err));
+        .catch((err) => {
+          console.log(err);
+        });
     }
   };
   return (

@@ -13,16 +13,24 @@ import TestPage from './pages/TestPage';
 import AddQuestionsPage from './pages/AddQuestionsPage';
 import Header from './UI/Navbar/Header';
 import { relative } from 'path';
+import Modal from './UI/Modal/Modal';
 
 function App() {
   const [user, setUser] = useState(null);
   const [gameCode, setGameCode]: any = useState('');
   const [errorOrInfoText, setErrorOrInfoText] = useState('');
+  const [showModal, setShowModal] = useState(false);
+
+  const HandleNewErrorOrInfo = (message: string) => {
+    setErrorOrInfoText(message);
+    setShowModal(true);
+  };
 
   let AppPage = (
     <Login
       changeUser={(value: any) => setUser(value)}
       changeGameCode={(userGameCode: string) => setGameCode(userGameCode)}
+      displayErrorHandler={(message: string) => HandleNewErrorOrInfo(message)}
     />
   );
   if (user) {
@@ -71,7 +79,17 @@ function App() {
   return (
     <div style={{ height: '100vh', width: '100vw', overflowX: 'hidden' }}>
       <div style={{ position: 'relative', zIndex: 1 }}>
-        <Header logout={() => setUser(null)} />
+        <Modal
+          toggled={showModal}
+          setToggled={() => {
+            setShowModal((curVal) => !curVal);
+            setErrorOrInfoText('');
+          }}
+          message={errorOrInfoText}
+        />
+      </div>
+      <div style={{ position: 'relative', zIndex: 1 }}>
+        <Header logout={() => setUser(null)} isAuthenticated={user !== null} />
       </div>
       <div style={{ position: 'relative' }}>{AppPage}</div>
     </div>
