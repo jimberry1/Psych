@@ -39,7 +39,7 @@ const Backdrop = styled.div`
   opacity: 0.5;
 `;
 
-const Sidedraw = ({ toggled, setToggled, logout }) => {
+const Sidedraw = ({ toggled, setToggled, logout, isAuthenticated }) => {
   const animationControl = useAnimation();
 
   useEffect(() => {
@@ -74,7 +74,12 @@ const Sidedraw = ({ toggled, setToggled, logout }) => {
         animate={animationControl}
       >
         <SideDrawer>
-          <Menu logout={logout} setToggle={setToggled} toggled={toggled} />
+          <Menu
+            logout={logout}
+            setToggle={setToggled}
+            toggled={toggled}
+            isAuthenticated={isAuthenticated}
+          />
         </SideDrawer>
       </motion.div>
     </div>

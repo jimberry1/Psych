@@ -4,6 +4,7 @@ import { useState } from 'react';
 import { motion, useAnimation } from 'framer-motion';
 export interface HeaderProps {
   logout: any;
+  isAuthenticated: boolean;
 }
 
 const HeaderContainer = styled.div`
@@ -33,7 +34,7 @@ const TitleLetter = styled.span`
   font-family: 'Titan One', cursive;
 `;
 
-const Header: React.SFC<HeaderProps> = ({ logout }) => {
+const Header: React.SFC<HeaderProps> = ({ logout, isAuthenticated }) => {
   const [toggled, setToggled] = useState(false);
   const titleArray = ['P', 'S', 'Y', 'C', 'H'];
   const colors = ['#FF008C', '#D309E1', '#9C1AFF', '#7700FF', '#4400FF'];
@@ -51,6 +52,7 @@ const Header: React.SFC<HeaderProps> = ({ logout }) => {
           toggled={toggled}
           setToggled={() => setToggled((curVal) => !curVal)}
           logout={logout}
+          isAuthenticated={isAuthenticated}
         />
       </div>
       <div style={{ zIndex: 0.9 }}>

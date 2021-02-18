@@ -8,6 +8,7 @@ export interface MenuProps {
   logout: any;
   setToggle: any;
   toggled: boolean;
+  isAuthenticated: boolean;
 }
 
 const MenuContainer = styled.div`
@@ -51,10 +52,19 @@ const MenuItemVariants = {
 
 type player = { linkName: string; linkTo: string; color: string };
 
-const Menu: React.SFC<MenuProps> = ({ logout, setToggle, toggled }) => {
+const Menu: React.SFC<MenuProps> = ({
+  logout,
+  setToggle,
+  toggled,
+  isAuthenticated,
+}) => {
   const colors = ['#FF008C', '#D309E1', '#9C1AFF', '#7700FF', '#4400FF'];
   const linkArray: player[] = [
-    { linkName: 'Home', linkTo: '/', color: '#FF008C' },
+    {
+      linkName: 'Home',
+      linkTo: '/',
+      color: '#FF008C',
+    },
     { linkName: 'Account', linkTo: '/', color: '#D309E1' },
     {
       linkName: 'Submit Questions',
@@ -83,6 +93,14 @@ const Menu: React.SFC<MenuProps> = ({ logout, setToggle, toggled }) => {
     setRedirectTo(redirectToLocation);
     setToggle();
   };
+
+  if (!isAuthenticated) {
+    return (
+      <MenuContainer>
+        <MenuItem>Log in to access menu</MenuItem>
+      </MenuContainer>
+    );
+  }
   return (
     <MenuContainer>
       {redirectTo && <Redirect push to={redirectTo} />}

@@ -5,6 +5,7 @@ import { SideDrawer } from '../styles/TestStyles';
 import SideDraw from '../UI/Navbar/Sidedraw';
 import HamburgerMenu from 'react-hamburger-menu';
 import { CountdownCircleTimer } from 'react-countdown-circle-timer';
+import Modal from '../UI/Modal/Modal';
 // export interface TestPageProps {}
 
 const TestPage = () => {
@@ -46,6 +47,11 @@ const TestPage = () => {
         toggled={toggled}
         setToggled={() => setToggled((curVal) => !curVal)}
       /> */}
+      <Modal
+        toggled={toggled}
+        setToggled={() => setToggled((curVal) => !curVal)}
+        message="Modal message"
+      />
       <div>
         <button onClick={() => setToggled((curVal) => !curVal)}>
           Toggle sidedraw
