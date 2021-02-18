@@ -93,13 +93,13 @@ const Menu: React.SFC<MenuProps> = ({ logout, setToggle, toggled }) => {
             onClick={() => RedirectHandler(linkObj.linkTo)}
             variants={{
               hover: {
-                color: '#D309E1',
+                color: linkObj.color,
                 scale: 1.2,
               },
               hidden: {
                 y: 100,
                 opacity: 0,
-                color: '#D309E1',
+                color: linkObj.color,
               },
               visible: {
                 y: 0,
