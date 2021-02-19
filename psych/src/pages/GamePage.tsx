@@ -35,7 +35,6 @@ const GamePage = (props: any) => {
 
         setRoundNumber(fetchedQuestionSnapshot.data().roundNumber);
         setQuestionIndex(fetchedQuestionSnapshot.data().questionIndex);
-        console.log(fetchedQuestionSnapshot.data().questionIndex);
         setIsQuestionsRound(fetchedQuestionSnapshot.data().isQuestionsRound);
         setIsVotingRound(fetchedQuestionSnapshot.data().isVotingRound);
         setIsResultsRound(fetchedQuestionSnapshot.data().isResultsRound);
@@ -298,35 +297,31 @@ const GamePage = (props: any) => {
         </motion.div>
       )}
 
-      {hasAlreadyAnswered &&
-        isVotingRound &&
-        !isResultsRound &&
-        gameInfo &&
-        roundNumber > 0 && (
-          <motion.div
-            key={10000000003}
-            variants={verticalFadeInVariants}
-            initial="hidden"
-            animate="visible"
-            exit="hidden"
-          >
-            <VotingOnAnswersComponent
-              roundNumber={roundNumber}
-              gameCode={props.gameCode}
-              user={props.user}
-              numberOfPlayers={players.length}
-              isVotingRound={isVotingRound}
-              answers={answers.filter(
-                (answer: any) => answer.data.roundNumber === roundNumber //filtered to ensure only the current round questions are displayed
-              )}
-              playersArray={players}
-              votesArray={votes}
-              isHost={isHost}
-              proceedToResultsRound={ProceedToResultsHandler}
-            />
-          </motion.div>
-        )}
-      {isResultsRound && (
+      {isVotingRound && !isQuestionsRound && !isResultsRound && (
+        <motion.div
+          key={10000000003}
+          variants={verticalFadeInVariants}
+          initial="hidden"
+          animate="visible"
+          exit="hidden"
+        >
+          <VotingOnAnswersComponent
+            roundNumber={roundNumber}
+            gameCode={props.gameCode}
+            user={props.user}
+            numberOfPlayers={players.length}
+            isVotingRound={isVotingRound}
+            answers={answers.filter(
+              (answer: any) => answer.data.roundNumber === roundNumber //filtered to ensure only the current round questions are displayed
+            )}
+            playersArray={players}
+            votesArray={votes}
+            isHost={isHost}
+            proceedToResultsRound={ProceedToResultsHandler}
+          />
+        </motion.div>
+      )}
+      {!isVotingRound && !isQuestionsRound && isResultsRound && (
         <motion.div
           key={10000000004}
           variants={verticalFadeInVariants}
