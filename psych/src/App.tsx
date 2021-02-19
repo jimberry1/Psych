@@ -78,7 +78,14 @@ function App() {
     );
   }
   return (
-    <div style={{ height: '100vh', width: '100vw', overflowX: 'hidden' }}>
+    <div
+      style={{
+        height: '100vh',
+        width: '100vw',
+        overflowX: 'hidden',
+        paddingBottom: 20,
+      }}
+    >
       <div style={{ position: 'relative', zIndex: 1 }}>
         <Modal
           toggled={showModal}

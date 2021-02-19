@@ -75,14 +75,15 @@ const RoundResults: React.SFC<RoundResultsProps> = (props) => {
               })}
             </div>
           )}
-
-          <ShowAnswersWithVoteCount
-            answersWithVoteTally={countVotesForEachAnswerInArrayForAProvidedRound(
-              props.answersArray,
-              props.votesArray,
-              props.roundNumber
-            )}
-          />
+          <div style={{ width: '100vw', paddingTop: 20 }}>
+            <ShowAnswersWithVoteCount
+              answersWithVoteTally={countVotesForEachAnswerInArrayForAProvidedRound(
+                props.answersArray,
+                props.votesArray,
+                props.roundNumber
+              )}
+            />
+          </div>
           <ResultsTableOrchestrator
             votes={props.votesArray}
             players={props.playersArray}
