@@ -2,6 +2,7 @@ import styled from 'styled-components';
 import { faMedal } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { useEffect, useState } from 'react';
+import { motion } from 'framer-motion';
 
 export interface ShowAnswersWithVoteCountProps {
   answersWithVoteTally: answerWithVotes[];
@@ -17,13 +18,13 @@ type answerWithVotes = {
 const AnswersContainer = styled.div`
   width: 100%;
   display: flex;
+  justify-content: center;
   flex-wrap: wrap;
-  padding: 20px;
 `;
 
 const AnswerContainer = styled.div`
-  height: 320px;
-  width: 320px;
+  height: 280px;
+  width: 280px;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -34,7 +35,7 @@ const AnswerContainer = styled.div`
   font-family: 'Reggae One', cursive;
   border: 1px solid black;
   border-radius: 10px;
-  margin: none;
+  margin: 15px;
   transition: 0.5s;
 
   overflow-wrap: break-word;
@@ -42,10 +43,10 @@ const AnswerContainer = styled.div`
 
   overflow: scroll;
 
-  &:hover {
-    transform: scale(1.1) translateY(-15px);
-    box-shadow: 4px 4px 4px 4px #0e254a;
-  }
+  //   &:hover {
+  //     transform: scale(1.1) translateY(-15px);
+  //     box-shadow: 4px 4px 4px 4px #0e254a;
+  //   }
 
   @media (max-width: 600px) {
     font-size: 20px;
@@ -92,7 +93,7 @@ const AnswerBody = styled.div`
 const ShowAnswersWithVoteCount: React.SFC<ShowAnswersWithVoteCountProps> = ({
   answersWithVoteTally,
 }) => {
-  const [topUids, setTopUids]: any[] = useState(['blahblah']);
+  const [topUids, setTopUids]: any[] = useState([]);
 
   // This useEffect line gets the top results out of the array
   // Do not track the top players if there are less than 4 players in the game, otherwise sort the array then take a slice of the top 3 players and save their Uids in state
@@ -105,20 +106,18 @@ const ShowAnswersWithVoteCount: React.SFC<ShowAnswersWithVoteCountProps> = ({
       answer2: answerWithVotes
     ) {
       if (answer1.numberOfVotes < answer2.numberOfVotes) {
-        return -1;
-      } else if (answer1.numberOfVotes > answer2.numberOfVotes) {
         return 1;
+      } else if (answer1.numberOfVotes > answer2.numberOfVotes) {
+        return -1;
       }
       return 0;
     }
     const topPlayerUids = answersWithVoteTally
       .sort(answerComparator)
-      .slice(0, 1)
+      .slice(0, 3)
       .map((topAnswer) => topAnswer.uid);
 
     setTopUids(topPlayerUids);
-
-    console.log(answersWithVoteTally.sort(answerComparator).slice(0, 1));
   }, [answersWithVoteTally]);
 
   function determineColorOfMedal(uid: string) {
@@ -133,24 +132,38 @@ const ShowAnswersWithVoteCount: React.SFC<ShowAnswersWithVoteCountProps> = ({
     <AnswersContainer>
       {answersWithVoteTally.map((answerWithVote) => {
         return (
-          <AnswerContainer key={answerWithVote.uid}>
-            <AnswerHeader>
-              <AnswerHeaderChild>{answerWithVote.name}</AnswerHeaderChild>
-              <AnswerHeaderChild>
-                +{answerWithVote.numberOfVotes}
-              </AnswerHeaderChild>
-              <AnswerHeaderChild>
-                {topUids.includes(answerWithVote.uid) && (
-                  <FontAwesomeIcon
-                    icon={faMedal}
-                    color={determineColorOfMedal(answerWithVote.uid)}
-                    // style={{ marginLeft: 30 }}
-                  />
-                )}
-              </AnswerHeaderChild>
-            </AnswerHeader>
-            <AnswerBody>{answerWithVote.answer}</AnswerBody>
-          </AnswerContainer>
+          <motion.div
+            key={`${answerWithVote.uid} - 1111`}
+            variants={{
+              hover: {
+                y: -10,
+                scale: 1.05,
+                // boxShadow: '4px 4px 4px 4px gray',
+              },
+            }}
+            whileHover="hover"
+          >
+            <AnswerContainer
+            //  key={answerWithVote.uid}
+            >
+              <AnswerHeader>
+                <AnswerHeaderChild>{answerWithVote.name}</AnswerHeaderChild>
+                <AnswerHeaderChild style={{ wordBreak: 'keep-all' }}>
+                  +{answerWithVote.numberOfVotes}
+                </AnswerHeaderChild>
+                <AnswerHeaderChild>
+                  {topUids.includes(answerWithVote.uid) && (
+                    <FontAwesomeIcon
+                      icon={faMedal}
+                      color={determineColorOfMedal(answerWithVote.uid)}
+                      // style={{ marginLeft: 30 }}
+                    />
+                  )}
+                </AnswerHeaderChild>
+              </AnswerHeader>
+              <AnswerBody>{answerWithVote.answer}</AnswerBody>
+            </AnswerContainer>
+          </motion.div>
         );
       })}
     </AnswersContainer>
