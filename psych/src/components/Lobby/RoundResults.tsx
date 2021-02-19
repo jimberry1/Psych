@@ -6,6 +6,8 @@ import {
   GeneralPageSubTitle,
 } from '../../styles/GeneralStyles';
 import ResultsTableOrchestrator from '../ResultsTableOrchestrator';
+import { countVotesForEachAnswerInArrayForAProvidedRound } from '../../utilities/utilityFunctions';
+import ShowAnswersWithVoteCount from '../ShowAnswersWithVoteCount';
 
 export interface RoundResultsProps {
   gameCode: string | number;
@@ -15,6 +17,7 @@ export interface RoundResultsProps {
   isResultsRound: boolean;
   votesArray: any;
   playersArray: any;
+  answersArray: any[];
   isHost: boolean;
 }
 
@@ -40,21 +43,21 @@ const RoundResults: React.SFC<RoundResultsProps> = (props) => {
       return element.data.voterName;
     });
 
+  console.log(
+    countVotesForEachAnswerInArrayForAProvidedRound(
+      props.answersArray,
+      props.votesArray,
+      props.roundNumber
+    )
+  );
   return (
     <ContainerStyles>
       {props.isResultsRound && (
         <div style={{ width: '100%' }}>
           <GeneralPageSubTitle>Results</GeneralPageSubTitle>
+
           <p>
-            Total number of results{' '}
-            {
-              props.votesArray.filter(
-                (vote: any) => vote.data.roundNumber === props.roundNumber
-              ).length
-            }
-          </p>
-          <p>
-            Total number of results for me:{' '}
+            My score +
             {
               props.votesArray
                 .filter(
@@ -64,11 +67,22 @@ const RoundResults: React.SFC<RoundResultsProps> = (props) => {
                 .length
             }
           </p>
-          <p>People who voted for me: </p>
-          {playersWhoVotedForMe.map((playerName: any) => {
-            return <div key={playerName}>{playerName}</div>;
-          })}
+          {playersWhoVotedForMe.length > 0 && (
+            <div>
+              <p>People who voted for me: </p>
+              {playersWhoVotedForMe.map((playerName: any) => {
+                return <div key={playerName}>{playerName}</div>;
+              })}
+            </div>
+          )}
 
+          <ShowAnswersWithVoteCount
+            answersWithVoteTally={countVotesForEachAnswerInArrayForAProvidedRound(
+              props.answersArray,
+              props.votesArray,
+              props.roundNumber
+            )}
+          />
           <ResultsTableOrchestrator
             votes={props.votesArray}
             players={props.playersArray}

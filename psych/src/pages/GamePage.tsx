@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 import { AnimatePresence, motion } from 'framer-motion';
-import { PageContainerVariants } from '../styles/Animations';
+import { voteType, answerType, playerType } from '../types';
 import db from '../firebase';
 import firebase from 'firebase';
 import VotingOnAnswersComponent from '../components/VotingOnAnswersComponent';
@@ -343,6 +343,7 @@ const GamePage = (props: any) => {
             votesArray={votes}
             playersArray={players}
             isHost={isHost}
+            answersArray={answers}
           />
         </motion.div>
       )}

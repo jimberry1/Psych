@@ -1,3 +1,5 @@
+import { answerType, playerType, voteType } from '../types';
+
 export const makeRandomGameId = (length: number) => {
   var result = '';
   var characters =
@@ -96,8 +98,34 @@ export const createAnOrderedListOfPlayerScores = (
   return playersScores.sort(scoreComparator);
 };
 
+export const countVotesForEachAnswerInArrayForAProvidedRound = (
+  answerArray: answerType[],
+  votesArray: voteType[],
+  roundNumber: number
+) => {
+  const filteredVotes = votesArray.filter(
+    (vote) => vote.data.roundNumber === roundNumber
+  );
+  return answerArray
+    .filter((ans) => ans.data.roundNumber === roundNumber)
+    .map((ans) => {
+      let numberOfVotes = 0;
+      for (let i = 0; i < filteredVotes.length; i++) {
+        if (filteredVotes[i].data.votedForUid === ans.data.uid) {
+          numberOfVotes++;
+        }
+      }
+      return {
+        answer: ans.data.answer,
+        name: ans.data.name,
+        numberOfVotes: numberOfVotes,
+        uid: ans.data.uid,
+      };
+    });
+};
+
 export const randomlyPickNamesForQuestions = (
-  playersArray: any,
+  playersArray: playerType[],
   numberOfRounds: number
 ) => {
   const playerNameArray = [];

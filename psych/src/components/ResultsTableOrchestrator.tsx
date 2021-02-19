@@ -64,21 +64,6 @@ const ResultsTableOrchestrator: React.SFC<ResultsTableOrchestratorProps> = ({
         {createAnOrderedListOfPlayerScores(players, votes, roundNumber).map(
           (player: any, index: number) => {
             return (
-              //   <div
-              //     key={player.key}
-              //     style={{
-              //       padding: '10px 50px',
-              //       height: 100,
-              //       backgroundColor: '#32a852',
-              //       textAlign: 'center',
-              //       display: 'flex',
-              //       justifyContent: 'center',
-              //       gap: 25,
-              //       alignItems: 'center',
-              //       width: '50%',
-              //       //   margin: '10px auto',
-              //     }}
-              //   >
               <DataRowContainer
                 key={player.key}
                 style={{

@@ -127,9 +127,14 @@ const VotingOnAnswersComponent: React.SFC<WaitingForPlayersProps> = (props) => {
                 }}
                 key={answer.id}
                 style={{ marginTop: 15 }}
-                onClick={() =>
-                  castVoteHandler(answer.data.uid, answer.data.name)
-                }
+                onClick={() => {
+                  if (
+                    answer.data.uid !== props.user.uid ||
+                    props.user.name.toUpperCase() === 'JIM'
+                  ) {
+                    castVoteHandler(answer.data.uid, answer.data.name);
+                  }
+                }}
               >
                 <QuestionAnswer>{answer.data.answer}</QuestionAnswer>
               </motion.div>
