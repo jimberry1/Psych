@@ -98,6 +98,7 @@ export const createAnOrderedListOfPlayerScores = (
   return playersScores.sort(scoreComparator);
 };
 
+// Counts the score each player received in a given round
 export const countVotesForEachAnswerInArrayForAProvidedRound = (
   answerArray: answerType[],
   votesArray: voteType[],
