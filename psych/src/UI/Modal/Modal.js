@@ -44,7 +44,10 @@ const InnerModalHeaderContainer = styled.div`
   font-family: 'Titan One', cursive;
 `;
 
-const ModalMessageContainer = styled.div``;
+const InnerModalMessageContainer = styled.h3`
+  text-align: center;
+  width: 80%;
+`;
 
 const ModalButton = styled.button`
   background: #148ea3;
@@ -100,7 +103,7 @@ const Modal = ({ toggled, setToggled, message }) => {
           >
             <ModalBox>
               <InnerModalHeaderContainer>Attention</InnerModalHeaderContainer>
-              <h3>{message}</h3>
+              <InnerModalMessageContainer>{message}</InnerModalMessageContainer>
               <ModalButton onClick={setToggled}>Got it</ModalButton>
             </ModalBox>
           </motion.div>
