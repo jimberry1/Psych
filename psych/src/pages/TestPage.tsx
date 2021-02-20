@@ -6,6 +6,7 @@ import SideDraw from '../UI/Navbar/Sidedraw';
 import HamburgerMenu from 'react-hamburger-menu';
 import { CountdownCircleTimer } from 'react-countdown-circle-timer';
 import Modal from '../UI/Modal/Modal';
+import ReactFrappeChart from 'react-frappe-charts';
 // export interface TestPageProps {}
 
 const TestPage = () => {
@@ -15,6 +16,20 @@ const TestPage = () => {
 
   const test1 = 'What does XXX do for ch';
   const test2 = 'xxx';
+
+  const testDataForPlayer = [
+    { roundNumber: 0, score: 0 },
+    { roundNumber: 1, score: 1 },
+
+    // { roundNumber: 1, score: 0 },
+    // { roundNumber: 2, score: 2 },
+    // { roundNumber: 3, score: 3 },
+    // { roundNumber: 4, score: 0 },
+    // { roundNumber: 5, score: 4 },
+    // { roundNumber: 6, score: 1 },
+    // { roundNumber: 7, score: 1 },
+    // { roundNumber: 8, score: 2 },
+  ];
 
   console.log(test1.search('XXX'));
   return (
@@ -33,15 +48,25 @@ const TestPage = () => {
           return <div style={{ fontSize: 25 }}>{remainingTime}</div>;
         }}
       </CountdownCircleTimer>
-      <div>
-        {/* <HamburgerMenu
-          isOpen={toggled}
-          menuClicked={() => {
-            setToggled((curVal) => !curVal);
+      <div style={{ width: 250 }}>
+        <ReactFrappeChart
+          title="Score"
+          type="line"
+          colors={['#21ba45']}
+          axisOptions={{ xAxisMode: 'tick', yAxisMode: 'tick', xIsSeries: 1 }}
+          height={250}
+          data={{
+            labels: testDataForPlayer.map(
+              (data) => `round ${data.roundNumber.toString()}`
+            ),
+            datasets: [
+              {
+                name: 'points',
+                values: testDataForPlayer.map((data) => data.score),
+              },
+            ],
           }}
-          color="white"
-          strokeWidth={3}
-        /> */}
+        />
       </div>
       {/* <SideDraw
         toggled={toggled}

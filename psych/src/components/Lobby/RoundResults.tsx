@@ -8,6 +8,7 @@ import {
 import ResultsTableOrchestrator from '../ResultsTableOrchestrator';
 import { countVotesForEachAnswerInArrayForAProvidedRound } from '../../utilities/utilityFunctions';
 import ShowAnswersWithVoteCount from '../ShowAnswersWithVoteCount';
+import ScoreGraph from '../ScoreGraph';
 
 export interface RoundResultsProps {
   gameCode: string | number;
@@ -76,6 +77,17 @@ const RoundResults: React.SFC<RoundResultsProps> = (props) => {
             </div>
           )}
           <div style={{ width: '100vw', paddingTop: 20 }}>
+            <div
+              style={{
+                margin: 'auto',
+              }}
+            >
+              <ScoreGraph
+                playerUid={props.user.uid}
+                votesArray={props.votesArray}
+                answersArray={props.answersArray}
+              />
+            </div>
             <ShowAnswersWithVoteCount
               answersWithVoteTally={countVotesForEachAnswerInArrayForAProvidedRound(
                 props.answersArray,
@@ -84,6 +96,7 @@ const RoundResults: React.SFC<RoundResultsProps> = (props) => {
               )}
             />
           </div>
+
           <ResultsTableOrchestrator
             votes={props.votesArray}
             players={props.playersArray}

@@ -3,6 +3,8 @@ import { faMedal } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { useEffect, useState } from 'react';
 import { motion } from 'framer-motion';
+import { answerType, voteType } from '../types';
+import ScoreGraph from './ScoreGraph';
 
 export interface ShowAnswersWithVoteCountProps {
   answersWithVoteTally: answerWithVotes[];
@@ -128,6 +130,7 @@ const ShowAnswersWithVoteCount: React.SFC<ShowAnswersWithVoteCountProps> = ({
     }
     return '#eb772f';
   }
+
   return (
     <AnswersContainer>
       {answersWithVoteTally.map((answerWithVote) => {
@@ -138,14 +141,11 @@ const ShowAnswersWithVoteCount: React.SFC<ShowAnswersWithVoteCountProps> = ({
               hover: {
                 y: -10,
                 scale: 1.05,
-                // boxShadow: '4px 4px 4px 4px gray',
               },
             }}
             whileHover="hover"
           >
-            <AnswerContainer
-            //  key={answerWithVote.uid}
-            >
+            <AnswerContainer>
               <AnswerHeader>
                 <AnswerHeaderChild>{answerWithVote.name}</AnswerHeaderChild>
                 <AnswerHeaderChild style={{ wordBreak: 'keep-all' }}>
