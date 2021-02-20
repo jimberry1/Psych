@@ -83,7 +83,7 @@ function App() {
         height: '100vh',
         width: '100vw',
         overflowX: 'hidden',
-        paddingBottom: 20,
+        // scrollBehavior: 'smooth',
       }}
     >
       <div style={{ position: 'relative', zIndex: 1 }}>

@@ -1,6 +1,8 @@
 import VotingOnAnswersComponent from './VotingOnAnswersComponent';
 import { createAnOrderedListOfPlayerScores } from '../utilities/utilityFunctions';
 import styled from 'styled-components';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faChartLine } from '@fortawesome/free-solid-svg-icons';
 
 const RoundResultsContainer = styled.div`
   display: flex;
@@ -40,12 +42,16 @@ export interface ResultsTableOrchestratorProps {
   players: any;
   votes: any;
   roundNumber: number;
+  playerSelected: any;
+  selectedPlayerUid: string;
 }
 
 const ResultsTableOrchestrator: React.SFC<ResultsTableOrchestratorProps> = ({
   players,
   votes,
   roundNumber,
+  playerSelected,
+  selectedPlayerUid,
 }) => {
   return (
     <div>
@@ -60,6 +66,16 @@ const ResultsTableOrchestrator: React.SFC<ResultsTableOrchestratorProps> = ({
           <DataCellContainer>
             <h2>Change</h2>
           </DataCellContainer>
+          <div
+            style={{
+              padding: 5,
+              display: 'flex',
+              justifyContent: 'center',
+              alignItems: 'center',
+            }}
+          >
+            <FontAwesomeIcon icon={faChartLine} />
+          </div>
         </DataRowContainer>
         {createAnOrderedListOfPlayerScores(players, votes, roundNumber).map(
           (player: any, index: number) => {
@@ -73,6 +89,22 @@ const ResultsTableOrchestrator: React.SFC<ResultsTableOrchestratorProps> = ({
                 <DataCellContainer>{player.name}</DataCellContainer>
                 <DataCellContainer>{player.totalScore}</DataCellContainer>
                 <DataCellContainer>+ {player.scoreThisRound}</DataCellContainer>
+                <div
+                  style={{
+                    borderRadius: '50%',
+                    height: 10,
+                    width: 10,
+                    backgroundColor:
+                      selectedPlayerUid === player.uid ? '#23e000' : 'white',
+                  }}
+                  onClick={() => {
+                    if (selectedPlayerUid === player.uid) {
+                      playerSelected('');
+                    } else {
+                      playerSelected(player.uid);
+                    }
+                  }}
+                />
               </DataRowContainer>
               //   </div>
             );

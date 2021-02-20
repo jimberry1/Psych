@@ -1,59 +1,42 @@
-import { answerType, voteType } from '../types';
+import { voteType } from '../types';
 import ReactFrappeChart from 'react-frappe-charts';
 
 export interface ScoreGraphProps {
   playerUid: string;
   votesArray: voteType[];
-  answersArray: answerType[];
+  roundNumber: number;
 }
 
 const ScoreGraph: React.SFC<ScoreGraphProps> = ({
   playerUid,
   votesArray,
-  answersArray,
+  roundNumber,
 }) => {
-  function generatePlottableDataForPlayer(
+  function generatePlottableDataUsingRoundNumber(
     playerUid: string,
     votesArray: voteType[],
-    answersArray: answerType[]
+    roundNumber: number
   ) {
-    const filteredAndOrderedAns = answersArray
-      .filter((ans: answerType) => ans.data.uid === playerUid)
-      .sort((ans1, ans2) => {
-        if (ans1.data.roundNumber < ans2.data.roundNumber) {
-          return -1;
-        } else if (ans1.data.roundNumber < ans2.data.roundNumber) {
-          return 1;
-        } else return 0;
-      });
+    console.log('inside method with roundNumber' + roundNumber);
+    const results = [{ roundNumber: 0, score: 0 }];
+    // How about instead of doing it like this we pass the round number, then do a for loop, counting the number of votes for each round
+    for (let i = 1; i <= 3; i++) {
+      console.log('inside for loop and filtering data');
+      const numberOfVotesInRound = votesArray
+        .filter((vote: voteType) => vote.data.roundNumber === i)
+        .filter((vote: voteType) => vote.data.votedForUid === playerUid).length;
 
-    console.log(filteredAndOrderedAns);
-
-    return [
-      { roundNumber: 0, score: 0 },
-      ...filteredAndOrderedAns.map((ans: answerType) => {
-        const numberOfVotes = votesArray
-          .filter(
-            (vote: voteType) => vote.data.roundNumber === ans.data.roundNumber
-          )
-          .filter((vote: voteType) => vote.data.votedForUid === ans.data.uid)
-          .length;
-
-        return {
-          roundNumber: ans.data.roundNumber,
-          score: numberOfVotes,
-        };
-      }),
-    ];
+      console.log(numberOfVotesInRound);
+      results.push({ roundNumber: i, score: numberOfVotesInRound });
+    }
+    return results;
   }
 
-  const plottableData = generatePlottableDataForPlayer(
+  const plottableData = generatePlottableDataUsingRoundNumber(
     playerUid,
     votesArray,
-    answersArray
+    roundNumber
   );
-
-  console.log(plottableData);
 
   return (
     <div>

@@ -38,7 +38,7 @@ const VotedForMeName = styled.div`
 `;
 
 const RoundResults: React.SFC<RoundResultsProps> = (props) => {
-  const [showGraph, setShowGraph] = useState(false);
+  const [showGraph, setShowGraph] = useState('');
   const nextRoundHandler = () => {
     db.collection('games')
       .doc(props.gameCode.toString())
@@ -73,17 +73,6 @@ const RoundResults: React.SFC<RoundResultsProps> = (props) => {
         <div style={{ width: '100%' }}>
           <GeneralPageSubTitle>Results</GeneralPageSubTitle>
 
-          {/* <p>
-            My score +
-            {
-              props.votesArray
-                .filter(
-                  (vote: any) => vote.data.roundNumber === props.roundNumber
-                )
-                .filter((vote: any) => vote.data.votedForUid === props.user.uid)
-                .length
-            }
-          </p> */}
           {playersWhoVotedForMe.length > 0 && (
             <div style={{ paddingBottom: 20 }}>
               <VotedForMeName style={{ fontSize: 25 }}>
@@ -94,40 +83,43 @@ const RoundResults: React.SFC<RoundResultsProps> = (props) => {
                   <VotedForMeName key={playerName}>{playerName}</VotedForMeName>
                 );
               })}
-              <GeneralBlueButtonStyles
-                style={{ width: 200, margin: 10 }}
-                onClick={() => setShowGraph((curVal) => !curVal)}
-              >
-                {showGraph ? 'Hide' : 'Show Graph'}
-              </GeneralBlueButtonStyles>
             </div>
           )}
-          <AnimatePresence>
-            {showGraph && (
-              <motion.div
-                variants={verticalFadeInVariants}
-                initial="hidden"
-                animate="visible"
-                exit="hidden"
-                style={{
-                  margin: 'auto',
-                }}
-              >
-                <ScoreGraph
-                  playerUid={props.user.uid}
-                  votesArray={props.votesArray}
-                  answersArray={props.answersArray}
-                />
-              </motion.div>
-            )}
-          </AnimatePresence>
-          <div style={{ paddingTop: 20, borderTop: '1px solid gray' }}>
-            <GeneralPageSubTitle>Scoreboard</GeneralPageSubTitle>
 
+          <div
+            style={{
+              paddingTop: 20,
+              borderTop: '1px solid gray',
+              transition: 'height 1s',
+            }}
+          >
+            <GeneralPageSubTitle>Scoreboard</GeneralPageSubTitle>
+            <AnimatePresence>
+              {showGraph && (
+                <motion.div
+                  variants={verticalFadeInVariants}
+                  transition={{ delay: 0.2 }}
+                  initial="hidden"
+                  animate="visible"
+                  exit="hidden"
+                  style={{
+                    margin: 'auto',
+                  }}
+                >
+                  <ScoreGraph
+                    playerUid={showGraph}
+                    votesArray={props.votesArray}
+                    roundNumber={props.roundNumber}
+                  />
+                </motion.div>
+              )}
+            </AnimatePresence>
             <ResultsTableOrchestrator
               votes={props.votesArray}
               players={props.playersArray}
               roundNumber={props.roundNumber}
+              playerSelected={(playerUid: string) => setShowGraph(playerUid)}
+              selectedPlayerUid={showGraph}
             />
           </div>
           <div
