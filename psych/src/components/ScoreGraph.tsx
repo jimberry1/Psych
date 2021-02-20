@@ -20,7 +20,7 @@ const ScoreGraph: React.SFC<ScoreGraphProps> = ({
     console.log('inside method with roundNumber' + roundNumber);
     const results = [{ roundNumber: 0, score: 0 }];
     // How about instead of doing it like this we pass the round number, then do a for loop, counting the number of votes for each round
-    for (let i = 1; i <= 3; i++) {
+    for (let i = 1; i <= roundNumber; i++) {
       console.log('inside for loop and filtering data');
       const numberOfVotesInRound = votesArray
         .filter((vote: voteType) => vote.data.roundNumber === i)
