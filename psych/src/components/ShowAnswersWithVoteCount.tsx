@@ -138,12 +138,13 @@ const ShowAnswersWithVoteCount: React.SFC<ShowAnswersWithVoteCountProps> = ({
           <motion.div
             key={`${answerWithVote.uid} - 1111`}
             variants={{
-              hover: {
+              interact: {
                 y: -10,
                 scale: 1.05,
               },
             }}
-            whileHover="hover"
+            whileHover="interact"
+            whileTap="interact"
           >
             <AnswerContainer>
               <AnswerHeader>

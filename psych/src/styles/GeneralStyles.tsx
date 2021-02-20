@@ -39,6 +39,7 @@ export const ContainerStyles = styled.div`
   gap: 20px;
   height: 100vh;
   overflow: none;
+  padding-bottom: 50px;
 `;
 
 export const GeneralPageSubTitle = styled.div`
