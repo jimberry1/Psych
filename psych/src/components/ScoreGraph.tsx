@@ -12,22 +12,22 @@ const ScoreGraph: React.SFC<ScoreGraphProps> = ({
   votesArray,
   roundNumber,
 }) => {
+  // Counts the number of votes a player got each round between the start of the game and the current round number
   function generatePlottableDataUsingRoundNumber(
     playerUid: string,
     votesArray: voteType[],
     roundNumber: number
   ) {
-    console.log('inside method with roundNumber' + roundNumber);
     const results = [{ roundNumber: 0, score: 0 }];
-    // How about instead of doing it like this we pass the round number, then do a for loop, counting the number of votes for each round
+    let cumulativeScore = 0;
     for (let i = 1; i <= roundNumber; i++) {
-      console.log('inside for loop and filtering data');
       const numberOfVotesInRound = votesArray
         .filter((vote: voteType) => vote.data.roundNumber === i)
         .filter((vote: voteType) => vote.data.votedForUid === playerUid).length;
 
-      console.log(numberOfVotesInRound);
-      results.push({ roundNumber: i, score: numberOfVotesInRound });
+      cumulativeScore = cumulativeScore + numberOfVotesInRound;
+
+      results.push({ roundNumber: i, score: cumulativeScore });
     }
     return results;
   }
