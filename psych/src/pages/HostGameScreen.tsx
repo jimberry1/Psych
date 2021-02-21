@@ -29,7 +29,7 @@ const HostGameScreen = (props: any) => {
   const [numberOfQuestions, setNumberOfQuestions] = useState(70); // Defaulted to 70 but is updated with a useEffect call to the database at the start
   const [redirectTo, setRedirectTo] = useState('');
   const [roundNumberSelected, setRoundNumberSelected] = useState(10);
-  const [timeLimitSelected, setTimeLimitSelected] = useState('-');
+  const [timeLimitSelected, setTimeLimitSelected] = useState(-1);
 
   // Get the number of questions in the questions component
   useEffect(() => {
@@ -50,16 +50,9 @@ const HostGameScreen = (props: any) => {
       .collection('players');
 
     // if (props.gameCode) {
-    console.log(
-      'this is the game code when fetching the people ' +
-        props.gameCode.toString()
-    );
 
     const snapshot = playerDbRef.onSnapshot((docSnapshot: any) => {
       setPlayers(
-        docSnapshot.docs.map((doc: any) => ({ id: doc.id, data: doc.data() }))
-      );
-      console.log(
         docSnapshot.docs.map((doc: any) => ({ id: doc.id, data: doc.data() }))
       );
     });
@@ -68,7 +61,6 @@ const HostGameScreen = (props: any) => {
   }, [props.gameCode]);
 
   const startGameHandler = () => {
-    // const randomNames = randomlyPickNamesForQuestions(players, 15);
     // console.log(randomNames);
     //Change this to be the number of rounds and the total number of questions in the database that we'll get from doing a query search
 
@@ -82,8 +74,6 @@ const HostGameScreen = (props: any) => {
       players,
       roundNumberSelected
     );
-
-    console.log(randomlyPickedPlayersForQuestions);
 
     db.collection('games')
       .doc(props.gameCode.toString())
@@ -120,7 +110,7 @@ const HostGameScreen = (props: any) => {
           setRoundNumberSelected(roundNumber)
         }
         timeLimitSelected={timeLimitSelected}
-        setTimeLimitSelected={(timeLimit: string) =>
+        setTimeLimitSelected={(timeLimit: number) =>
           setTimeLimitSelected(timeLimit)
         }
       />

@@ -11,8 +11,8 @@ import {
 export interface HostGameCustomisationControlsProps {
   roundNumberSelected: number;
   setRoundNumberSelected: (roundNumber: number) => void;
-  timeLimitSelected: string;
-  setTimeLimitSelected: (timeLimit: string) => void;
+  timeLimitSelected: number;
+  setTimeLimitSelected: (timeLimit: number) => void;
 }
 
 const HostGameCustomisationControls: React.SFC<HostGameCustomisationControlsProps> = ({
@@ -61,37 +61,39 @@ const HostGameCustomisationControls: React.SFC<HostGameCustomisationControlsProp
         </GameControlsOptionsContainer>
       </GameControlsInnerBox>
       <GameControlsInnerBox>
-        <GameControlsInnerBoxTitle>Time limit (mins)</GameControlsInnerBoxTitle>
+        <GameControlsInnerBoxTitle>
+          Question time limit (mins)
+        </GameControlsInnerBoxTitle>
         <GameControlsOptionsContainer>
           <GameControlsInnerBoxContent
             style={{
-              border: timeLimitSelected === '1' ? '1px solid green' : 'none',
+              border: timeLimitSelected === 1 ? '1px solid green' : 'none',
             }}
-            onClick={() => setTimeLimitSelected('1')}
+            onClick={() => setTimeLimitSelected(1)}
           >
             1
           </GameControlsInnerBoxContent>
           <GameControlsInnerBoxContent
             style={{
-              border: timeLimitSelected === '2' ? '1px solid green' : 'none',
+              border: timeLimitSelected === 2 ? '1px solid green' : 'none',
             }}
-            onClick={() => setTimeLimitSelected('2')}
+            onClick={() => setTimeLimitSelected(2)}
           >
             2
           </GameControlsInnerBoxContent>
           <GameControlsInnerBoxContent
             style={{
-              border: timeLimitSelected === '5' ? '1px solid green' : 'none',
+              border: timeLimitSelected === 5 ? '1px solid green' : 'none',
             }}
-            onClick={() => setTimeLimitSelected('5')}
+            onClick={() => setTimeLimitSelected(5)}
           >
             5
           </GameControlsInnerBoxContent>
           <GameControlsInnerBoxContent
             style={{
-              border: timeLimitSelected === '-' ? '1px solid green' : 'none',
+              border: timeLimitSelected === -1 ? '1px solid green' : 'none',
             }}
-            onClick={() => setTimeLimitSelected('-')}
+            onClick={() => setTimeLimitSelected(-1)}
           >
             None
           </GameControlsInnerBoxContent>
