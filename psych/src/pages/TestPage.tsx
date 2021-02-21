@@ -10,7 +10,7 @@ import ReactFrappeChart from 'react-frappe-charts';
 import ProfilePictureUpload from '../ProfilePictureUpload';
 // export interface TestPageProps {}
 
-const TestPage = () => {
+const TestPage = ({ user }: any) => {
   const [toggled, setToggled] = useState(false);
   const [profilePicture, setProfilePicture] = useState(null);
   const colors = ['#ff0055', '#0099ff', '#22cc88', '#ffaa00'];
@@ -87,7 +87,7 @@ const TestPage = () => {
         {test2.replace('xxx', 'jim').replace('XXX', 'jim')}
       </div>
 
-      <ProfilePictureUpload />
+      <ProfilePictureUpload userUid={user.uid} />
     </div>
   );
 };

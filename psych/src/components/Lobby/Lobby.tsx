@@ -19,10 +19,12 @@ const Lobby = (props: LobbyProps) => {
       animate="visible"
     >
       {props.players.map((player) => {
+        console.log(player);
         return (
           <LobbyCard
             key={player.id}
             name={player.data.name}
+            photoURL={player.data.photoURL}
             hasAnswered={player?.hasAnswered || false}
             showLoader={props.showLoader || false}
           />

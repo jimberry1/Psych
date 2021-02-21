@@ -69,7 +69,7 @@ function App() {
             />
           </Route>
           <Route exact path="/test">
-            <TestPage />
+            <TestPage user={user} />
           </Route>
           <Route exact path="/game" key="GamePageKey">
             <GamePage gameCode={gameCode} user={user} />

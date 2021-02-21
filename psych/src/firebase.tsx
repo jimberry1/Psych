@@ -15,6 +15,7 @@ firebase.analytics();
 
 const db = firebaseApp.firestore();
 const auth = firebase.auth();
+const storage = firebaseApp.storage();
 
-export { auth, firebaseApp };
+export { auth, firebaseApp, storage };
 export default db;

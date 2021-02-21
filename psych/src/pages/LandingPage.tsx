@@ -45,7 +45,7 @@ const LandingPage = (props: any) => {
                   .add({
                     name: props.user.name,
                     uid: props.user.uid,
-                    answer: '',
+                    photoURL: props.user.photoURL,
                   });
               } else {
                 console.log('Player is already in that game');
@@ -88,10 +88,11 @@ const LandingPage = (props: any) => {
       .set({ gameCode: newGameId }, { merge: true });
 
     // Then add yourself as a player to the lobby
-    db.collection('games')
-      .doc(newGameId)
-      .collection('players')
-      .add({ name: props.user.name, uid: props.user.uid });
+    db.collection('games').doc(newGameId).collection('players').add({
+      name: props.user.name,
+      uid: props.user.uid,
+      photoURL: props.user.photoURL,
+    });
 
     //Then update your gameCode state locally
     props.gameCodeChanged(newGameId);
