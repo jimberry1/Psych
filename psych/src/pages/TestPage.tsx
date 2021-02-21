@@ -7,10 +7,12 @@ import HamburgerMenu from 'react-hamburger-menu';
 import { CountdownCircleTimer } from 'react-countdown-circle-timer';
 import Modal from '../UI/Modal/Modal';
 import ReactFrappeChart from 'react-frappe-charts';
+import ProfilePictureUpload from '../ProfilePictureUpload';
 // export interface TestPageProps {}
 
 const TestPage = () => {
   const [toggled, setToggled] = useState(false);
+  const [profilePicture, setProfilePicture] = useState(null);
   const colors = ['#ff0055', '#0099ff', '#22cc88', '#ffaa00'];
   const [selected, setSelected] = useState('#ff0055');
 
@@ -84,6 +86,8 @@ const TestPage = () => {
         </button>
         {test2.replace('xxx', 'jim').replace('XXX', 'jim')}
       </div>
+
+      <ProfilePictureUpload />
     </div>
   );
 };
