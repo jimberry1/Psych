@@ -19,6 +19,7 @@ function App() {
   const [user, setUser] = useState(null);
   const [gameCode, setGameCode]: any = useState('');
   const [errorOrInfoText, setErrorOrInfoText] = useState('');
+  const [modalTitleText, setModalTitleText] = useState('');
   const [showModal, setShowModal] = useState(false);
 
   const HandleNewErrorOrInfo = (message: string) => {
@@ -53,7 +54,10 @@ function App() {
                 gameCodeChanged={(value: any) => setGameCode(value)}
                 gameCode={gameCode}
                 user={user}
-                handleError={(text: string) => setErrorOrInfoText(text)}
+                handleError={(text: string) => {
+                  setErrorOrInfoText(text);
+                  setModalTitleText('Attention');
+                }}
               />
             )}
           />
@@ -93,11 +97,20 @@ function App() {
             setShowModal((curVal) => !curVal);
             setErrorOrInfoText('');
           }}
+          title={modalTitleText}
           message={errorOrInfoText}
         />
       </div>
       <div style={{ position: 'relative', zIndex: 1 }}>
-        <Header logout={() => setUser(null)} isAuthenticated={user !== null} />
+        <Header
+          logout={() => setUser(null)}
+          isAuthenticated={user !== null}
+          infoButtonClicked={() => {
+            setModalTitleText('INFO');
+            setErrorOrInfoText(`The Game Code is: ${gameCode}`);
+            setShowModal(true);
+          }}
+        />
       </div>
       <div style={{ position: 'relative' }}>{AppPage}</div>
     </div>

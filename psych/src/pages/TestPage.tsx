@@ -76,6 +76,7 @@ const TestPage = () => {
         toggled={toggled}
         setToggled={() => setToggled((curVal) => !curVal)}
         message="Modal message"
+        title="Test title"
       />
       <div>
         <button onClick={() => setToggled((curVal) => !curVal)}>

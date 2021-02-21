@@ -2,9 +2,13 @@ import styled from 'styled-components';
 import Sidedraw from './Sidedraw';
 import { useState } from 'react';
 import { motion, useAnimation } from 'framer-motion';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faInfoCircle } from '@fortawesome/free-solid-svg-icons';
+
 export interface HeaderProps {
   logout: any;
   isAuthenticated: boolean;
+  infoButtonClicked: () => void;
 }
 
 const HeaderContainer = styled.div`
@@ -34,7 +38,23 @@ const TitleLetter = styled.span`
   font-family: 'Titan One', cursive;
 `;
 
-const Header: React.SFC<HeaderProps> = ({ logout, isAuthenticated }) => {
+const InfoIconContainer = styled.div`
+  position: absolute;
+  top: 15px;
+  left: 90vw;
+  margin: auto;
+
+  @media (max-width: 1000px) {
+    left: 80vw;
+    top: 17;
+  }
+`;
+
+const Header: React.SFC<HeaderProps> = ({
+  logout,
+  isAuthenticated,
+  infoButtonClicked,
+}) => {
   const [toggled, setToggled] = useState(false);
   const titleArray = ['P', 'S', 'Y', 'C', 'H'];
   const colors = ['#FF008C', '#D309E1', '#9C1AFF', '#7700FF', '#4400FF'];
@@ -82,6 +102,11 @@ const Header: React.SFC<HeaderProps> = ({ logout, isAuthenticated }) => {
           </TitleContainer>
         </HeaderContainer>
       </div>
+      {isAuthenticated && (
+        <InfoIconContainer onClick={() => infoButtonClicked()}>
+          <FontAwesomeIcon icon={faInfoCircle} style={{ fontSize: '2.5em' }} />
+        </InfoIconContainer>
+      )}
     </div>
   );
 };

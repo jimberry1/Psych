@@ -66,10 +66,10 @@ const VotingOnAnswersComponent: React.SFC<WaitingForPlayersProps> = (props) => {
     <ContainerStyles>
       {!userHasVotedalready && (
         <div>
-          <GeneralPageSubTitle>{props.question}</GeneralPageSubTitle>
           <GeneralPageSubTitle>
             Vote for your favourite answer!
           </GeneralPageSubTitle>
+          <GeneralPageSubTitle>{props.question}</GeneralPageSubTitle>
         </div>
       )}
       <motion.div

@@ -21,7 +21,7 @@ const ModalBox = styled.div`
   width: 60vw;
   position: absolute;
   left: 20vw;
-  top: 10vh;
+  top: 20vh;
   border-radius: 20px;
 
   border: 3px solid black;
@@ -68,7 +68,7 @@ const ModalButton = styled.button`
   }
 `;
 
-const Modal = ({ toggled, setToggled, message }) => {
+const Modal = ({ toggled, setToggled, message, title }) => {
   const animationControl = useAnimation();
 
   useEffect(() => {
@@ -102,7 +102,9 @@ const Modal = ({ toggled, setToggled, message }) => {
             exit="hidden"
           >
             <ModalBox>
-              <InnerModalHeaderContainer>Attention</InnerModalHeaderContainer>
+              <InnerModalHeaderContainer>
+                {title ? title : 'Attention'}
+              </InnerModalHeaderContainer>
               <InnerModalMessageContainer>{message}</InnerModalMessageContainer>
               <ModalButton onClick={setToggled}>Got it</ModalButton>
             </ModalBox>

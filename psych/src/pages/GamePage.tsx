@@ -81,20 +81,6 @@ const GamePage = (props: any) => {
             data: answer.data(),
           }))
         );
-        // console.log(
-        //   `Number of answers (${snap.docs.length}) = total number of players (${props.numberOfPlayers}) so auto progressing to results round`
-        // );
-        // if (
-        //   snap.docs.length > 0 &&
-        //   snap.docs.length === props.numberOfPlayers
-        // ) {
-        //   console.log(
-        //     `Number of answers (${snap.docs.length}) = total number of players (${props.numberOfPlayers}) so auto progressing to results round`
-        //   );
-        //   db.collection('games')
-        //     .doc(props.gameCode.toString())
-        //     .set({ isVotingRound: false, isResultsRound: true });
-        // }
       });
     return answersDbRef;
   }, []);
@@ -133,9 +119,6 @@ const GamePage = (props: any) => {
 
   // Gets the question for the round using the information from the games collectiom
   useEffect(() => {
-    console.log(roundNumber);
-    console.log(questionIndex);
-    console.log(questionIndex[roundNumber]);
     if (!questionIndex) {
       return;
     }
@@ -255,7 +238,7 @@ const GamePage = (props: any) => {
           : 'ERROR - NO NAME FOUND'
       )
       .replace(
-        'xxx',
+        'XXX',
         randomNameArray.length >= roundNumber
           ? arrayOfNames[roundNumber]
           : 'ERROR - NO NAME FOUND'
