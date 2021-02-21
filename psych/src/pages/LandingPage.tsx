@@ -15,10 +15,8 @@ import { motion } from 'framer-motion';
 import { PageContainerVariants } from '../styles/Animations';
 import db from '../firebase';
 import { Redirect } from 'react-router';
-import {
-  makeRandomGameId,
-  questionArrayGenerator,
-} from '../utilities/utilityFunctions';
+import { makeRandomGameId } from '../utilities/utilityFunctions';
+import firebase from 'firebase';
 
 const LandingPage = (props: any) => {
   const [showGameCodeInput, setShowGameCodeInput] = useState(false);
@@ -81,6 +79,7 @@ const LandingPage = (props: any) => {
       isVotingRound: false,
       isResultsRound: false,
       host: props.user.uid,
+      timestamp: firebase.firestore.FieldValue.serverTimestamp(),
     });
 
     // Then change your game code to reflect the new lobby that you made

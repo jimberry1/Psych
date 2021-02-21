@@ -242,14 +242,28 @@ const GamePage = (props: any) => {
       );
   };
 
+  const substituteNameIntoQuestion = (
+    question: string,
+    arrayOfNames: any[],
+    roundNumber: number
+  ) => {
+    return question
+      .replace(
+        'xxx',
+        randomNameArray.length >= roundNumber
+          ? arrayOfNames[roundNumber]
+          : 'ERROR - NO NAME FOUND'
+      )
+      .replace(
+        'xxx',
+        randomNameArray.length >= roundNumber
+          ? arrayOfNames[roundNumber]
+          : 'ERROR - NO NAME FOUND'
+      );
+  };
+
   return (
     <AnimatePresence exitBeforeEnter>
-      {/* <motion.div
-        variants={PageContainerVariants}
-        initial="hidden"
-        animate="visible"
-        exit="exitting"
-      > */}
       {!hasAlreadyAnswered && isQuestionsRound && (
         <motion.div
           key={10000000001}
@@ -259,19 +273,11 @@ const GamePage = (props: any) => {
           exit="hidden"
         >
           <QuestionComponent
-            question={question
-              .replace(
-                'XXX',
-                randomNameArray.length >= roundNumber
-                  ? randomNameArray[roundNumber]
-                  : 'ERROR - NO NAME FOUND'
-              )
-              .replace(
-                'xxx',
-                randomNameArray.length >= roundNumber
-                  ? randomNameArray[roundNumber]
-                  : 'ERROR - NO NAME FOUND'
-              )}
+            question={substituteNameIntoQuestion(
+              question,
+              randomNameArray,
+              roundNumber
+            )}
             answer={answer}
             answerChangedHandler={(newAnswer) => setAnswer(newAnswer)}
             submitAnswerHandler={() => submitAnswerHandler()}
@@ -318,6 +324,11 @@ const GamePage = (props: any) => {
             votesArray={votes}
             isHost={isHost}
             proceedToResultsRound={ProceedToResultsHandler}
+            question={substituteNameIntoQuestion(
+              question,
+              randomNameArray,
+              roundNumber
+            )}
           />
         </motion.div>
       )}
@@ -342,7 +353,6 @@ const GamePage = (props: any) => {
           />
         </motion.div>
       )}
-      {/* </motion.div> */}
     </AnimatePresence>
   );
 };

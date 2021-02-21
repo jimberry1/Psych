@@ -22,6 +22,7 @@ export interface WaitingForPlayersProps {
   votesArray: any[];
   isHost: boolean;
   proceedToResultsRound: any;
+  question: string;
 }
 
 const VotingOnAnswersComponent: React.SFC<WaitingForPlayersProps> = (props) => {
@@ -37,32 +38,6 @@ const VotingOnAnswersComponent: React.SFC<WaitingForPlayersProps> = (props) => {
         .filter((vote: any) => vote.data.voterUid === props.user.uid).length > 0
     ) {
       setUserHasVotedAlready(true);
-    }
-
-    // console.log('checking whether the user has voted already');
-    // db.collection('games')
-    //   .doc(props.gameCode.toString())
-    //   .collection('votes')
-    //   .where('roundNumber', '==', props.roundNumber)
-    //   .where('voterUid', '==', props.user.uid)
-    //   .get()
-    //   .then((usersVotes) => {
-    //     if (!usersVotes.empty) {
-    //       console.log('user has voted already');
-    //       setUserHasVotedAlready(true);
-    //     }
-    //   });
-
-    // console.log(props.answers);
-    if (
-      props.answers
-        .filter((vote: any) => vote.data.roundNumber === props.roundNumber)
-        .filter((vote: any) => vote.data.voterUid === props.user.uid).length > 0
-    ) {
-      setUserHasVotedAlready(true);
-      console.log(
-        'Successfully determined that the user has voted already using my array filter method and can delete the db query'
-      );
     }
   }, [props]);
 
@@ -90,9 +65,12 @@ const VotingOnAnswersComponent: React.SFC<WaitingForPlayersProps> = (props) => {
   return (
     <ContainerStyles>
       {!userHasVotedalready && (
-        <GeneralPageSubTitle>
-          Vote for your favourite answer!
-        </GeneralPageSubTitle>
+        <div>
+          <GeneralPageSubTitle>{props.question}</GeneralPageSubTitle>
+          <GeneralPageSubTitle>
+            Vote for your favourite answer!
+          </GeneralPageSubTitle>
+        </div>
       )}
       <motion.div
         variants={fadeInFromLeft}

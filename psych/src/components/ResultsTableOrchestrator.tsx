@@ -85,6 +85,13 @@ const ResultsTableOrchestrator: React.SFC<ResultsTableOrchestratorProps> = ({
                 style={{
                   backgroundColor: index % 2 == 0 ? '#0c2a4a' : '#230e4a',
                 }}
+                onClick={() => {
+                  if (selectedPlayerUid === player.uid) {
+                    playerSelected('');
+                  } else {
+                    playerSelected(player.uid);
+                  }
+                }}
               >
                 <DataCellContainer>{player.name}</DataCellContainer>
                 <DataCellContainer>{player.totalScore}</DataCellContainer>
@@ -96,13 +103,6 @@ const ResultsTableOrchestrator: React.SFC<ResultsTableOrchestratorProps> = ({
                     width: 10,
                     backgroundColor:
                       selectedPlayerUid === player.uid ? '#23e000' : 'white',
-                  }}
-                  onClick={() => {
-                    if (selectedPlayerUid === player.uid) {
-                      playerSelected('');
-                    } else {
-                      playerSelected(player.uid);
-                    }
                   }}
                 />
               </DataRowContainer>
