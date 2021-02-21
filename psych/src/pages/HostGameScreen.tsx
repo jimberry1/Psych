@@ -12,6 +12,8 @@ import {
   questionArrayGenerator,
   randomlyPickNamesForQuestions,
 } from '../utilities/utilityFunctions';
+import HostGameCustomisationControls from '../components/HostGameCustomisationControls';
+import { GeneralPageSubTitle } from '../styles/GeneralStyles';
 // import { randomlyPickNamesForQuestions } from '../utilities/utilityFunctions';
 
 const ButtonContainer = styled(motion.div)`
@@ -24,8 +26,10 @@ const ButtonContainer = styled(motion.div)`
 
 const HostGameScreen = (props: any) => {
   const [players, setPlayers] = useState([]);
-  const [numberOfQuestions, setNumberOfQuestions] = useState(15);
+  const [numberOfQuestions, setNumberOfQuestions] = useState(70); // Defaulted to 70 but is updated with a useEffect call to the database at the start
   const [redirectTo, setRedirectTo] = useState('');
+  const [roundNumberSelected, setRoundNumberSelected] = useState(10);
+  const [timeLimitSelected, setTimeLimitSelected] = useState('-');
 
   // Get the number of questions in the questions component
   useEffect(() => {
@@ -69,11 +73,14 @@ const HostGameScreen = (props: any) => {
     //Change this to be the number of rounds and the total number of questions in the database that we'll get from doing a query search
 
     // Create a new questions array -- This will need to be changed in the future to use the questions db table and the number of available questions there
-    const questionsIndex = questionArrayGenerator(15, numberOfQuestions);
+    const questionsIndex = questionArrayGenerator(
+      roundNumberSelected,
+      numberOfQuestions
+    );
 
     const randomlyPickedPlayersForQuestions = randomlyPickNamesForQuestions(
       players,
-      15
+      roundNumberSelected
     );
 
     console.log(randomlyPickedPlayersForQuestions);
@@ -87,6 +94,7 @@ const HostGameScreen = (props: any) => {
           questionIndex: questionsIndex,
           randomNameArray: randomlyPickedPlayersForQuestions,
           hostUid: props.user.uid,
+          timeLimit: timeLimitSelected,
         },
         { merge: true }
       )
@@ -103,7 +111,20 @@ const HostGameScreen = (props: any) => {
       exit="exit"
     >
       {redirectTo.length > 0 && <Redirect push to={redirectTo} />}
+
       <HostGameContainer lobbyCode={props.gameCode} />
+      <GeneralPageSubTitle>Game Controls</GeneralPageSubTitle>
+      <HostGameCustomisationControls
+        roundNumberSelected={roundNumberSelected}
+        setRoundNumberSelected={(roundNumber: number) =>
+          setRoundNumberSelected(roundNumber)
+        }
+        timeLimitSelected={timeLimitSelected}
+        setTimeLimitSelected={(timeLimit: string) =>
+          setTimeLimitSelected(timeLimit)
+        }
+      />
+      <GeneralPageSubTitle>Players</GeneralPageSubTitle>
       {players[0] && <Lobby players={players} />}
       <ButtonContainer
         variants={verticalFadeInVariants}
