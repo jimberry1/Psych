@@ -142,7 +142,10 @@ const RoundResults: React.SFC<RoundResultsProps> = (props) => {
           </div>
 
           {props.isHost && (
-            <GeneralBlueButtonStyles onClick={nextRoundHandler}>
+            <GeneralBlueButtonStyles
+              onClick={nextRoundHandler}
+              style={{ marginBottom: 20 }}
+            >
               Proceed to round {props.roundNumber + 1}
             </GeneralBlueButtonStyles>
           )}
