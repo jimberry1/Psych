@@ -21,8 +21,6 @@ const LobbyCardStyle = styled(motion.div)`
   border: 1px solid lightgray;
 `;
 const LobbyCard = (props: LobbyCardProps) => {
-  console.log(props.showLoader);
-  console.log(props.photoURL);
   return (
     <LobbyCardStyle
       variants={verticalFadeInVariants}

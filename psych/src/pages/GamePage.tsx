@@ -32,7 +32,6 @@ const GamePage = (props: any) => {
       .collection('games')
       .doc(props.gameCode.toString())
       .onSnapshot((fetchedQuestionSnapshot: any) => {
-        console.log(fetchedQuestionSnapshot.data());
         setGameInfo(fetchedQuestionSnapshot.data());
 
         setRoundNumber(fetchedQuestionSnapshot.data().roundNumber);
@@ -89,7 +88,6 @@ const GamePage = (props: any) => {
 
   //Establishes snapshot listener to the votes subcollection
   useEffect(() => {
-    console.log('loading votes...');
     const votesSnapshot = db
       .collection('games')
       .doc(props.gameCode.toString())
@@ -148,7 +146,6 @@ const GamePage = (props: any) => {
         .get()
         .then((answerQuery) => {
           setHasAlreadyAnswered(!answerQuery.empty);
-          console.log('has already answered = ' + !answerQuery.empty);
         });
     }
   }, [roundNumber, isVotingRound]);
@@ -189,7 +186,6 @@ const GamePage = (props: any) => {
   const submitAnswerHandler = () => {
     if (!hasAlreadyAnswered) {
       if (answer.length > 0) {
-        console.log('submitAnswerHandler invoked');
         db.collection('games')
           .doc(props.gameCode.toString())
           .collection('answers')

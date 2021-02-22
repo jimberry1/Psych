@@ -18,7 +18,6 @@ export const questionArrayGenerator = (
   const questionArray = [];
 
   while (questionArray.length < numberOfRounds) {
-    console.log(questionArray);
     const randomNumber = Math.floor(Math.random() * totalNumberOfQs);
     if (questionArray.indexOf(randomNumber) === -1)
       questionArray.push(randomNumber);
@@ -49,8 +48,6 @@ export const createArrayOfPeopleWhoHaveVoted = (
   const namesOfPeopleWhoHaveAnswered = answersOrQuestionsArray
     .filter((answer: any) => answer.data.roundNumber === roundNumber)
     .map((answer: any) => answer.data.voterName);
-
-  console.log(namesOfPeopleWhoHaveAnswered);
 
   return playerArray.map((player: any) => ({
     ...player,

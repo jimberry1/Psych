@@ -45,7 +45,6 @@ const VotingOnAnswersComponent: React.SFC<WaitingForPlayersProps> = (props) => {
   }, [props]);
 
   const castVoteHandler = (uid: string, name: string) => {
-    console.log('castVoteHandler invoked with uid = ' + uid);
     if (!userHasVotedalready) {
       db.collection('games')
         .doc(props.gameCode.toString())
@@ -95,7 +94,6 @@ const VotingOnAnswersComponent: React.SFC<WaitingForPlayersProps> = (props) => {
         {roundAnswers &&
           !userHasVotedalready &&
           props.answers.map((answer: any, index: number) => {
-            console.log(index);
             return (
               <motion.div
                 variants={{

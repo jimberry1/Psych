@@ -60,13 +60,6 @@ const RoundResults: React.SFC<RoundResultsProps> = (props) => {
       return element.data.voterName;
     });
 
-  console.log(
-    countVotesForEachAnswerInArrayForAProvidedRound(
-      props.answersArray,
-      props.votesArray,
-      props.roundNumber
-    )
-  );
   return (
     <ContainerStyles>
       {props.isResultsRound && (
