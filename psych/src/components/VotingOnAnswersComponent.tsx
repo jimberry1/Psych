@@ -11,6 +11,7 @@ import {
 import { QuestionAnswer } from '../styles/GamePageStyles';
 import Lobby from '../components/Lobby/Lobby';
 import { createArrayOfPeopleWhoHaveVoted } from '../utilities/utilityFunctions';
+import CountDownClock from './CountDownClock';
 export interface WaitingForPlayersProps {
   roundNumber: number;
   gameCode: string | number;
@@ -23,6 +24,8 @@ export interface WaitingForPlayersProps {
   isHost: boolean;
   proceedToResultsRound: any;
   question: string;
+  roundDurationTimer: number;
+  roundTimerRunsOutOfTimeHandler: () => void;
 }
 
 const VotingOnAnswersComponent: React.SFC<WaitingForPlayersProps> = (props) => {
@@ -64,6 +67,12 @@ const VotingOnAnswersComponent: React.SFC<WaitingForPlayersProps> = (props) => {
 
   return (
     <ContainerStyles>
+      {props.roundDurationTimer > 0 && !userHasVotedalready && (
+        <CountDownClock
+          duration={props.roundDurationTimer * 60}
+          countDownComplete={props.roundTimerRunsOutOfTimeHandler}
+        />
+      )}
       {!userHasVotedalready && (
         <div>
           <GeneralPageSubTitle>

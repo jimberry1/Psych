@@ -8,12 +8,15 @@ import {
   GeneralPageSubTitle,
 } from '../styles/GeneralStyles';
 import { StyledTextArea } from '../styles/LandingPageStyles';
+import CountDownClock from './CountDownClock';
 export interface QuestionComponentProps {
   question: string;
   answer: string;
   gameCode: string | number;
   answerChangedHandler: (answer: string) => void;
   submitAnswerHandler: () => void;
+  roundDurationTimer: number;
+  roundTimerRunsOutOfTimeHandler: () => void;
 }
 
 const QuestionComponent: React.SFC<QuestionComponentProps> = ({
@@ -22,10 +25,18 @@ const QuestionComponent: React.SFC<QuestionComponentProps> = ({
   gameCode,
   answerChangedHandler,
   submitAnswerHandler,
+  roundDurationTimer,
+  roundTimerRunsOutOfTimeHandler,
 }) => {
   return (
     <motion.div>
       <ContainerStyles>
+        {roundDurationTimer > 0 && (
+          <CountDownClock
+            duration={roundDurationTimer * 60}
+            countDownComplete={roundTimerRunsOutOfTimeHandler}
+          />
+        )}
         <GeneralPageSubTitle style={{ marginBottom: 50, padding: 20 }}>
           {question}
         </GeneralPageSubTitle>
