@@ -83,7 +83,6 @@ const Menu: React.SFC<MenuProps> = ({
 
   if (toggled) {
     animationControl.start('visible');
-    console.log('Anomiation control called');
   } else {
     animationControl.start('hidden');
   }

@@ -37,7 +37,6 @@ const HostGameScreen = (props: any) => {
       .doc('Indexor')
       .get()
       .then((doc) => {
-        console.log(doc.get('index'));
         setNumberOfQuestions(doc.get('index'));
       });
   }, []);

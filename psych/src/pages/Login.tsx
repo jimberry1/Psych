@@ -29,7 +29,6 @@ const Login = ({
   const [password, setPassword] = useState('');
 
   if (localStorageUid !== null) {
-    console.log('id found');
     auth.onAuthStateChanged(function (user) {
       if (user) {
         const dbUserRef = db.collection('users').doc(localStorageUid);
