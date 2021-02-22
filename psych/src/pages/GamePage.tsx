@@ -8,8 +8,10 @@ import RoundResults from '../components/Lobby/RoundResults';
 import QuestionComponent from '../components/QuestionComponent';
 import WaitingForAnswers from '../components/WaitingForAnswers';
 import { verticalFadeInVariants } from '../styles/Animations';
+import { Redirect } from 'react-router';
+import CountDownClock from '../components/CountDownClock';
 const GamePage = (props: any) => {
-  const [gameInfo, setGameInfo] = useState(null);
+  const [gameInfo, setGameInfo]: any = useState(null);
   const [players, setPlayers] = useState([]);
   const [answers, setAnswers] = useState([]);
   const [votes, setVotes] = useState([]);
@@ -265,6 +267,8 @@ const GamePage = (props: any) => {
             answerChangedHandler={(newAnswer) => setAnswer(newAnswer)}
             submitAnswerHandler={() => submitAnswerHandler()}
             gameCode={props.gameCode}
+            roundDurationTimer={gameInfo.timeLimit}
+            roundTimerRunsOutOfTimeHandler={ProceedToVotingHandler}
           />
         </motion.div>
       )}
@@ -312,6 +316,8 @@ const GamePage = (props: any) => {
               randomNameArray,
               roundNumber
             )}
+            roundDurationTimer={gameInfo.timeLimit}
+            roundTimerRunsOutOfTimeHandler={ProceedToResultsHandler}
           />
         </motion.div>
       )}
@@ -336,6 +342,7 @@ const GamePage = (props: any) => {
           />
         </motion.div>
       )}
+      {gameInfo?.winner && <Redirect to="/endOfGame" />}
     </AnimatePresence>
   );
 };

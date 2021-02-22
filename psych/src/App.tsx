@@ -14,6 +14,7 @@ import AddQuestionsPage from './pages/AddQuestionsPage';
 import Header from './UI/Navbar/Header';
 import { relative } from 'path';
 import Modal from './UI/Modal/Modal';
+import EndOfGamePage from './pages/EndOfGamePage';
 
 function App() {
   const [user, setUser] = useState(null);
@@ -76,6 +77,13 @@ function App() {
           </Route>
           <Route exact path="/submitQuestion">
             <AddQuestionsPage user={user} key="AddQuestionsKey" />
+          </Route>
+          <Route exact path="/EndOfGame">
+            <EndOfGamePage
+              user={user}
+              gameCode={gameCode}
+              key="EndOfGamePage"
+            />
           </Route>
         </Switch>
       </AnimatePresence>
