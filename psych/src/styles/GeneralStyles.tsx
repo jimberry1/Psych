@@ -53,3 +53,8 @@ export const GeneralPageSubTitle = styled.div`
   @media (max-width: 1000px) {
   }
 `;
+
+export const GeneralPageTextBody = styled.span`
+  padding: 5px;
+  font-family: 'Secular One', sans-serif;
+`;

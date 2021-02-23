@@ -30,6 +30,10 @@ const HostGameScreen = (props: any) => {
   const [redirectTo, setRedirectTo] = useState('');
   const [roundNumberSelected, setRoundNumberSelected] = useState(10);
   const [timeLimitSelected, setTimeLimitSelected] = useState(-1);
+  const [
+    playerNumberAutoprogressThreshold,
+    setPlayerNumberAutoprogressThreshold,
+  ] = useState(-1);
 
   // Get the number of questions in the questions component
   useEffect(() => {
@@ -85,6 +89,7 @@ const HostGameScreen = (props: any) => {
           hostUid: props.user.uid,
           timeLimit: timeLimitSelected,
           numberOfRounds: roundNumberSelected,
+          autoProgressionThreshold: playerNumberAutoprogressThreshold,
         },
         { merge: true }
       )
@@ -112,6 +117,10 @@ const HostGameScreen = (props: any) => {
         timeLimitSelected={timeLimitSelected}
         setTimeLimitSelected={(timeLimit: number) =>
           setTimeLimitSelected(timeLimit)
+        }
+        playerNumberAutoprogressThreshold={playerNumberAutoprogressThreshold}
+        setPlayerNumberAutoprogressThreshold={(autoProgressThreshold: number) =>
+          setPlayerNumberAutoprogressThreshold(autoProgressThreshold)
         }
       />
       <GeneralPageSubTitle>Players</GeneralPageSubTitle>

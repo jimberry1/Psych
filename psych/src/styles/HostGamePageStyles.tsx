@@ -11,6 +11,7 @@ export const GameControlsContainer = styled.div`
   font-family: Roboto;
   padding: 20px;
   background-color: #222;
+  flex-wrap: wrap;
 
   @media (max-width: 1000px) {
     flex-direction: column;
@@ -21,6 +22,7 @@ export const GameControlsInnerBox = styled.div`
   flex: 1;
   display: flex;
   min-height: 100%;
+  min-width: 50%;
   justify-content: flex-start;
   flex-direction: column;
   align-items: center;
