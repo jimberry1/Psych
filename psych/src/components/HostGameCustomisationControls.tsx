@@ -13,6 +13,8 @@ export interface HostGameCustomisationControlsProps {
   setRoundNumberSelected: (roundNumber: number) => void;
   timeLimitSelected: number;
   setTimeLimitSelected: (timeLimit: number) => void;
+  playerNumberAutoprogressThreshold: number;
+  setPlayerNumberAutoprogressThreshold: (numberOfPlayers: number) => void;
 }
 
 const HostGameCustomisationControls: React.SFC<HostGameCustomisationControlsProps> = ({
@@ -20,6 +22,8 @@ const HostGameCustomisationControls: React.SFC<HostGameCustomisationControlsProp
   setRoundNumberSelected,
   timeLimitSelected,
   setTimeLimitSelected,
+  playerNumberAutoprogressThreshold,
+  setPlayerNumberAutoprogressThreshold,
 }) => {
   return (
     <GameControlsContainer>
@@ -99,6 +103,46 @@ const HostGameCustomisationControls: React.SFC<HostGameCustomisationControlsProp
           </GameControlsInnerBoxContent>
         </GameControlsOptionsContainer>
       </GameControlsInnerBox>
+      {/* <GameControlsInnerBox>
+        <GameControlsInnerBoxTitle>
+          Autoprogress threshold
+        </GameControlsInnerBoxTitle>
+        <GameControlsOptionsContainer>
+          <GameControlsInnerBoxContent
+            style={{
+              border:
+                playerNumberAutoprogressThreshold === 1
+                  ? '1px solid green'
+                  : 'none',
+            }}
+            onClick={() => setPlayerNumberAutoprogressThreshold(1)}
+          >
+            1
+          </GameControlsInnerBoxContent>
+          <GameControlsInnerBoxContent
+            style={{
+              border:
+                playerNumberAutoprogressThreshold === 2
+                  ? '1px solid green'
+                  : 'none',
+            }}
+            onClick={() => setPlayerNumberAutoprogressThreshold(2)}
+          >
+            2
+          </GameControlsInnerBoxContent>
+          <GameControlsInnerBoxContent
+            style={{
+              border:
+                playerNumberAutoprogressThreshold === -1
+                  ? '1px solid green'
+                  : 'none',
+            }}
+            onClick={() => setPlayerNumberAutoprogressThreshold(-1)}
+          >
+            None
+          </GameControlsInnerBoxContent>
+        </GameControlsOptionsContainer>
+      </GameControlsInnerBox> */}
     </GameControlsContainer>
   );
 };
