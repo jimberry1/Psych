@@ -56,7 +56,7 @@ function App() {
                 gameCode={gameCode}
                 user={user}
                 handleError={(text: string) => {
-                  setErrorOrInfoText(text);
+                  HandleNewErrorOrInfo(text);
                   setModalTitleText('Attention');
                 }}
               />
@@ -67,6 +67,11 @@ function App() {
               gameCode={gameCode}
               user={user}
               setGameCode={setGameCode}
+              handleError={(text: string) => {
+                console.log(text);
+                HandleNewErrorOrInfo(text);
+                setModalTitleText('Information');
+              }}
             />
           </Route>
           <Route exact path="/test">
