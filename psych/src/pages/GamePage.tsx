@@ -25,6 +25,9 @@ const GamePage = (props: any) => {
   const [isResultsRound, setIsResultsRound] = useState(false);
   const [answer, setAnswer] = useState('');
   const [isHost, setIsHost] = useState(false);
+  const [customQuestionCollectionId, setCustomQuestionCollectionId] = useState(
+    ''
+  );
 
   // Establishes a snapshot listner on the main games lobby
   useEffect(() => {
@@ -44,6 +47,9 @@ const GamePage = (props: any) => {
           fetchedQuestionSnapshot.data().hostUid === props.user.uid
             ? true
             : false
+        );
+        setCustomQuestionCollectionId(
+          fetchedQuestionSnapshot.data().customQuestionCollectionId
         );
       });
     return snapshot;
@@ -123,15 +129,31 @@ const GamePage = (props: any) => {
       return;
     }
     if (questionIndex.length > 0 && roundNumber > 0) {
-      db.collection('questions')
-        .where('index', '==', questionIndex[roundNumber])
-        .limit(1)
-        .get()
-        .then((questionQuery) => {
-          if (!questionQuery.empty) {
-            setQuestion(questionQuery.docs[0].data().question);
-          }
-        });
+      if (customQuestionCollectionId) {
+        // If the custom collection id is set then use that to get the question
+        db.collection('customQuestions')
+          .doc(customQuestionCollectionId)
+          .collection('questions')
+          .where('index', '==', questionIndex[roundNumber])
+          .limit(1)
+          .get()
+          .then((questionQuery) => {
+            if (!questionQuery.empty) {
+              setQuestion(questionQuery.docs[0].data().question);
+            }
+          });
+      } else {
+        // If the custom collection id isn't set then get the questions from the default collection
+        db.collection('questions')
+          .where('index', '==', questionIndex[roundNumber])
+          .limit(1)
+          .get()
+          .then((questionQuery) => {
+            if (!questionQuery.empty) {
+              setQuestion(questionQuery.docs[0].data().question);
+            }
+          });
+      }
     }
   }, [roundNumber, questionIndex]);
 

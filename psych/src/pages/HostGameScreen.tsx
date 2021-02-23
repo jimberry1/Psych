@@ -14,6 +14,7 @@ import {
 } from '../utilities/utilityFunctions';
 import HostGameCustomisationControls from '../components/HostGameCustomisationControls';
 import { GeneralPageSubTitle } from '../styles/GeneralStyles';
+import CustomCollectionDisplay from '../components/CustomCollectionDisplay';
 // import { randomlyPickNamesForQuestions } from '../utilities/utilityFunctions';
 
 const ButtonContainer = styled(motion.div)`
@@ -34,6 +35,9 @@ const HostGameScreen = (props: any) => {
     playerNumberAutoprogressThreshold,
     setPlayerNumberAutoprogressThreshold,
   ] = useState(-1);
+  const [customQuestionsInUse, setCustomQuestionsInUse] = useState(false);
+  const [numberOfCustomQuestions, setNumberOfCustomQuestions] = useState(-1);
+  const [questionCollectionId, setQuestionCollectionId] = useState('');
 
   // Get the number of questions in the questions component
   useEffect(() => {
@@ -52,26 +56,31 @@ const HostGameScreen = (props: any) => {
       .doc(props.gameCode.toString())
       .collection('players');
 
-    // if (props.gameCode) {
-
     const snapshot = playerDbRef.onSnapshot((docSnapshot: any) => {
       setPlayers(
         docSnapshot.docs.map((doc: any) => ({ id: doc.id, data: doc.data() }))
       );
     });
-    // }
     return snapshot;
   }, [props.gameCode]);
 
   const startGameHandler = () => {
-    // console.log(randomNames);
     //Change this to be the number of rounds and the total number of questions in the database that we'll get from doing a query search
 
     // Create a new questions array -- This will need to be changed in the future to use the questions db table and the number of available questions there
-    const questionsIndex = questionArrayGenerator(
-      roundNumberSelected,
-      numberOfQuestions
-    );
+
+    let questionsIndex: number[];
+    if (customQuestionsInUse) {
+      questionsIndex = questionArrayGenerator(
+        roundNumberSelected,
+        numberOfCustomQuestions
+      );
+    } else {
+      questionsIndex = questionArrayGenerator(
+        roundNumberSelected,
+        numberOfQuestions
+      );
+    }
 
     const randomlyPickedPlayersForQuestions = randomlyPickNamesForQuestions(
       players,
@@ -90,6 +99,7 @@ const HostGameScreen = (props: any) => {
           timeLimit: timeLimitSelected,
           numberOfRounds: roundNumberSelected,
           autoProgressionThreshold: playerNumberAutoprogressThreshold,
+          customQuestionCollectionId: questionCollectionId,
         },
         { merge: true }
       )
@@ -98,6 +108,39 @@ const HostGameScreen = (props: any) => {
         setRedirectTo('/game');
       });
   };
+
+  const searchForQuestionsByCollectionIdHandler = (
+    questionCollectionId: string
+  ) => {
+    console.log('Invoked with id= ' + questionCollectionId);
+
+    db.collection('customQuestions')
+      .doc(questionCollectionId)
+      .collection('questions')
+      .doc('Indexor')
+      // .collection('questions')
+      .get()
+      .then((customQuestions) => {
+        if (customQuestions.exists) {
+          if (customQuestions.get('index') < roundNumberSelected) {
+            props.handleError(
+              `The custom question collection was found, however it only contains ${customQuestions.get(
+                'index'
+              )} questions which is fewer than the number of rounds and therefore has not been selected.`
+            );
+          } else {
+            setCustomQuestionsInUse(true);
+            setNumberOfCustomQuestions(customQuestions.get('index'));
+            setQuestionCollectionId(questionCollectionId);
+          }
+        } else {
+          props.handleError(
+            `No custom questions found for game code '${questionCollectionId}'`
+          );
+        }
+      });
+  };
+
   return (
     <motion.div
       variants={PageContainerVariants}
@@ -108,12 +151,30 @@ const HostGameScreen = (props: any) => {
       {redirectTo.length > 0 && <Redirect push to={redirectTo} />}
 
       <HostGameContainer lobbyCode={props.gameCode} />
+      <GeneralPageSubTitle>Questions</GeneralPageSubTitle>
+      <CustomCollectionDisplay
+        searchForQuestionCollectionById={(questionCollectionId: string) =>
+          searchForQuestionsByCollectionIdHandler(questionCollectionId)
+        }
+        handleInfoButton={(text: string) => props.handleError(text)}
+        numberOfCustomQuestions={numberOfCustomQuestions}
+        parentQuestionCollectionId={questionCollectionId}
+      />
       <GeneralPageSubTitle>Game Controls</GeneralPageSubTitle>
       <HostGameCustomisationControls
         roundNumberSelected={roundNumberSelected}
-        setRoundNumberSelected={(roundNumber: number) =>
-          setRoundNumberSelected(roundNumber)
-        }
+        setRoundNumberSelected={(roundNumber: number) => {
+          if (
+            !customQuestionsInUse ||
+            (customQuestionsInUse && roundNumber < numberOfCustomQuestions)
+          ) {
+            setRoundNumberSelected(roundNumber);
+          } else {
+            props.handleError(
+              `Cannot change number of rounds to ${roundNumber} because it is greater than the number of questions in the custom question collection`
+            );
+          }
+        }}
         timeLimitSelected={timeLimitSelected}
         setTimeLimitSelected={(timeLimit: number) =>
           setTimeLimitSelected(timeLimit)

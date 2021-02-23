@@ -58,3 +58,9 @@ export const GeneralPageTextBody = styled.span`
   padding: 5px;
   font-family: 'Secular One', sans-serif;
 `;
+
+export const GeneralFlexboxColumnDirection = styled.div`
+  display: flex;
+  flex-direction: column;
+  text-align: center;
+`;

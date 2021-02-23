@@ -53,3 +53,32 @@ export const GameControlsInnerBoxContent = styled.div`
   border-radius: 50%;
   transition 0.5s;
 `;
+
+export const QuestionCollectionSelectionItem = styled.div`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 5px;
+  transition: 0.3s;
+`;
+
+export const QuestionCollectionSelectionContainer = styled.div`
+  display: flex;
+  flex-direction: column;
+
+  flex: 1;
+  min-height: 100%;
+  justify-content: space-around;
+  align-items: center;
+  font-family: Roboto;
+
+  @media (max-width: 1000px) {
+    flex-direction: column;
+  }
+
+  &:hover {
+    ${QuestionCollectionSelectionItem} {
+      transform: scale(1.1);
+    }
+  }
+`;
