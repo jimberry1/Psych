@@ -115,7 +115,7 @@ function App() {
           isAuthenticated={user !== null}
           infoButtonClicked={() => {
             setModalTitleText('INFO');
-            setErrorOrInfoText(`The Game Code is: ${gameCode}`);
+            setErrorOrInfoText(`Current game code: ${gameCode}`);
             setShowModal(true);
           }}
         />
