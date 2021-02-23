@@ -67,6 +67,7 @@ export const GameCodeInputBar = styled.input`
   font-size: 22px;
   outline: none;
   margin-bottom: 5px;
+  border-radius: 10px;
 `;
 
 export const StyledTextArea = styled.textarea`
