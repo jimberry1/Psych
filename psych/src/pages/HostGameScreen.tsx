@@ -70,6 +70,13 @@ const HostGameScreen = (props: any) => {
 
     // Create a new questions array -- This will need to be changed in the future to use the questions db table and the number of available questions there
 
+    if (selectedQuestionSet > 0 && !questionCollectionId) {
+      props.handleError(
+        'Please connect to a question collection if you want to start a game using custom questions'
+      );
+      return;
+    }
+
     let questionsIndex: number[];
     if (customQuestionsInUse) {
       questionsIndex = questionArrayGenerator(
