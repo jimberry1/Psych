@@ -5,7 +5,7 @@ import { AnimatePresence, motion, useAnimation } from 'framer-motion';
 const Backdrop = styled.div`
   height: 100vh;
   width: 100vw;
-  position: absolute;
+  position: fixed;
   left: 0;
   top: 0;
   background: gray;
@@ -17,7 +17,7 @@ const Backdrop = styled.div`
 `;
 
 const ModalBox = styled.div`
-  height: 40vh;
+  min-height: 40vh;
   width: 60vw;
   position: absolute;
   left: 20vw;
@@ -81,36 +81,40 @@ const Modal = ({ toggled, setToggled, message, title }) => {
   return (
     <div>
       <Backdrop toggled={toggled} onClick={setToggled} />
-      <AnimatePresence>
-        {toggled && (
-          <motion.div
-            variants={{
-              hidden: {
-                opacity: 0,
-                //   y: -100,
-                x: '-100vw',
-              },
-              visible: {
-                opacity: 1,
-                y: 0,
-                x: 0,
-              },
-            }}
-            // animate={animationControl}
-            initial="hidden"
-            animate="visible"
-            exit="hidden"
-          >
-            <ModalBox>
-              <InnerModalHeaderContainer>
-                {title ? title : 'Attention'}
-              </InnerModalHeaderContainer>
-              <InnerModalMessageContainer>{message}</InnerModalMessageContainer>
-              <ModalButton onClick={setToggled}>Got it</ModalButton>
-            </ModalBox>
-          </motion.div>
-        )}
-      </AnimatePresence>
+      <div style={{ position: 'fixed' }}>
+        <AnimatePresence>
+          {toggled && (
+            <motion.div
+              variants={{
+                hidden: {
+                  opacity: 0,
+                  //   y: -100,
+                  x: '-100vw',
+                },
+                visible: {
+                  opacity: 1,
+                  y: 0,
+                  x: 0,
+                },
+              }}
+              // animate={animationControl}
+              initial="hidden"
+              animate="visible"
+              exit="hidden"
+            >
+              <ModalBox>
+                <InnerModalHeaderContainer>
+                  {title ? title : 'Attention'}
+                </InnerModalHeaderContainer>
+                <InnerModalMessageContainer>
+                  {message}
+                </InnerModalMessageContainer>
+                <ModalButton onClick={setToggled}>Got it</ModalButton>
+              </ModalBox>
+            </motion.div>
+          )}
+        </AnimatePresence>
+      </div>
     </div>
   );
 };
