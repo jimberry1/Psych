@@ -38,6 +38,7 @@ const HostGameScreen = (props: any) => {
   const [customQuestionsInUse, setCustomQuestionsInUse] = useState(false);
   const [numberOfCustomQuestions, setNumberOfCustomQuestions] = useState(-1);
   const [questionCollectionId, setQuestionCollectionId] = useState('');
+  const [selectedQuestionSet, setSelectedQuestionSet] = useState(0);
 
   // Get the number of questions in the questions component
   useEffect(() => {
@@ -159,6 +160,14 @@ const HostGameScreen = (props: any) => {
         handleInfoButton={(text: string) => props.handleError(text)}
         numberOfCustomQuestions={numberOfCustomQuestions}
         parentQuestionCollectionId={questionCollectionId}
+        selectedQuestionSet={selectedQuestionSet}
+        setSelectedQuestionSet={(gameModeCode: number) => {
+          setSelectedQuestionSet(gameModeCode);
+          if (gameModeCode === 0) {
+            setCustomQuestionsInUse(false);
+            setQuestionCollectionId('');
+          }
+        }}
       />
       <GeneralPageSubTitle>Game Controls</GeneralPageSubTitle>
       <HostGameCustomisationControls

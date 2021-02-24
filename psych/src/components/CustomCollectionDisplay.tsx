@@ -13,13 +13,19 @@ import {
   GeneralFlexboxColumnDirection,
   GeneralPageTextBody,
 } from '../styles/GeneralStyles';
-import { faInfoCircle, fas, faSearch } from '@fortawesome/free-solid-svg-icons';
+import {
+  faInfoCircle,
+  faSearch,
+  faSquare,
+} from '@fortawesome/free-solid-svg-icons';
 
 export interface CustomQuestionDisplayProps {
   searchForQuestionCollectionById: (questionCollectionId: string) => void;
+  setSelectedQuestionSet: (gameModeCode: number) => void;
   handleInfoButton: (infoText: string) => void;
   numberOfCustomQuestions: number;
   parentQuestionCollectionId: string;
+  selectedQuestionSet: number;
 }
 
 type gameMode = { gameModeDisplayName: string; gameModeCode: number };
@@ -27,10 +33,10 @@ type gameMode = { gameModeDisplayName: string; gameModeCode: number };
 const CustomQuestionDisplay: React.SFC<CustomQuestionDisplayProps> = ({
   searchForQuestionCollectionById,
   handleInfoButton,
-  numberOfCustomQuestions,
   parentQuestionCollectionId,
+  selectedQuestionSet,
+  setSelectedQuestionSet,
 }) => {
-  const [selectedQuestionSet, setSelectedQuestionSet] = useState(0);
   const [questionCollectionId, setQuestionCollectionId] = useState('');
 
   const questionCollectionModes = [
@@ -46,14 +52,23 @@ const CustomQuestionDisplay: React.SFC<CustomQuestionDisplayProps> = ({
           return (
             <QuestionCollectionSelectionContainer
               key={`${questionMode.gameModeDisplayName}-${questionMode.gameModeDisplayName}`}
-              onClick={() => setSelectedQuestionSet(questionMode.gameModeCode)}
+              onClick={() => {
+                setSelectedQuestionSet(questionMode.gameModeCode);
+                if (questionMode.gameModeCode === 0) {
+                  setQuestionCollectionId('');
+                }
+              }}
             >
               <QuestionCollectionSelectionItem>
                 {questionMode.gameModeDisplayName}
               </QuestionCollectionSelectionItem>
               <QuestionCollectionSelectionItem>
                 <FontAwesomeIcon
-                  icon={faCheckSquare}
+                  icon={
+                    selectedQuestionSet === questionMode.gameModeCode
+                      ? faCheckSquare
+                      : faSquare
+                  }
                   size="2x"
                   color={
                     selectedQuestionSet === questionMode.gameModeCode

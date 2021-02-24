@@ -57,7 +57,7 @@ const AddQuestionsPage: React.SFC<AddQuestionsPageProps> = ({ user }) => {
             setHasSubmittedQuestion(true);
           } else {
             setError(
-              `Could not find a question collection for ID ${questionCollectionId}`
+              `Could not find a question collection for ID '${questionCollectionId}'`
             );
           }
         });
