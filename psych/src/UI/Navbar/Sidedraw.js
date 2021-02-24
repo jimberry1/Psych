@@ -30,7 +30,7 @@ const HamburgerContainer = styled.div`
 const Backdrop = styled.div`
   height: 100vh;
   width: 100vw;
-  position: absolute;
+  position: fixed;
   left: 0;
   top: 0;
   background: gray;
