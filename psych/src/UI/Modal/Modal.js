@@ -47,13 +47,17 @@ const InnerModalHeaderContainer = styled.div`
   font-size: 25px;
   font-weight: bold;
   font-family: 'Titan One', cursive;
-  margin-bottom: 10px;
+  @media (max-width: 1000px) {
+    margin-bottom: 10px;
+  }
 `;
 
 const InnerModalMessageContainer = styled.h3`
   text-align: center;
   width: 80%;
-  margin-bottom: 10px;
+  @media (max-width: 1000px) {
+    margin-bottom: 10px;
+  }
 `;
 
 const ModalButton = styled.button`
@@ -73,6 +77,10 @@ const ModalButton = styled.button`
 
   &:selected {
     transform: scale(1.1);
+  }
+
+  @media (max-width: 1000px) {
+    margin-bottom: 5px;
   }
 `;
 
