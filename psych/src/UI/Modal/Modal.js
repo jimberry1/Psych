@@ -30,6 +30,11 @@ const ModalBox = styled.div`
   flex-direction: column;
   align-items: center;
   background-color: #101975;
+
+  @media (max-width: 1000px) {
+    width: 80vw;
+    left: 10vw;
+  }
 `;
 
 const InnerModalHeaderContainer = styled.div`
@@ -42,11 +47,13 @@ const InnerModalHeaderContainer = styled.div`
   font-size: 25px;
   font-weight: bold;
   font-family: 'Titan One', cursive;
+  margin-bottom: 10px;
 `;
 
 const InnerModalMessageContainer = styled.h3`
   text-align: center;
   width: 80%;
+  margin-bottom: 10px;
 `;
 
 const ModalButton = styled.button`
@@ -57,6 +64,7 @@ const ModalButton = styled.button`
   outline: none;
   font-size: 20px;
   transition: 0.2s;
+  margin-bottom: 5px;
 
   &:hover {
     background: #0b5966;
