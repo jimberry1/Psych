@@ -128,7 +128,11 @@ const GamePage = (props: any) => {
     if (!questionIndex) {
       return;
     }
-    if (questionIndex.length > 0 && roundNumber > 0) {
+    if (
+      questionIndex.length > 0 &&
+      roundNumber > 0 &&
+      questionIndex.length > roundNumber
+    ) {
       if (customQuestionCollectionId) {
         // If the custom collection id is set then use that to get the question
         db.collection('customQuestions')
@@ -155,7 +159,7 @@ const GamePage = (props: any) => {
           });
       }
     }
-  }, [roundNumber, questionIndex]);
+  }, [roundNumber, questionIndex, customQuestionCollectionId]);
 
   // Queries the answers collection to see if the user has already answered this round's question
   useEffect(() => {
