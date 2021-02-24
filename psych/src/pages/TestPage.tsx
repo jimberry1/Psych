@@ -1,14 +1,55 @@
 import { useState, useEffect } from 'react';
 import { motion, AnimatePresence, AnimateSharedLayout } from 'framer-motion';
 import styled from 'styled-components';
-import { SideDrawer } from '../styles/TestStyles';
-import SideDraw from '../UI/Navbar/Sidedraw';
-import HamburgerMenu from 'react-hamburger-menu';
 import { CountdownCircleTimer } from 'react-countdown-circle-timer';
 import Modal from '../UI/Modal/Modal';
 import ReactFrappeChart from 'react-frappe-charts';
 import ProfilePictureUpload from '../ProfilePictureUpload';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faUserPlus } from '@fortawesome/free-solid-svg-icons';
+import { GameCodeInputBar } from '../styles/LandingPageStyles';
+import { StartButton } from '../UI/ButtonStyle1';
+import CardComponent from '../components/CardComponent';
 // export interface TestPageProps {}
+
+const StyledContainer = styled.div`
+  margin-top: 300px;
+  width: 100vw;
+  height: 1000px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: purple;
+`;
+
+const StyledGameCard = styled.div`
+  height: 400px;
+  width: 300px;
+  border: 3px solid black;
+`;
+
+const StyledCardSection = styled.div`
+  height: 50%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  margin
+`;
+
+const StyledCardTitleSection = styled.span`
+  width: 90%;
+  // margin: auto;
+  height: 20%;
+  padding: 5;
+  border-bottom: 1px solid gray;
+  font-family: 'Secular One', sans-serif;
+  font-size: 30px;
+  text-align: center;
+  margin-bottom: 10px;
+`;
+
+const StyledCardBodySection = styled.div``;
 
 const TestPage = ({ user }: any) => {
   const [toggled, setToggled] = useState(false);
@@ -88,6 +129,34 @@ const TestPage = ({ user }: any) => {
       </div>
 
       <ProfilePictureUpload userUid={user.uid} />
+      <StyledContainer>
+        <StyledGameCard>
+          <StyledCardSection
+          // style={{ background: 'gray', margin: 10 }}
+          >
+            <FontAwesomeIcon icon={faUserPlus} size="7x" />
+          </StyledCardSection>
+          <StyledCardSection>
+            <StyledCardTitleSection>New Game</StyledCardTitleSection>
+            <GameCodeInputBar
+              // value={props.gameCode}
+              // onChange={(e) => props.gameCodeChanged(e.target.value)}
+              placeholder="Enter Game code..."
+            />
+            <StartButton style={{ margin: 10 }}>Connect</StartButton>
+          </StyledCardSection>
+        </StyledGameCard>
+        <CardComponent
+          cardTitle="New Game"
+          buttonText="Connect"
+          buttonClickedHandler={() => {}}
+          inputPlaceholder="Enter game code..."
+          inputValue=""
+          inputValueChanged={() => {}}
+          icon={faUserPlus}
+          inputPresent={true}
+        />
+      </StyledContainer>
     </div>
   );
 };

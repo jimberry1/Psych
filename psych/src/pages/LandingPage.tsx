@@ -17,6 +17,8 @@ import db from '../firebase';
 import { Redirect } from 'react-router';
 import { makeRandomGameId } from '../utilities/utilityFunctions';
 import firebase from 'firebase';
+import CardComponent from '../components/CardComponent';
+import { faUserPlus, faLink } from '@fortawesome/free-solid-svg-icons';
 
 const LandingPage = (props: any) => {
   const [showGameCodeInput, setShowGameCodeInput] = useState(false);
@@ -139,29 +141,28 @@ const LandingPage = (props: any) => {
               exit="hidden"
             >
               <GameCodeInputColumn>
-                <GameInputSubSection>
-                  <h2>Join a new game</h2>
-                </GameInputSubSection>
-
-                <GameInputSubSection>
-                  <GameCodeInputBar
-                    value={props.gameCode}
-                    onChange={(e) => props.gameCodeChanged(e.target.value)}
-                    placeholder="Enter Game code here..."
-                  />
-                  <StartButton onClick={joinNewGameHandler}>Join</StartButton>
-                </GameInputSubSection>
+                <CardComponent
+                  cardTitle="Join Game"
+                  buttonText="Connect"
+                  buttonClickedHandler={joinNewGameHandler}
+                  inputPlaceholder="Enter game code..."
+                  inputValue={props.gameCode}
+                  inputValueChanged={(e) =>
+                    props.gameCodeChanged(e.target.value)
+                  }
+                  icon={faUserPlus}
+                  inputPresent={true}
+                />
               </GameCodeInputColumn>
               <GameCodeInputColumn>
-                <GameInputSubSection>
-                  <h2>Reconnect to an existing game</h2>
-                </GameInputSubSection>
-                <GameInputSubSection>
-                  {' '}
-                  <StartButton onClick={ReconnectToGameHandler}>
-                    Reconnect
-                  </StartButton>
-                </GameInputSubSection>
+                <CardComponent
+                  cardTitle="Rejoin game"
+                  buttonText="Reconnect"
+                  buttonClickedHandler={ReconnectToGameHandler}
+                  inputValueChanged={() => {}}
+                  icon={faLink}
+                  inputPresent={false}
+                />
               </GameCodeInputColumn>
             </GameCodeInput>
           )}

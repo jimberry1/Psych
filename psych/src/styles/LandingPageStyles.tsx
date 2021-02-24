@@ -33,7 +33,6 @@ export const ButtonContainer = styled.div`
   min-width: 250px;
 `;
 export const GameCodeInput = styled(motion.div)`
-  height: 200px;
   width: 100%;
   display: flex;
   justify-content: center;
@@ -41,7 +40,6 @@ export const GameCodeInput = styled(motion.div)`
   gap: 15px;
   @media (max-width: 1000px) {
     flex-direction: column;
-    height: 500px;
   }
 `;
 
@@ -50,6 +48,7 @@ export const GameCodeInputColumn = styled.div`
   flex-direction: column;
   padding: 10px;
   justify-content: center;
+  align-items: center;
   flex: 1;
   height: 100%;
   // border: 1px solid lightgray;
