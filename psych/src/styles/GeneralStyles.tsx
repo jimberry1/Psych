@@ -37,8 +37,7 @@ export const ContainerStyles = styled.div`
   text-align: center;
   overflow-x: none;
   gap: 20px;
-  height: 100vh;
-  overflow: none;
+  //   overflow: none;
   margin-bottom: 30px;
 `;
 
