@@ -27,6 +27,7 @@ const MotionisedContainer = styled(motion.div)`
   justify-content: center;
   align-items: center;
   margin-top: 10;
+  text-align: center;
 `;
 
 export interface CustomQuestionDisplayProps {
