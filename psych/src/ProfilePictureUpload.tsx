@@ -36,7 +36,6 @@ const ProfilePictureUpload: React.SFC<ProfilePictureUploadProps> = ({
 
     const options = {
       maxSizeMB: 0.05,
-      maxWidthOrHeight: 300,
       useWebWorker: true,
     };
     try {
