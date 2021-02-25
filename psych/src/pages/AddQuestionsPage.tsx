@@ -24,6 +24,12 @@ const AddQuestionsPage: React.SFC<AddQuestionsPageProps> = ({ user }) => {
   const [error, setError] = useState('');
 
   const submitQuestionHandler = () => {
+    if (!questionCollectionId) {
+      setError(
+        'Please connect to a question collection before submitting a question'
+      );
+      return;
+    }
     if (
       question.length > 10 &&
       (question.search('xxx') !== -1 || question.search('XXX') !== -1)
