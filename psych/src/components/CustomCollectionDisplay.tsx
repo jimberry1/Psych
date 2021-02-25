@@ -168,6 +168,7 @@ const CustomQuestionDisplay: React.SFC<CustomQuestionDisplayProps> = ({
               justifyContent: 'center',
               alignItems: 'center',
               marginTop: 10,
+              textAlign: 'center',
             }}
           >
             Not yet connected to questions collection
