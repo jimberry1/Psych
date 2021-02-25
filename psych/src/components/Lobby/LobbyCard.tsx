@@ -4,6 +4,7 @@ import { verticalFadeInVariants } from '../../styles/Animations';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faCheckCircle } from '@fortawesome/free-regular-svg-icons';
 import CircleLoader from '../../UI/CircleLoader';
+import SpinningBlueTick from '../SpinningBlueTick';
 
 const LobbyCardStyle = styled(motion.div)`
   display: flex;
@@ -33,30 +34,7 @@ const LobbyCard = (props: LobbyCardProps) => {
       <div>
         {props.showLoader && !props.hasAnswered && <CircleLoader />}
         {props.showLoader && props.hasAnswered && (
-          <motion.div
-            variants={{
-              hidden: { opacity: 0.2 },
-              visible: { rotateY: 720, opacity: 1, transition: { delay: 1.5 } },
-              // hover: {
-              //   rotateY: 360,
-              //   transition: { duration: 2, delay: 0 },
-              // },
-            }}
-            initial="hidden"
-            animate="visible"
-            whileHover="hover"
-          >
-            <FontAwesomeIcon
-              icon={faCheckCircle}
-              style={{
-                height: 50,
-                width: 50,
-                borderRadius: '50%',
-                padding: '15px',
-                color: 'cyan',
-              }}
-            />
-          </motion.div>
+          <SpinningBlueTick delay={1.5} />
         )}
         {!props.showLoader && (
           <img
