@@ -69,6 +69,19 @@ export const GameCodeInputBar = styled.input`
   border-radius: 10px;
 `;
 
+export const SkinnyGameCodeInputBar = styled.input`
+  padding: 15px;
+  text-align: center;
+  font-size: 22px;
+  outline: none;
+  margin-bottom: 5px;
+  border-radius: 10px;
+
+  @media (max-width: 1000px) {
+    padding: 5px;
+  }
+`;
+
 export const StyledTextArea = styled.textarea`
   padding: 15px;
   text-align: center;
