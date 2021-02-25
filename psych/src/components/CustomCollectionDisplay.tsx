@@ -18,6 +18,16 @@ import {
   faSearch,
   faSquare,
 } from '@fortawesome/free-solid-svg-icons';
+import SpinningBlueTick from './SpinningBlueTick';
+import styled from 'styled-components';
+
+const MotionisedContainer = styled(motion.div)`
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-top: 10;
+`;
 
 export interface CustomQuestionDisplayProps {
   searchForQuestionCollectionById: (questionCollectionId: string) => void;
@@ -42,7 +52,7 @@ const CustomQuestionDisplay: React.SFC<CustomQuestionDisplayProps> = ({
   const questionCollectionModes = [
     { gameModeDisplayName: 'Standard Questions', gameModeCode: 0 },
     { gameModeDisplayName: 'Custom Questions', gameModeCode: 1 },
-    { gameModeDisplayName: 'Mixed', gameModeCode: 2 },
+    // { gameModeDisplayName: 'Mixed', gameModeCode: 2 },
   ];
 
   return (
@@ -80,83 +90,89 @@ const CustomQuestionDisplay: React.SFC<CustomQuestionDisplayProps> = ({
             </QuestionCollectionSelectionContainer>
           );
         })}
-        <AnimatePresence>
-          {(selectedQuestionSet === 1 || selectedQuestionSet === 2) && (
-            <motion.div
-              key="AnimatePresenceInputCodeBox001"
-              variants={fadeInFromLeft}
-              initial="hidden"
-              animate="visible"
-              exit="hidden"
-              style={{
-                width: '100%',
-                display: 'flex',
-                justifyContent: 'center',
-                alignItems: 'center',
-                marginTop: 10,
-              }}
-            >
-              <GeneralFlexboxColumnDirection>
-                <div
-                  style={{
-                    display: 'flex',
-                    padding: '0px 10px',
-                  }}
-                >
-                  <GeneralPageTextBody>
-                    Enter Question ID collection
-                  </GeneralPageTextBody>
-                  <FontAwesomeIcon
-                    icon={faInfoCircle}
-                    style={{ fontSize: 20, padding: 5 }}
-                    onClick={() =>
-                      handleInfoButton(
-                        `The Question collection ID links questions submitted by multiple people into a single collection for a shared game. 
-                        If you don't have a code yet then navigate to the Submit Questions page and generate one!`
-                      )
-                    }
-                  />
-                </div>
-                <div style={{ display: 'flex', maxWidth: '80%' }}>
-                  <SkinnyGameCodeInputBar
-                    placeholder="Enter ID..."
-                    value={questionCollectionId}
-                    onChange={(e) => setQuestionCollectionId(e.target.value)}
-                  />
+        <AnimatePresence exitBeforeEnter>
+          {(selectedQuestionSet === 1 || selectedQuestionSet === 2) &&
+            !parentQuestionCollectionId && (
+              <MotionisedContainer
+                key="AnimatePresenceInputCodeBox001"
+                variants={fadeInFromLeft}
+                initial="hidden"
+                animate="visible"
+                exit="hidden"
+              >
+                <GeneralFlexboxColumnDirection>
                   <div
-                    style={{ margin: 'auto' }}
-                    onClick={() =>
-                      searchForQuestionCollectionById(questionCollectionId)
-                    }
+                    style={{
+                      display: 'flex',
+                      padding: '0px 10px',
+                    }}
                   >
+                    <GeneralPageTextBody>
+                      Enter Question ID collection
+                    </GeneralPageTextBody>
                     <FontAwesomeIcon
-                      icon={faSearch}
-                      size="2x"
-                      flip="horizontal"
-                      style={{ marginLeft: 10 }}
+                      icon={faInfoCircle}
+                      style={{ fontSize: 20, padding: 5 }}
+                      onClick={() =>
+                        handleInfoButton(
+                          `The Question collection ID links questions submitted by multiple people into a single collection for a shared game. 
+                        If you don't have a code yet then navigate to the Submit Questions page and generate one!`
+                        )
+                      }
                     />
                   </div>
-                </div>
-              </GeneralFlexboxColumnDirection>
-            </motion.div>
-          )}
+                  <div style={{ display: 'flex', maxWidth: '80%' }}>
+                    <SkinnyGameCodeInputBar
+                      placeholder="Enter ID..."
+                      value={questionCollectionId}
+                      onChange={(e) => setQuestionCollectionId(e.target.value)}
+                    />
+                    <div
+                      style={{ margin: 'auto' }}
+                      onClick={() =>
+                        searchForQuestionCollectionById(questionCollectionId)
+                      }
+                    >
+                      <FontAwesomeIcon
+                        icon={faSearch}
+                        size="2x"
+                        flip="horizontal"
+                        style={{ marginLeft: 10 }}
+                      />
+                    </div>
+                  </div>
+                </GeneralFlexboxColumnDirection>
+              </MotionisedContainer>
+            )}
           {parentQuestionCollectionId && (
-            <motion.div
+            <MotionisedContainer
               variants={fadeInFromLeft}
               initial="hidden"
               animate="visible"
               exit="hidden"
               key="AnimatePresenceResponseMessage001"
               style={{
-                width: '100%',
-                display: 'flex',
-                justifyContent: 'center',
-                alignItems: 'center',
-                marginTop: 10,
+                flexDirection: 'column',
               }}
-            >{`Successfully connected to question collection ID ${parentQuestionCollectionId}`}</motion.div>
+            >
+              <SpinningBlueTick />
+              {`Successfully connected to question collection ID ${parentQuestionCollectionId}`}
+            </MotionisedContainer>
           )}
         </AnimatePresence>
+        {!parentQuestionCollectionId && selectedQuestionSet > 0 && (
+          <div
+            style={{
+              width: '100%',
+              display: 'flex',
+              justifyContent: 'center',
+              alignItems: 'center',
+              marginTop: 10,
+            }}
+          >
+            Not yet connected to questions collection
+          </div>
+        )}
       </GameControlsContainer>
     </div>
   );
