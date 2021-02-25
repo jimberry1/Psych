@@ -4,11 +4,11 @@ import {
   QuestionCollectionSelectionContainer,
   QuestionCollectionSelectionItem,
 } from '../styles/HostGamePageStyles';
-import { AnimatePresence, motion, useAnimation } from 'framer-motion';
+import { AnimatePresence, motion } from 'framer-motion';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faCheckSquare } from '@fortawesome/free-regular-svg-icons';
 import { fadeInFromLeft } from '../styles/Animations';
-import { GameCodeInputBar } from '../styles/LandingPageStyles';
+import { SkinnyGameCodeInputBar } from '../styles/LandingPageStyles';
 import {
   GeneralFlexboxColumnDirection,
   GeneralPageTextBody,
@@ -97,7 +97,12 @@ const CustomQuestionDisplay: React.SFC<CustomQuestionDisplayProps> = ({
               }}
             >
               <GeneralFlexboxColumnDirection>
-                <div style={{ display: 'flex', padding: '0px 10px' }}>
+                <div
+                  style={{
+                    display: 'flex',
+                    padding: '0px 10px',
+                  }}
+                >
                   <GeneralPageTextBody>
                     Enter Question ID collection
                   </GeneralPageTextBody>
@@ -112,8 +117,8 @@ const CustomQuestionDisplay: React.SFC<CustomQuestionDisplayProps> = ({
                     }
                   />
                 </div>
-                <div style={{ display: 'flex' }}>
-                  <GameCodeInputBar
+                <div style={{ display: 'flex', maxWidth: '80%' }}>
+                  <SkinnyGameCodeInputBar
                     placeholder="Enter ID..."
                     value={questionCollectionId}
                     onChange={(e) => setQuestionCollectionId(e.target.value)}
