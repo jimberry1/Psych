@@ -73,6 +73,7 @@ const Login = ({
                 gameCode: 0,
                 uid: result.user.uid,
                 createdDate: firebase.firestore.FieldValue.serverTimestamp(),
+                photoURL: null,
               },
               { merge: true }
             );
@@ -85,6 +86,7 @@ const Login = ({
               gameCode: 0,
               uid: result.user.uid,
               createdDate: firebase.firestore.FieldValue.serverTimestamp(),
+              photoURL: null,
             });
           }
         })
@@ -111,10 +113,11 @@ const Login = ({
                 email: docSnapshot.data().email,
                 uid: result.user.uid,
                 gameCode: docSnapshot.data().gameCode,
+                photoURL: docSnapshot.data().photoURL,
               };
 
               localStorage.setItem('psy_uid', result.user.uid);
-              changeGameCode(docSnapshot.data().gameCode);
+              // changeGameCode(docSnapshot.data().gameCode);
               changeUser(userObject);
             } else {
               console.log(
@@ -126,6 +129,7 @@ const Login = ({
                 gameCode: 0,
                 uid: result.user.uid,
                 createdDate: firebase.firestore.FieldValue.serverTimestamp(),
+                photoURL: null,
               };
               dbUserRef.set(userObject);
 
