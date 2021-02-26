@@ -171,6 +171,11 @@ const LandingPage = (props: any) => {
         <ButtonContainer>
           <StartButton onClick={HostGameHandler}>Host Game</StartButton>
         </ButtonContainer>
+        <ButtonContainer>
+          <StartButton onClick={() => setRedirectTo('/submitQuestion')}>
+            Add Questions
+          </StartButton>
+        </ButtonContainer>
       </PageContainer>
     </motion.div>
   );
