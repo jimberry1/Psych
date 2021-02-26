@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import styled from 'styled-components';
 import { motion } from 'framer-motion';
 import undraw_To_do_re_jaef from '../assets/images/undraw_To_do_re_jaef.svg';
@@ -100,9 +100,11 @@ const cardVariants = {
 const StartPage: React.SFC<StartPageProps> = () => {
   const [redirect, setRedirect] = useState(false);
 
-  if (localStorage.getItem('psy_uid') !== null) {
-    setRedirect(true);
-  }
+  useEffect(() => {
+    if (localStorage.getItem('psy_uid') !== null) {
+      setRedirect(true);
+    }
+  }, []);
 
   return (
     <StartPageContainer>

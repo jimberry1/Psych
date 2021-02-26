@@ -3,7 +3,7 @@ import { useState, useEffect } from 'react';
 import db from './firebase';
 import './App.css';
 import Login from './pages/Login';
-import { Switch, Route } from 'react-router';
+import { Switch, Route, Redirect } from 'react-router';
 import LandingPage from './pages/LandingPage';
 import GameLobby from './pages/GameLobby';
 import HostGameScreen from './pages/HostGameScreen';
@@ -15,6 +15,7 @@ import Header from './UI/Navbar/Header';
 import { relative } from 'path';
 import Modal from './UI/Modal/Modal';
 import EndOfGamePage from './pages/EndOfGamePage';
+import StartPage from './pages/StartPage';
 
 function App() {
   const [user, setUser] = useState(null);
@@ -29,11 +30,20 @@ function App() {
   };
 
   let AppPage = (
-    <Login
-      changeUser={(value: any) => setUser(value)}
-      changeGameCode={(userGameCode: string) => setGameCode(userGameCode)}
-      displayErrorHandler={(message: string) => HandleNewErrorOrInfo(message)}
-    />
+    <Switch>
+      <Route exact path="/">
+        <StartPage key="startPageKey" />
+      </Route>
+      <Route exact path="/signin">
+        <Login
+          changeUser={(value: any) => setUser(value)}
+          changeGameCode={(userGameCode: string) => setGameCode(userGameCode)}
+          displayErrorHandler={(message: string) =>
+            HandleNewErrorOrInfo(message)
+          }
+        />
+      </Route>
+    </Switch>
   );
   if (user) {
     AppPage = (
@@ -83,6 +93,7 @@ function App() {
           <Route exact path="/submitQuestion">
             <AddQuestionsPage user={user} key="AddQuestionsKey" />
           </Route>
+
           <Route exact path="/EndOfGame">
             <EndOfGamePage
               user={user}
@@ -90,6 +101,7 @@ function App() {
               key="EndOfGamePage"
             />
           </Route>
+          <Route render={() => <Redirect to="/" />} />
         </Switch>
       </AnimatePresence>
     );
