@@ -21,7 +21,7 @@ const GamePage = (props: any) => {
   const [roundNumber, setRoundNumber] = useState(0);
   const [isQuestionsRound, setIsQuestionsRound] = useState(false);
   const [isVotingRound, setIsVotingRound] = useState(false);
-  const [hasAlreadyAnswered, setHasAlreadyAnswered] = useState(true);
+  const [hasAlreadyAnswered, setHasAlreadyAnswered] = useState(false);
   const [isResultsRound, setIsResultsRound] = useState(false);
   const [answer, setAnswer] = useState('');
   const [isHost, setIsHost] = useState(false);
@@ -174,7 +174,7 @@ const GamePage = (props: any) => {
           setHasAlreadyAnswered(!answerQuery.empty);
         });
     }
-  }, [roundNumber, isVotingRound]);
+  }, [roundNumber]);
 
   // Controls how we automatically progress to the voting round
   useEffect(() => {
