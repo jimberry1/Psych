@@ -142,7 +142,7 @@ const AddQuestionsPage: React.SFC<AddQuestionsPageProps> = ({ user }) => {
               </GeneralPageTextBody>
               <div style={{ padding: 20 }}>
                 <GeneralPageTextBody>
-                  Example question: 'What would XXX's superpower be?'
+                  Example question: 'Why did XXX cross the road?'
                 </GeneralPageTextBody>
               </div>
             </motion.div>
