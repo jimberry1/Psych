@@ -16,24 +16,41 @@ import { relative } from 'path';
 import Modal from './UI/Modal/Modal';
 import EndOfGamePage from './pages/EndOfGamePage';
 import StartPage from './pages/StartPage';
+import PrivacyPolicyPage from './pages/PrivacyPolicyPage';
+import { useLocation } from 'react-router-dom';
+import { useHistory } from 'react-router-dom';
 
 function App() {
+  const location = useLocation();
+  const history = useHistory();
   const [user, setUser] = useState(null);
   const [gameCode, setGameCode]: any = useState('');
   const [errorOrInfoText, setErrorOrInfoText] = useState('');
   const [modalTitleText, setModalTitleText] = useState('');
   const [showModal, setShowModal] = useState(false);
+  const [preAuthLocation, setPreAuthLocation] = useState(location.pathname);
 
   const HandleNewErrorOrInfo = (message: string) => {
     setErrorOrInfoText(message);
     setShowModal(true);
   };
 
+  // Tracks the route of the user and stores it in state
+  useEffect(() => {
+    if (location.pathname !== '/' && location.pathname !== '/signin') {
+      setPreAuthLocation(location.pathname);
+    }
+  }, [location]);
+
+  // Pushes the user to their pre-authenticated route after a rerender cycle
+  useEffect(() => {
+    if (user !== null) {
+      history.push(preAuthLocation);
+    }
+  }, [user]);
+
   let AppPage = (
     <Switch>
-      <Route exact path="/">
-        <StartPage key="startPageKey" />
-      </Route>
       <Route exact path="/signin">
         <Login
           changeUser={(value: any) => setUser(value)}
@@ -43,7 +60,9 @@ function App() {
           }
         />
       </Route>
-      <Route render={() => <Redirect to="/" />} />
+      <Route path="/">
+        <StartPage key="startPageKey" />
+      </Route>
     </Switch>
   );
   if (user) {
@@ -102,6 +121,9 @@ function App() {
               gameCode={gameCode}
               key="EndOfGamePage"
             />
+          </Route>
+          <Route exact path="/privacyPolicy">
+            <PrivacyPolicyPage key="PrivacyPolicyPage" />
           </Route>
           <Route render={() => <Redirect to="/" />} />
         </Switch>

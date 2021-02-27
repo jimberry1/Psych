@@ -64,8 +64,6 @@ const Login = ({
   const signIn = (e: any) => {
     e.preventDefault();
 
-    console.log('signing in...');
-
     if (createAnAccount) {
       auth
         .createUserWithEmailAndPassword(email, password)
@@ -74,10 +72,7 @@ const Login = ({
           displayErrorHandler(err.message);
         })
         .then((result: any) => {
-          console.log('creating user with email and password');
           if (result) {
-            console.log('This is the result ' + result);
-            console.log(result);
             const dbUserRef = db.collection('users').doc(result.user.uid).set(
               {
                 name: displayName,
@@ -107,7 +102,6 @@ const Login = ({
           displayErrorHandler(err.message);
         });
     } else if (!createAnAccount) {
-      console.log('attempting to sign in');
       auth
         .signInWithEmailAndPassword(email, password)
         .catch((err) => {
@@ -116,10 +110,8 @@ const Login = ({
         })
         .then((result: any) => {
           const dbUserRef = db.collection('users').doc(result.user.uid);
-          console.log('in here');
           dbUserRef.get().then((docSnapshot: any) => {
             if (docSnapshot.exists) {
-              console.log('This user already exists');
               const userObject = {
                 name: docSnapshot.data().name,
                 email: docSnapshot.data().email,
@@ -129,7 +121,6 @@ const Login = ({
               };
 
               localStorage.setItem('psy_uid', result.user.uid);
-              // changeGameCode(docSnapshot.data().gameCode);
               changeUser(userObject);
             } else {
               console.log(
