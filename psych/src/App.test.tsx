@@ -18,8 +18,6 @@ test('renders learn react link', () => {
  *
  * - Add mixed games, whereby you can host games with a mix of questions from both the standard library and other libraries
  *
- * - Make it so that the host can use the 'rejoin' functionality
- *
  * - Improve account features, present an area to change the user's profile picture and don't forget to log the user out when they update their profile picture.
  *
  * - Record user scores and top answers. Create a leaderboard

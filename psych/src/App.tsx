@@ -103,6 +103,7 @@ function App() {
               key="EndOfGamePage"
             />
           </Route>
+          <Route render={() => <Redirect to="/" />} />
         </Switch>
       </AnimatePresence>
     );
