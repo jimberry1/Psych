@@ -43,6 +43,7 @@ function App() {
           }
         />
       </Route>
+      <Route render={() => <Redirect to="/" />} />
     </Switch>
   );
   if (user) {
@@ -56,6 +57,7 @@ function App() {
               style={{ height: '100vh', width: '100vw' }}
             />
           </Route>
+
           <Route
             exact
             path="/"
@@ -101,7 +103,6 @@ function App() {
               key="EndOfGamePage"
             />
           </Route>
-          <Route render={() => <Redirect to="/" />} />
         </Switch>
       </AnimatePresence>
     );
