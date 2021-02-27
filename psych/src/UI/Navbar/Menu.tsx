@@ -88,7 +88,11 @@ const Menu: React.SFC<MenuProps> = ({
   }
 
   const RedirectHandler = (redirectToLocation: string) => {
-    setRedirectTo(redirectToLocation);
+    if (redirectTo === '/' && redirectToLocation === '/') {
+      setRedirectTo('/1');
+    } else {
+      setRedirectTo(redirectToLocation);
+    }
     setToggle();
   };
 
