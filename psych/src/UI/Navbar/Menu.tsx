@@ -70,7 +70,7 @@ const Menu: React.SFC<MenuProps> = ({
       linkTo: '/submitQuestion',
       color: '#9C1AFF',
     },
-    { linkName: 'Privacy Policy', linkTo: '/', color: '#7700FF' },
+    { linkName: 'Privacy Policy', linkTo: '/privacyPolicy', color: '#7700FF' },
   ];
   const animationControl = useAnimation();
   const [redirectTo, setRedirectTo] = useState('');
