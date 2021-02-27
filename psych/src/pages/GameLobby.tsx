@@ -22,9 +22,6 @@ const GameLobby = (props: any) => {
         setPlayers(
           docSnapshot.docs.map((doc: any) => ({ id: doc.id, data: doc.data() }))
         );
-        console.log(
-          docSnapshot.docs.map((doc: any) => ({ id: doc.id, data: doc.data() }))
-        );
       });
     }
   }, []);

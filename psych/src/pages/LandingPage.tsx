@@ -21,14 +21,11 @@ const LandingPage = (props: any) => {
   const [redirectTo, setRedirectTo] = useState('');
 
   const joinNewGameHandler = () => {
-    console.log('attempting to join game with gamecode' + props.gameCode);
-
     db.collection('games')
       .doc(props.gameCode.toString())
       .get()
       .then((doc) => {
         if (doc.exists) {
-          console.log('game found!');
           db.collection('games')
             .doc(props.gameCode.toString())
             .collection('players')
@@ -36,7 +33,6 @@ const LandingPage = (props: any) => {
             .get()
             .then((recordOfPlayer) => {
               if (recordOfPlayer.empty) {
-                console.log('record is empty');
                 db.collection('games')
                   .doc(props.gameCode.toString())
                   .collection('players')
@@ -45,8 +41,6 @@ const LandingPage = (props: any) => {
                     uid: props.user.uid,
                     photoURL: props.user?.photoURL || null,
                   });
-              } else {
-                console.log('Player is already in that game');
               }
             });
 
