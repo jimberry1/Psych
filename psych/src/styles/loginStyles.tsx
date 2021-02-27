@@ -58,6 +58,7 @@ font-size: 16px;
 
 export const LoginTitle = styled.h1`
   text-align: center;
+  font-family: 'Secular One', sans-serif;
 `;
 
 export const InfoGrouping = styled.div`
@@ -67,6 +68,7 @@ export const InfoGrouping = styled.div`
   justify-content: center;
   padding: 20px;
   width: 100%;
+  font-family: 'Secular One', sans-serif;
 
   @media (max-width: 1000px) {
     padding: 10px;
@@ -79,7 +81,7 @@ export const SubmitButton = styled.button`
   transition: 0.3s linear;
   background-color: green;
   color: green;
-  font-family: 'Lexend Deca', sans-serif;
+  font-family: 'Secular One', sans-serif;
   color: white;
   width: 25%;
   outline: none;
@@ -101,7 +103,7 @@ export const SwitchControls = styled.button`
   width: 25%;
   outline: none;
   background-color: blue;
-  font-family: 'Lexend Deca', sans-serif;
+  font-family: 'Secular One', sans-serif;
   &:hover {
     background-color: blue;
     animation: ${ButtonPop} 0.5s;
