@@ -1,6 +1,6 @@
 import db from '../firebase';
 import { useState, useEffect } from 'react';
-import { AnimatePresence, AnimateSharedLayout, motion } from 'framer-motion';
+import { motion } from 'framer-motion';
 import Lobby from '../components/Lobby/Lobby';
 import { Redirect } from 'react-router';
 import { GameLobbyHeader } from '../styles/GameLobby';

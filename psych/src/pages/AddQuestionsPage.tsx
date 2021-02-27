@@ -9,7 +9,11 @@ import {
 } from '../styles/GeneralStyles';
 import firebase from 'firebase';
 import { AnimatePresence, motion } from 'framer-motion';
-import { PageContainerVariants } from '../styles/Animations';
+import {
+  fadeInFromLeft,
+  PageContainerVariants,
+  verticalFadeInVariants,
+} from '../styles/Animations';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faInfoCircle, faPlus } from '@fortawesome/free-solid-svg-icons';
 import { makeRandomGameId } from '../utilities/utilityFunctions';
@@ -20,7 +24,14 @@ export interface AddQuestionsPageProps {
 const AddQuestionsPage: React.SFC<AddQuestionsPageProps> = ({ user }) => {
   const [question, setQuestion] = useState('');
   const [questionCollectionId, setQuestionCollectionId] = useState('');
+  const [lockedQuestionCollectionId, setLockedQuestionCollectionId] = useState(
+    ''
+  );
   const [hasSubmittedQuestion, setHasSubmittedQuestion] = useState(false);
+  const [
+    connectedToQuestionCollection,
+    setConnectedToQuestionCollection,
+  ] = useState(false);
   const [error, setError] = useState('');
 
   const submitQuestionHandler = () => {
@@ -41,7 +52,7 @@ const AddQuestionsPage: React.SFC<AddQuestionsPageProps> = ({ user }) => {
             const index = indexor.get('index');
 
             db.collection('customQuestions')
-              .doc(questionCollectionId)
+              .doc(lockedQuestionCollectionId)
               .collection('questions')
               .add({
                 question: question,
@@ -64,32 +75,29 @@ const AddQuestionsPage: React.SFC<AddQuestionsPageProps> = ({ user }) => {
             );
           }
         });
-
-      //   db.collection('questions')
-      //     .doc('Indexor')
-      //     .get()
-      //     .then((Indexor) => {
-      //       const index = Indexor.get('index');
-
-      //       db.collection('questions').add({
-      //         question: question,
-      //         index: index,
-      //         uid: user.uid,
-      //         name: user.name,
-      //       });
-
-      //       db.collection('questions')
-      //         .doc('Indexor')
-      //         .update({ index: firebase.firestore.FieldValue.increment(1) });
-
-      //       setQuestion('');
-      //       setHasSubmittedQuestion(true);
-      //     });
     } else {
-      setError(
-        'Please make sure your question is over 10 characters long and contains XXX'
-      );
+      setError('Please make sure your question is over 10 characters long');
     }
+  };
+
+  const connectToQuestionCollection = () => {
+    if (!questionCollectionId) {
+      console.log('lol nothing is even here');
+      return;
+    }
+    db.collection('customQuestions')
+      .doc(questionCollectionId)
+      .collection('questions')
+      .doc('Indexor')
+      .get()
+      .then((indexor) => {
+        if (indexor.exists) {
+          setConnectedToQuestionCollection(true);
+          setLockedQuestionCollectionId(questionCollectionId);
+        } else {
+          console.log("Sorry bro couldn't find it");
+        }
+      });
   };
 
   const generateQuestionID = () => {
@@ -115,30 +123,63 @@ const AddQuestionsPage: React.SFC<AddQuestionsPageProps> = ({ user }) => {
     >
       <ContainerStyles>
         <GeneralPageSubTitle>Contribute your questions!</GeneralPageSubTitle>
-        <div style={{ padding: 20 }}>
-          <GeneralPageTextBody>
-            To contribute a question simply enter it in the box below and type
-            XXX where the name of a random player will be substituted
-          </GeneralPageTextBody>
-        </div>
-        <div style={{ padding: 20 }}>
-          <GeneralPageTextBody>
-            Example question: 'What would XXX's superpower be?'
-          </GeneralPageTextBody>
-        </div>
-        {/* <div>
-          <GeneralPageTextBody>
-            Make sure your questions are linked to a question pool using a
-            question collection identifier!
-          </GeneralPageTextBody>
-        </div> */}
+        <AnimatePresence exitBeforeEnter>
+          {connectedToQuestionCollection ? (
+            <motion.div
+              variants={verticalFadeInVariants}
+              initial="hidden"
+              animate="visible"
+              exit="hidden"
+              key="AnimatePresenceStep1Key"
+              style={{ maxWidth: '80%', gap: 20 }}
+            >
+              <GeneralPageSubTitle>Step 2</GeneralPageSubTitle>
+              <GeneralPageTextBody>
+                To contribute a question simply enter it in the box below. If
+                the letters XXX are included in your question they will be
+                substituted for a randomly selected name of a player in your
+                game.
+              </GeneralPageTextBody>
+              <div style={{ padding: 20 }}>
+                <GeneralPageTextBody>
+                  Example question: 'What would XXX's superpower be?'
+                </GeneralPageTextBody>
+              </div>
+            </motion.div>
+          ) : (
+            <motion.div
+              variants={verticalFadeInVariants}
+              initial="hidden"
+              animate="visible"
+              exit="hidden"
+              key="AnimatePresenceStep2Key"
+              style={{ maxWidth: '80%' }}
+            >
+              <GeneralPageSubTitle>Step 1</GeneralPageSubTitle>
+              <GeneralPageTextBody>
+                Enter a question collection ID to link your question with others
+                from the same group of friends. If you're setting up a
+                collection for the first time then click the '+' icon to
+                generate a new code.
+              </GeneralPageTextBody>
+            </motion.div>
+          )}
+        </AnimatePresence>
+
         <div style={{ display: 'flex' }}>
           <GameCodeInputBar
             placeholder="Enter collection ID..."
-            style={{ borderRadius: 10 }}
+            style={{
+              borderRadius: 10,
+              border: connectedToQuestionCollection ? '7px solid green' : '',
+            }}
             value={questionCollectionId}
-            onChange={(e) => setQuestionCollectionId(e.target.value)}
+            onChange={(e) => {
+              setConnectedToQuestionCollection(false);
+              setQuestionCollectionId(e.target.value);
+            }}
           />
+
           <div style={{ display: 'flex', flexDirection: 'column' }}>
             <FontAwesomeIcon
               icon={faInfoCircle}
@@ -157,20 +198,13 @@ const AddQuestionsPage: React.SFC<AddQuestionsPageProps> = ({ user }) => {
             />
           </div>
         </div>
-
-        <StyledTextArea
-          placeholder="Enter question here..."
-          value={question}
-          onChange={(e) => {
-            setQuestion(e.target.value);
-            setHasSubmittedQuestion(false);
-            setError('');
-          }}
-        />
-
-        <GeneralBlueButtonStyles onClick={submitQuestionHandler}>
-          Submit
-        </GeneralBlueButtonStyles>
+        {connectedToQuestionCollection ? (
+          <div></div>
+        ) : (
+          <GeneralBlueButtonStyles onClick={connectToQuestionCollection}>
+            Connect
+          </GeneralBlueButtonStyles>
+        )}
         <AnimatePresence>
           {hasSubmittedQuestion && (
             <motion.div
@@ -205,6 +239,36 @@ const AddQuestionsPage: React.SFC<AddQuestionsPageProps> = ({ user }) => {
             </motion.div>
           )}
         </AnimatePresence>
+        {connectedToQuestionCollection && (
+          <motion.div
+            style={{
+              padding: 15,
+              display: 'flex',
+              flexDirection: 'column',
+              width: '100%',
+              justifyContent: 'center',
+              alignItems: 'center',
+            }}
+            variants={fadeInFromLeft}
+            initial="hidden"
+            animate="visible"
+          >
+            <StyledTextArea
+              placeholder="Enter question here..."
+              style={{ width: '80%', padding: 15, height: '200px' }}
+              value={question}
+              onChange={(e) => {
+                setQuestion(e.target.value);
+                setHasSubmittedQuestion(false);
+                setError('');
+              }}
+            />
+
+            <GeneralBlueButtonStyles onClick={submitQuestionHandler}>
+              Submit
+            </GeneralBlueButtonStyles>
+          </motion.div>
+        )}
       </ContainerStyles>
     </motion.div>
   );

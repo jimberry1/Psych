@@ -32,5 +32,7 @@ test('renders learn react link', () => {
  *
  * - Allow for url matching to occur
  *
+ * - Track which collections people have written to and let them view their submissions
  *
+ * - Add a question index owner to customQuestion collections and let the owner manage the entire collection
  */
