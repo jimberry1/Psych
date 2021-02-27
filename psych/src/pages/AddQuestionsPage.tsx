@@ -30,10 +30,7 @@ const AddQuestionsPage: React.SFC<AddQuestionsPageProps> = ({ user }) => {
       );
       return;
     }
-    if (
-      question.length > 10 &&
-      (question.search('xxx') !== -1 || question.search('XXX') !== -1)
-    ) {
+    if (question.length > 10) {
       db.collection('customQuestions')
         .doc(questionCollectionId)
         .collection('questions')
