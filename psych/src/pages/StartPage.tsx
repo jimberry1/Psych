@@ -8,6 +8,8 @@ import askquestion from '../assets/images/askquestion.svg';
 import { GeneralBlueButtonStyles } from '../styles/GeneralStyles';
 import { Redirect } from 'react-router';
 import PageLoader from '../components/PageLoader';
+import WaveSVG from '../UI/WaveSVG';
+import GradientText from '../UI/GradientText';
 
 export interface StartPageProps {}
 
@@ -123,28 +125,7 @@ const StartPage: React.SFC<StartPageProps> = () => {
     <StartPageContainer>
       {redirect && <Redirect push to="/signin" />}
 
-      <svg viewBox="0 0 1792 279" style={{ marginTop: -5 }}>
-        <path
-          fill="#1e2d61"
-          d="M 0 0 C 245.39999999999998 0 163.60000000000002 66 409 66 L 409 66 L 409 0 L 0 0 Z"
-          stroke-width="0"
-        ></path>
-        <path
-          fill="#1e2d61"
-          d="M 408 66 C 728.4 66 621.6 203 942 203 L 942 203 L 942 0 L 408 0 Z"
-          stroke-width="0"
-        ></path>
-        <path
-          fill="#1e2d61"
-          d="M 941 203 C 1193 203 1109 81 1361 81 L 1361 81 L 1361 0 L 941 0 Z"
-          stroke-width="0"
-        ></path>
-        <path
-          fill="#1e2d61"
-          d="M 1360 81 C 1619.2 81 1532.8 0 1792 0 L 1792 0 L 1792 0 L 1360 0 Z"
-          stroke-width="0"
-        ></path>
-      </svg>
+      <WaveSVG />
       <GenericContainer>
         Pysch is an interactive Quiz game designed to be played with friends
       </GenericContainer>
@@ -178,19 +159,9 @@ const StartPage: React.SFC<StartPageProps> = () => {
           </RowSegment>
 
           <RowSegment>
-            <h1
-              style={{
-                background: 'linear-gradient(90deg, #FF8008 0%, #FFC837 100%)',
-                WebkitTextFillColor: 'transparent',
-                textAlign: 'center',
-                backgroundClip: 'text',
-                WebkitBackgroundClip: 'text',
-                fontSize: '45px',
-                fontFamily: "'Secular One', sans-serif",
-              }}
-            >
+            <GradientText colorGradient="linear-gradient(90deg, #FF8008 0%, #FFC837 100%)">
               Submit answers and vote on your favourites
-            </h1>
+            </GradientText>
           </RowSegment>
         </RowContainer>
 
@@ -201,20 +172,9 @@ const StartPage: React.SFC<StartPageProps> = () => {
           key="0000012"
         >
           <RowSegment>
-            <h1
-              style={{
-                background:
-                  'linear-gradient(90deg, rgba(63,177,173,1) 0%, rgba(22,42,124,1) 100%)',
-                WebkitTextFillColor: 'transparent',
-                textAlign: 'center',
-                backgroundClip: 'text',
-                WebkitBackgroundClip: 'text',
-                fontSize: '45px',
-                fontFamily: "'Secular One', sans-serif",
-              }}
-            >
+            <GradientText colorGradient="linear-gradient(90deg, rgba(63,177,173,1) 0%, rgba(22,42,124,1) 100%)">
               Keep track of scores on our leaderboard
-            </h1>
+            </GradientText>
           </RowSegment>
           <RowSegment>
             <img
@@ -233,19 +193,9 @@ const StartPage: React.SFC<StartPageProps> = () => {
             <img src={askquestion} style={{ height: 400, width: 300 }} />
           </RowSegment>
           <RowSegment>
-            <h1
-              style={{
-                background: 'linear-gradient(to right,#86d480,#6aee3d)',
-                WebkitTextFillColor: 'transparent',
-                textAlign: 'center',
-                backgroundClip: 'text',
-                WebkitBackgroundClip: 'text',
-                fontSize: '45px',
-                fontFamily: "'Secular One', sans-serif",
-              }}
-            >
+            <GradientText colorGradient="linear-gradient(to right,#86d480,#6aee3d)">
               Create your own questions for a personal twist
-            </h1>
+            </GradientText>
           </RowSegment>
         </RowContainer>
       </motion.ul>

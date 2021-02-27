@@ -66,10 +66,7 @@ const HostGameScreen = (props: any) => {
   }, [props.gameCode]);
 
   const startGameHandler = () => {
-    //Change this to be the number of rounds and the total number of questions in the database that we'll get from doing a query search
-
-    // Create a new questions array -- This will need to be changed in the future to use the questions db table and the number of available questions there
-
+    // Displays an error and prevents progression if the user has selected a custom question set without providing an ID
     if (selectedQuestionSet > 0 && !questionCollectionId) {
       props.handleError(
         'Please connect to a question collection if you want to start a game using custom questions'
@@ -77,6 +74,7 @@ const HostGameScreen = (props: any) => {
       return;
     }
 
+    // Creates the questionsIndex which is an array the length of the number of rounds with the question index for each round
     let questionsIndex: number[];
     if (customQuestionsInUse) {
       questionsIndex = questionArrayGenerator(
@@ -90,6 +88,7 @@ const HostGameScreen = (props: any) => {
       );
     }
 
+    // Creates an array of names that will be substituted during each questions
     const randomlyPickedPlayersForQuestions = randomlyPickNamesForQuestions(
       players,
       roundNumberSelected

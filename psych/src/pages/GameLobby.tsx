@@ -18,8 +18,6 @@ const GameLobby = (props: any) => {
         .doc(props.gameCode.toString())
         .collection('players');
 
-      console.log(playerDbRef);
-
       playerDbRef.onSnapshot((docSnapshot) => {
         setPlayers(
           docSnapshot.docs.map((doc: any) => ({ id: doc.id, data: doc.data() }))
