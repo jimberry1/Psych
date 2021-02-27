@@ -101,16 +101,18 @@ const PrivacyPolicyPage: React.SFC<PrivacyPolicyPageProps> = () => {
           <GeneralPageSubTitle>Cookies</GeneralPageSubTitle>
           <GeneralPageTextBody>
             Cookies are text files placed on your computer to collect standard
-            Internet log information and visitor behavior information.
+            Internet log information and visitor behavior information. This site
+            uses minimal cookies and only to prevent sign in occuring every page
+            refresh, we do not use cookies to invade on your privacy or collect
+            your data
           </GeneralPageTextBody>
         </GeneralFlexboxColumnDirection>
         <GeneralFlexboxColumnDirection>
           <GeneralPageSubTitle>How to manage cookies</GeneralPageSubTitle>
           <GeneralPageTextBody>
-            You can set your browser not to accept cookies, and the above
-            website tells you how to remove cookies from your browser. However,
-            in a few cases, some of our website features may not function as a
-            result.
+            You can set your browser not to accept cookies - this should not
+            affect the performance or usability of our site as we do not use
+            cookies as a key part of any functionality.
           </GeneralPageTextBody>
         </GeneralFlexboxColumnDirection>
         <GeneralFlexboxColumnDirection>
