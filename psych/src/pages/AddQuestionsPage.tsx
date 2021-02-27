@@ -17,9 +17,15 @@ import {
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faInfoCircle, faPlus } from '@fortawesome/free-solid-svg-icons';
 import { makeRandomGameId } from '../utilities/utilityFunctions';
+import styled from 'styled-components';
 export interface AddQuestionsPageProps {
   user: any;
 }
+
+const GameInputContainer = styled.div`
+  display: flex;
+  margin-top: 30px;
+`;
 
 const AddQuestionsPage: React.SFC<AddQuestionsPageProps> = ({ user }) => {
   const [question, setQuestion] = useState('');
@@ -95,7 +101,7 @@ const AddQuestionsPage: React.SFC<AddQuestionsPageProps> = ({ user }) => {
           setConnectedToQuestionCollection(true);
           setLockedQuestionCollectionId(questionCollectionId);
         } else {
-          console.log("Sorry bro couldn't find it");
+          setError(`No collection ID matching '${questionCollectionId}' found`);
         }
       });
   };
@@ -140,11 +146,9 @@ const AddQuestionsPage: React.SFC<AddQuestionsPageProps> = ({ user }) => {
                 substituted for a randomly selected name of a player in your
                 game.
               </GeneralPageTextBody>
-              <div style={{ padding: 20 }}>
-                <GeneralPageTextBody>
-                  Example question: 'Why did XXX cross the road?'
-                </GeneralPageTextBody>
-              </div>
+              <GeneralPageTextBody style={{ padding: 20 }}>
+                Example question: 'Why did XXX cross the road?'
+              </GeneralPageTextBody>
             </motion.div>
           ) : (
             <motion.div
@@ -156,7 +160,7 @@ const AddQuestionsPage: React.SFC<AddQuestionsPageProps> = ({ user }) => {
               style={{ maxWidth: '80%' }}
             >
               <GeneralPageSubTitle>Step 1</GeneralPageSubTitle>
-              <GeneralPageTextBody>
+              <GeneralPageTextBody style={{ padding: 20 }}>
                 Enter a question collection ID to link your question with others
                 from the same group of friends. If you're setting up a
                 collection for the first time then click the '+' icon to
@@ -166,7 +170,7 @@ const AddQuestionsPage: React.SFC<AddQuestionsPageProps> = ({ user }) => {
           )}
         </AnimatePresence>
 
-        <div style={{ display: 'flex' }}>
+        <GameInputContainer>
           <GameCodeInputBar
             placeholder="Enter collection ID..."
             style={{
@@ -176,6 +180,7 @@ const AddQuestionsPage: React.SFC<AddQuestionsPageProps> = ({ user }) => {
             value={questionCollectionId}
             onChange={(e) => {
               setConnectedToQuestionCollection(false);
+              setError('');
               setQuestionCollectionId(e.target.value);
             }}
           />
@@ -197,7 +202,7 @@ const AddQuestionsPage: React.SFC<AddQuestionsPageProps> = ({ user }) => {
               onClick={generateQuestionID}
             />
           </div>
-        </div>
+        </GameInputContainer>
         {connectedToQuestionCollection ? (
           <div></div>
         ) : (
