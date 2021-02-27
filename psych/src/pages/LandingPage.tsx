@@ -1,12 +1,8 @@
 import {
   PageContainer,
-  TitleStyles,
-  GameControlButton,
   GameCodeInput,
   ButtonContainer,
   GameCodeInputColumn,
-  GameCodeInputBar,
-  GameInputSubSection,
 } from '../styles/LandingPageStyles';
 import { StartButton } from '../UI/ButtonStyle1';
 import { useState } from 'react';
@@ -84,7 +80,7 @@ const LandingPage = (props: any) => {
       timestamp: firebase.firestore.FieldValue.serverTimestamp(),
     });
 
-    // Then change your game code to reflect the new lobby that you made
+    // Then change your game code on firebase to reflect the new lobby that you made
     db.collection('users')
       .doc(props.user.uid)
       .set({ gameCode: newGameId }, { merge: true });
@@ -108,7 +104,20 @@ const LandingPage = (props: any) => {
 
   const ReconnectToGameHandler: () => void = () => {
     if (props.user.gameCode && props.user.gameCode !== 0) {
-      setRedirectTo('/lobby');
+      db.collection('games')
+        .doc(props.user.gameCode.toString())
+        .get()
+        .then((gameSnapshot: any) => {
+          if (gameSnapshot.data().host === props.user.uid) {
+            setRedirectTo('hostgame');
+          } else {
+            setRedirectTo('/lobby');
+          }
+        })
+        .catch((err) => {
+          console.log(err);
+          setRedirectTo('/lobby');
+        });
     }
   };
 
