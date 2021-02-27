@@ -7,6 +7,7 @@ import SubtlePrism from '../assets/images/SubtlePrism.svg';
 import askquestion from '../assets/images/askquestion.svg';
 import { GeneralBlueButtonStyles } from '../styles/GeneralStyles';
 import { Redirect } from 'react-router';
+import PageLoader from '../components/PageLoader';
 
 export interface StartPageProps {}
 
@@ -99,16 +100,28 @@ const cardVariants = {
 
 const StartPage: React.SFC<StartPageProps> = () => {
   const [redirect, setRedirect] = useState(false);
+  const [loaded, setLoaded] = useState(false);
 
   useEffect(() => {
     if (localStorage.getItem('psy_uid') !== null) {
       setRedirect(true);
+    } else {
+      setLoaded(true);
     }
   }, []);
 
+  if (!loaded) {
+    return (
+      <div>
+        {redirect && <Redirect push to="/signin" />}
+        <PageLoader />
+      </div>
+    );
+  }
+
   return (
     <StartPageContainer>
-      {redirect && <Redirect to="/signin" />}
+      {redirect && <Redirect push to="/signin" />}
 
       <svg viewBox="0 0 1792 279" style={{ marginTop: -5 }}>
         <path
@@ -147,8 +160,8 @@ const StartPage: React.SFC<StartPageProps> = () => {
         initial="hidden"
         animate="visible"
         variants={{
-          hidden: { opacity: 0 },
-          visible: { opacity: 1, transition: { staggerChildren: 0.7 } },
+          hidden: { opacity: 0, y: -200 },
+          visible: { opacity: 1, y: 0, transition: { staggerChildren: 0.7 } },
         }}
       >
         <RowContainer

@@ -39,6 +39,7 @@ const AnswerContainer = styled.div`
   border-radius: 10px;
   margin: 15px;
   transition: 0.5s;
+  overflow-x: none;
 
   overflow-wrap: break-word;
   word-wrap: break-word;
@@ -157,7 +158,6 @@ const ShowAnswersWithVoteCount: React.SFC<ShowAnswersWithVoteCountProps> = ({
                     <FontAwesomeIcon
                       icon={faMedal}
                       color={determineColorOfMedal(answerWithVote.uid)}
-                      // style={{ marginLeft: 30 }}
                     />
                   )}
                 </AnswerHeaderChild>

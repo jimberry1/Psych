@@ -1,6 +1,6 @@
 import db, { auth } from '../firebase';
 import firebase from 'firebase';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import {
   LoginContainer,
   LoginPageContainer,
@@ -10,6 +10,7 @@ import {
   SubmitButton,
   SwitchControls,
 } from '../styles/loginStyles';
+import PageLoader from '../components/PageLoader';
 
 export interface LoginProps {
   changeGameCode: (newGameCode: string) => void;
@@ -27,27 +28,32 @@ const Login = ({
   const [email, setEmail] = useState('');
   const [displayName, setDisplayName] = useState('');
   const [password, setPassword] = useState('');
+  const [loaded, setLoaded] = useState(false);
 
-  if (localStorageUid !== null) {
-    auth.onAuthStateChanged(function (user) {
-      if (user) {
-        const dbUserRef = db.collection('users').doc(localStorageUid);
-        dbUserRef.get().then((docSnapshot: any) => {
-          if (docSnapshot.exists) {
-            const userObj = {
-              name: docSnapshot.data().name,
-              email: docSnapshot.data().email,
-              photoURL: docSnapshot.data().photoURL,
-              uid: docSnapshot.data().uid,
-              gameCode: docSnapshot.data().gameCode,
-            };
-            changeGameCode(docSnapshot.data().gameCode);
-            changeUser(userObj);
-          }
-        });
-      }
-    });
-  }
+  useEffect(() => {
+    if (localStorageUid !== null) {
+      auth.onAuthStateChanged(function (user) {
+        if (user) {
+          const dbUserRef = db.collection('users').doc(localStorageUid);
+          dbUserRef.get().then((docSnapshot: any) => {
+            if (docSnapshot.exists) {
+              const userObj = {
+                name: docSnapshot.data().name,
+                email: docSnapshot.data().email,
+                photoURL: docSnapshot.data().photoURL,
+                uid: docSnapshot.data().uid,
+                gameCode: docSnapshot.data().gameCode,
+              };
+              changeGameCode(docSnapshot.data().gameCode);
+              changeUser(userObj);
+            }
+          });
+        }
+      });
+    } else {
+      setLoaded(true);
+    }
+  }, []);
 
   const signIn = (e: any) => {
     e.preventDefault();
@@ -143,6 +149,10 @@ const Login = ({
         });
     }
   };
+
+  if (!loaded) {
+    return <PageLoader />;
+  }
   return (
     <LoginPageContainer>
       <LoginContainer>
@@ -182,18 +192,7 @@ const Login = ({
         </InfoGrouping>
 
         <InfoGrouping>
-          <SubmitButton
-            onClick={(e) => signIn(e)}
-            // disabled={
-            //   !(
-            //     email.length > 0 &&
-            //     password.length > 6 &&
-            //     (createAnAccount ? displayName.length > 2 : true)
-            //   )
-            // }
-          >
-            Submit
-          </SubmitButton>
+          <SubmitButton onClick={(e) => signIn(e)}>Submit</SubmitButton>
         </InfoGrouping>
         <InfoGrouping>
           <SwitchControls
