@@ -35,19 +35,25 @@ const Login = ({
       auth.onAuthStateChanged(function (user) {
         if (user) {
           const dbUserRef = db.collection('users').doc(localStorageUid);
-          dbUserRef.get().then((docSnapshot: any) => {
-            if (docSnapshot.exists) {
-              const userObj = {
-                name: docSnapshot.data().name,
-                email: docSnapshot.data().email,
-                photoURL: docSnapshot.data().photoURL,
-                uid: docSnapshot.data().uid,
-                gameCode: docSnapshot.data().gameCode,
-              };
-              changeGameCode(docSnapshot.data().gameCode);
-              changeUser(userObj);
-            }
-          });
+          dbUserRef
+            .get()
+            .then((docSnapshot: any) => {
+              if (docSnapshot.exists) {
+                const userObj = {
+                  name: docSnapshot.data().name,
+                  email: docSnapshot.data().email,
+                  photoURL: docSnapshot.data().photoURL,
+                  uid: docSnapshot.data().uid,
+                  gameCode: docSnapshot.data().gameCode,
+                };
+                changeGameCode(docSnapshot.data().gameCode);
+                changeUser(userObj);
+              }
+            })
+            .catch((err) => {
+              console.log(err);
+              setLoaded(true);
+            });
         }
       });
     } else {
