@@ -12,10 +12,6 @@ const SpinningBlueTick: React.SFC<SpinningBlueTickProps> = ({ delay = 1 }) => {
       variants={{
         hidden: { opacity: 0.2 },
         visible: { rotateY: 720, opacity: 1, transition: { delay: delay } },
-        // hover: {
-        //   rotateY: 360,
-        //   transition: { duration: 2, delay: 0 },
-        // },
       }}
       initial="hidden"
       animate="visible"

@@ -15,7 +15,6 @@ import {
 import HostGameCustomisationControls from '../components/HostGameCustomisationControls';
 import { GeneralPageSubTitle } from '../styles/GeneralStyles';
 import CustomCollectionDisplay from '../components/CustomCollectionDisplay';
-// import { randomlyPickNamesForQuestions } from '../utilities/utilityFunctions';
 
 const ButtonContainer = styled(motion.div)`
   display: flex;

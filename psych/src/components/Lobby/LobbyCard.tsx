@@ -1,8 +1,6 @@
 import styled from 'styled-components';
 import { motion } from 'framer-motion';
 import { verticalFadeInVariants } from '../../styles/Animations';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faCheckCircle } from '@fortawesome/free-regular-svg-icons';
 import CircleLoader from '../../UI/CircleLoader';
 import SpinningBlueTick from '../SpinningBlueTick';
 

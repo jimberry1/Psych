@@ -1,13 +1,9 @@
-import styled from 'styled-components';
-import { motion } from 'framer-motion';
-import { verticalFadeInVariants } from '../styles/Animations';
 import {
   GeneralBlueButtonStyles,
   ContainerStyles,
   GeneralPageSubTitle,
 } from '..//styles/GeneralStyles';
 import Lobby from './Lobby/Lobby';
-import { useEffect } from 'react';
 import { createArrayOfPeopleWhoHaveAnswered } from '../utilities/utilityFunctions';
 export interface WaitingForAnswersProps {
   ProceedToVotingHandler: () => void;
@@ -25,11 +21,6 @@ const WaitingForAnswers: React.SFC<WaitingForAnswersProps> = ({
   isHost,
 }) => {
   return (
-    // <motion.div
-    //   variants={verticalFadeInVariants}
-    //   initial="hidden"
-    //   animate="visible"
-    // >
     <ContainerStyles>
       <GeneralPageSubTitle style={{ marginBottom: 50 }}>
         Waiting for all players to answer
@@ -52,7 +43,6 @@ const WaitingForAnswers: React.SFC<WaitingForAnswersProps> = ({
         </GeneralBlueButtonStyles>
       )}
     </ContainerStyles>
-    // </motion.div>
   );
 };
 

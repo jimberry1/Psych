@@ -1,5 +1,4 @@
-import { useState, useEffect } from 'react';
-import { motion, AnimatePresence, AnimateSharedLayout } from 'framer-motion';
+import { useState } from 'react';
 import styled from 'styled-components';
 import { CountdownCircleTimer } from 'react-countdown-circle-timer';
 import Modal from '../UI/Modal/Modal';

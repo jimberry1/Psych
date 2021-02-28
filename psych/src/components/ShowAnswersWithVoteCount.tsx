@@ -3,8 +3,6 @@ import { faMedal } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { useEffect, useState } from 'react';
 import { motion } from 'framer-motion';
-import { answerType, voteType } from '../types';
-import ScoreGraph from './ScoreGraph';
 
 export interface ShowAnswersWithVoteCountProps {
   answersWithVoteTally: answerWithVotes[];

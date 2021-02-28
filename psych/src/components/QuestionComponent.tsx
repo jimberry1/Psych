@@ -1,7 +1,4 @@
-import styled from 'styled-components';
 import { motion } from 'framer-motion';
-import db from '../firebase';
-import { keyframes } from 'styled-components';
 import {
   GeneralBlueButtonStyles,
   ContainerStyles,

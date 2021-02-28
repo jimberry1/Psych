@@ -1,4 +1,3 @@
-import VotingOnAnswersComponent from './VotingOnAnswersComponent';
 import { createAnOrderedListOfPlayerScores } from '../utilities/utilityFunctions';
 import styled from 'styled-components';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';

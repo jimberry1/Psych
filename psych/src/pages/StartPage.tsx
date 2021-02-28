@@ -5,7 +5,6 @@ import undraw_To_do_re_jaef from '../assets/images/undraw_To_do_re_jaef.svg';
 import undraw_winners_ao2o from '../assets/images/undraw_winners_ao2o.svg';
 import SubtlePrism from '../assets/images/SubtlePrism.svg';
 import askquestion from '../assets/images/askquestion.svg';
-import { GeneralBlueButtonStyles } from '../styles/GeneralStyles';
 import { Redirect } from 'react-router';
 import PageLoader from '../components/PageLoader';
 import WaveSVG from '../UI/WaveSVG';
