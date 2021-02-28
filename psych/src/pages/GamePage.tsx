@@ -1,6 +1,5 @@
 import { useState, useEffect } from 'react';
 import { AnimatePresence, motion } from 'framer-motion';
-import { voteType, answerType, playerType } from '../types';
 import db from '../firebase';
 import firebase from 'firebase';
 import VotingOnAnswersComponent from '../components/VotingOnAnswersComponent';
@@ -9,7 +8,6 @@ import QuestionComponent from '../components/QuestionComponent';
 import WaitingForAnswers from '../components/WaitingForAnswers';
 import { verticalFadeInVariants } from '../styles/Animations';
 import { Redirect } from 'react-router';
-import CountDownClock from '../components/CountDownClock';
 const GamePage = (props: any) => {
   const [gameInfo, setGameInfo]: any = useState(null);
   const [players, setPlayers] = useState([]);
@@ -131,14 +129,14 @@ const GamePage = (props: any) => {
     if (
       questionIndex.length > 0 &&
       roundNumber > 0 &&
-      questionIndex.length > roundNumber
+      questionIndex.length >= roundNumber
     ) {
       if (customQuestionCollectionId) {
         // If the custom collection id is set then use that to get the question
         db.collection('customQuestions')
           .doc(customQuestionCollectionId)
           .collection('questions')
-          .where('index', '==', questionIndex[roundNumber])
+          .where('index', '==', questionIndex[roundNumber - 1])
           .limit(1)
           .get()
           .then((questionQuery) => {
@@ -149,7 +147,7 @@ const GamePage = (props: any) => {
       } else {
         // If the custom collection id isn't set then get the questions from the default collection
         db.collection('questions')
-          .where('index', '==', questionIndex[roundNumber])
+          .where('index', '==', questionIndex[roundNumber - 1])
           .limit(1)
           .get()
           .then((questionQuery) => {
@@ -258,13 +256,13 @@ const GamePage = (props: any) => {
       .replace(
         'xxx',
         randomNameArray.length >= roundNumber
-          ? arrayOfNames[roundNumber]
+          ? arrayOfNames[roundNumber - 1]
           : 'ERROR - NO NAME FOUND'
       )
       .replace(
         'XXX',
         randomNameArray.length >= roundNumber
-          ? arrayOfNames[roundNumber]
+          ? arrayOfNames[roundNumber - 1]
           : 'ERROR - NO NAME FOUND'
       );
   };
@@ -355,6 +353,7 @@ const GamePage = (props: any) => {
             gameCode={props.gameCode}
             user={props.user}
             roundNumber={roundNumber}
+            numberOfRounds={gameInfo.numberOfRounds}
             numberOfPlayers={players.length}
             isResultsRound={isResultsRound}
             votesArray={votes}

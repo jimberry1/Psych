@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
 import db from '../../firebase';
 import {
   ContainerStyles,
@@ -6,15 +6,16 @@ import {
   GeneralPageSubTitle,
 } from '../../styles/GeneralStyles';
 import ResultsTableOrchestrator from '../ResultsTableOrchestrator';
-import { countVotesForEachAnswerInArrayForAProvidedRound } from '../../utilities/utilityFunctions';
+import {
+  countVotesForEachAnswerInArrayForAProvidedRound,
+  createAnOrderedListOfPlayerScores,
+} from '../../utilities/utilityFunctions';
 import ShowAnswersWithVoteCount from '../ShowAnswersWithVoteCount';
 import ScoreGraph from '../ScoreGraph';
 import styled from 'styled-components';
 import { AnimatePresence, motion } from 'framer-motion';
-import {
-  fadeInFromLeft,
-  verticalFadeInVariants,
-} from '../../styles/Animations';
+import { verticalFadeInVariants } from '../../styles/Animations';
+import { answerType, playerType, voteType } from '../../types';
 
 export interface RoundResultsProps {
   gameCode: string | number;
@@ -22,13 +23,12 @@ export interface RoundResultsProps {
   user: any;
   numberOfPlayers: number;
   isResultsRound: boolean;
-  votesArray: any;
-  playersArray: any;
-  answersArray: any[];
+  votesArray: voteType[];
+  playersArray: playerType[];
+  answersArray: answerType[];
   isHost: boolean;
+  numberOfRounds: number;
 }
-
-const MyResultsSection = styled.div``;
 
 const VotedForMeName = styled.div`
   padding: 5px;
@@ -40,17 +40,38 @@ const VotedForMeName = styled.div`
 const RoundResults: React.SFC<RoundResultsProps> = (props) => {
   const [showGraph, setShowGraph] = useState('');
   const nextRoundHandler = () => {
-    db.collection('games')
-      .doc(props.gameCode.toString())
-      .set(
+    if (props.roundNumber + 1 > props.numberOfRounds) {
+      const roundWinnerUid = createAnOrderedListOfPlayerScores(
+        props.playersArray,
+        props.votesArray,
+        props.roundNumber
+      )[0].uid;
+      db.collection('games').doc(props.gameCode.toString()).set(
         {
-          isResultsRound: false,
-          isVotingRound: false,
-          isQuestionsRound: true,
-          roundNumber: props.roundNumber + 1,
+          winner: roundWinnerUid,
         },
         { merge: true }
       );
+    } else {
+      console.log(
+        createAnOrderedListOfPlayerScores(
+          props.playersArray,
+          props.votesArray,
+          props.roundNumber
+        )[0].uid
+      );
+      db.collection('games')
+        .doc(props.gameCode.toString())
+        .set(
+          {
+            isResultsRound: false,
+            isVotingRound: false,
+            isQuestionsRound: true,
+            roundNumber: props.roundNumber + 1,
+          },
+          { merge: true }
+        );
+    }
   };
 
   const playersWhoVotedForMe = props.votesArray
@@ -139,7 +160,9 @@ const RoundResults: React.SFC<RoundResultsProps> = (props) => {
               onClick={nextRoundHandler}
               style={{ marginBottom: 20 }}
             >
-              Proceed to round {props.roundNumber + 1}
+              {props.roundNumber + 1 > props.numberOfRounds
+                ? 'Proceed to final scores'
+                : `Proceed to round ${props.roundNumber + 1}`}
             </GeneralBlueButtonStyles>
           )}
         </div>
