@@ -45,7 +45,7 @@ const RoundResults: React.SFC<RoundResultsProps> = (props) => {
         props.playersArray,
         props.votesArray,
         props.roundNumber
-      )[0].uid;
+      )[0].name;
       db.collection('games').doc(props.gameCode.toString()).set(
         {
           winner: roundWinnerUid,
@@ -53,13 +53,6 @@ const RoundResults: React.SFC<RoundResultsProps> = (props) => {
         { merge: true }
       );
     } else {
-      console.log(
-        createAnOrderedListOfPlayerScores(
-          props.playersArray,
-          props.votesArray,
-          props.roundNumber
-        )[0].uid
-      );
       db.collection('games')
         .doc(props.gameCode.toString())
         .set(
