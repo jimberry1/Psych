@@ -17,7 +17,6 @@ const WinnerContainerStyles = styled(motion.div)`
   box-shadow: 4px 4px 4px 4px #505050;
   border-radius: 15px;
   word-wrap: break-word;
-  word-break: break-all;
 
   @media (max-width: 1000px) {
     padding: 5px;
