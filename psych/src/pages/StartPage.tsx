@@ -127,7 +127,7 @@ const StartPage: React.SFC<StartPageProps> = () => {
 
       <WaveSVG />
       <GenericContainer>
-        Pysch is an interactive Quiz game designed to be played with friends
+        Pysch is an interactive quiz game designed to be played with friends
       </GenericContainer>
       <GenericContainer>
         <SignInButtonStyling

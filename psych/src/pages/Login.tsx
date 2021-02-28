@@ -159,7 +159,7 @@ const Login = ({
 
         {createAnAccount && (
           <InfoGrouping>
-            <span>Enter your name</span>
+            <span>Enter your display name</span>
             <InputBar
               value={displayName}
               onChange={(e) => {
