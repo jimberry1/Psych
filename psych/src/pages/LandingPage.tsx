@@ -70,8 +70,15 @@ const LandingPage = (props: any) => {
       isQuestionsRound: false,
       isVotingRound: false,
       isResultsRound: false,
-      host: props.user.uid,
+      hostUid: props.user.uid,
+      numberOfRounds: 10,
       timestamp: firebase.firestore.FieldValue.serverTimestamp(),
+      randomNameArray: null,
+      questionIndex: null,
+      customQuestionCollectionId: null,
+      winner: null,
+      timeLimit: -1,
+      autoProgressionThreshold: -1,
     });
 
     // Then change your game code on firebase to reflect the new lobby that you made
@@ -102,7 +109,10 @@ const LandingPage = (props: any) => {
         .doc(props.user.gameCode.toString())
         .get()
         .then((gameSnapshot: any) => {
-          if (gameSnapshot.data().host === props.user.uid) {
+          if (
+            gameSnapshot.data().hostUid === props.user.uid &&
+            !gameSnapshot.data().gameStarted
+          ) {
             setRedirectTo('hostgame');
           } else {
             setRedirectTo('/lobby');

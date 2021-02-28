@@ -44,13 +44,6 @@ const AnswerContainer = styled.div`
   overflow-wrap: break-word;
   word-wrap: break-word;
 
-  overflow: scroll;
-
-  //   &:hover {
-  //     transform: scale(1.1) translateY(-15px);
-  //     box-shadow: 4px 4px 4px 4px #0e254a;
-  //   }
-
   @media (max-width: 600px) {
     font-size: 20px;
   } ;
