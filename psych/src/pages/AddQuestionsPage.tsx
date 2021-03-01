@@ -146,9 +146,11 @@ const AddQuestionsPage: React.SFC<AddQuestionsPageProps> = ({ user }) => {
                 substituted for a randomly selected name of a player in your
                 game.
               </GeneralPageTextBody>
-              <GeneralPageTextBody style={{ padding: 20, marginTop: 10 }}>
-                Example question: 'Why did XXX cross the road?'
-              </GeneralPageTextBody>
+              <div style={{ padding: 10, marginTop: 10 }}>
+                <GeneralPageTextBody>
+                  Example question: 'Why did XXX cross the road?'
+                </GeneralPageTextBody>
+              </div>
             </motion.div>
           ) : (
             <motion.div

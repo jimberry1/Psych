@@ -28,10 +28,6 @@ test('renders learn react link', () => {
  *
  * - Create pages for the privacy policy and maybe add a footer to the application as well.
  *
- * - Improve the add question screen to make it clearer how to link to
- *
- * - Allow for url matching to occur
- *
  * - Track which collections people have written to and let them view their submissions
  *
  * - Add a question index owner to customQuestion collections and let the owner manage the entire collection
