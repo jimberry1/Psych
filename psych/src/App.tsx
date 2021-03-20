@@ -1,6 +1,4 @@
-import logo from './logo.svg';
 import { useState, useEffect } from 'react';
-import db from './firebase';
 import './App.css';
 import Login from './pages/Login';
 import { Switch, Route, Redirect } from 'react-router';
@@ -12,7 +10,6 @@ import { AnimatePresence } from 'framer-motion';
 import TestPage from './pages/TestPage';
 import AddQuestionsPage from './pages/AddQuestionsPage';
 import Header from './UI/Navbar/Header';
-import { relative } from 'path';
 import Modal from './UI/Modal/Modal';
 import EndOfGamePage from './pages/EndOfGamePage';
 import StartPage from './pages/StartPage';
