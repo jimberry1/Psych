@@ -1,8 +1,9 @@
 # PSYCH
 
+Access the game here: https://psych2.web.app/
+
 Welcome to Psych, the interactive Quiz game. I decided to make this app a project to improve my skills 
 in Typescript and PWA's, with the side effect of having a great game I'm able to play with friends
-
 
 # Game Concept
 
